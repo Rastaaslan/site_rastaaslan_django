@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Twitch</title>
+    <style>
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home'%}">Accueil</a></li>
+            <li><a href="{% url 'vods' %}">VODs</a></li>
+            <li><a href="{% url 'clips' %}">Clips</a></li>
+        </ul>
+    </nav>
+    <h1>Live Twitch</h1>
+    {% if stream_data %}
+        <iframe
+            src="https://player.twitch.tv/?channel={{ stream_data.0.user_name }}"
+            height="378"
+            width="620"
+            frameborder="0"
+            scrolling="no"
+            allowfullscreen="true">
+        </iframe>
+        <iframe
+            src="https://www.twitch.tv/embed/{{ stream_data.0.user_name }}/chat"
+            height="500"
+            width="350">
+        </iframe>
+    {% else %}
+        <p>Aucun live en cours.</p>
+    {% endif %}
+</body>
+</html>

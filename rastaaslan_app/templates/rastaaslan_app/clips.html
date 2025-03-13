@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clips</title>
+    <style>
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+        .video-thumbnail {
+            width: 200px;
+            height: auto;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home'%}">Accueil</a></li>
+            <li><a href="{% url 'live' %}">Live</a></li>
+            <li><a href="{% url 'vods' %}">VODs</a></li>
+        </ul>
+    </nav>
+    <h1>Clips</h1>
+    <div>
+        {% for video in videos %}
+            <div>
+                <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}" class="video-thumbnail">
+                <p><a href="{% url 'video_detail' video.video_id %}">{{ video.title }}</a></p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

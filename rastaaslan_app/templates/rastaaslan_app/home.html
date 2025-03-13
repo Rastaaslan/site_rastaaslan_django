@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accueil</title>
+    <style>
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'live' %}">Live</a></li>
+            <li><a href="{% url 'vods' %}">VODs</a></li>
+            <li><a href="{% url 'clips' %}">Clips</a></li>
+        </ul>
+    </nav>
+    <h1>Bienvenue sur mon site Twitch</h1>
+    <p>Utilisez le menu pour naviguer entre les différentes sections.</p>
+</body>
+</html>
