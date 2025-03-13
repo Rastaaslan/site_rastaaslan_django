@@ -129,9 +129,12 @@ def clips_view(request):
         'videos': videos
     }
     return render(request, 'rastaaslan_app/clips.html', context)
+
 def video_detail(request, video_id):
     video = get_object_or_404(Video, video_id=video_id)
+    similar_videos = Video.objects.filter(video_type=video.video_type).exclude(pk=video.pk)[:5]
     context = {
-        'video': video
+        'video': video,
+        'similar_videos': similar_videos
     }
     return render(request, 'rastaaslan_app/video_detail.html', context)
