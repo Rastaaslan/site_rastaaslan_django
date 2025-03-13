@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-6c8!s)hh5a)0xkl8@2m9m+h)md-2a5t^+i_*-zajcdc_sbnfy4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["62.4.21.212"]
+ALLOWED_HOSTS = [
+    'rastaaslan.xyz',
+    'www.rastaaslan.xyz',
+    '62.4.21.212',  # Ajoutez également votre adresse IP si nécessaire
+    'localhost',  # Utile pour le développement local
+]
 
 
 # Application definition
