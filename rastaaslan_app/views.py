@@ -6,9 +6,9 @@ def home(request):
     return render(request, 'rastaaslan_app/home.html')
 
 def live_view(request):
-    twitch_user = 'VOTRE_NOM_UTILISATEUR_TWITCH'
-    client_id = 'VOTRE_CLIENT_ID'
-    client_secret = 'VOTRE_CLIENT_SECRET'
+    twitch_user = 'RastaaslanRadal'
+    client_id = '3nnjhncyln9wija7vanfqf7lhsedh2'
+    client_secret = 'hvbs7v88ckuov3t4brbxvl1bacpyhk'
 
     # Obtenir un token d'accès
     token_url = 'https://id.twitch.tv/oauth2/token'
@@ -39,9 +39,9 @@ def live_view(request):
     return render(request, 'rastaaslan_app/live.html', context)
 
 def vods_view(request):
-    twitch_user = 'VOTRE_NOM_UTILISATEUR_TWITCH'
-    client_id = 'VOTRE_CLIENT_ID'
-    client_secret = 'VOTRE_CLIENT_SECRET'
+    twitch_user = 'RastaaslanRadal'
+    client_id = '3nnjhncyln9wija7vanfqf7lhsedh2'
+    client_secret = 'hvbs7v88ckuov3t4brbxvl1bacpyhk'
 
     # Obtenir un token d'accès
     token_url = 'https://id.twitch.tv/oauth2/token'
@@ -85,9 +85,9 @@ def vods_view(request):
     return render(request, 'rastaaslan_app/vods.html', context)
 
 def clips_view(request):
-    twitch_user = 'rastaaslanradal'
+    twitch_user = 'RastaaslanRadal'
     client_id = '3nnjhncyln9wija7vanfqf7lhsedh2'
-    client_secret = '13algjc3yixbbvz8l4rmlq5hmkqi4g'
+    client_secret = 'hvbs7v88ckuov3t4brbxvl1bacpyhk'
 
     # Obtenir un token d'accès
     token_url = 'https://id.twitch.tv/oauth2/token'
