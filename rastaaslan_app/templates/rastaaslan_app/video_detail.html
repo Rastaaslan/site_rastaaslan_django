@@ -2,27 +2,28 @@
 <html>
 <head>
     <title>{{ video.title }}</title>
-    <link rel="icon" href="/path/to/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <h1>{{ video.title }}</h1>
-
-    <!-- Conteneur pour l'intégration Twitch -->
-    <div id="twitch-embed" style="height: 378px; width: 620px;"></div>
-
-    <!-- Charger le script d'intégration Twitch -->
-    <script src="https://player.twitch.tv/js/embed/v1.js"></script>
-
-    <!-- Créer un objet Twitch.Player -->
-    <script type="text/javascript">
-      var options = {
-        width: 620,
-        height: 378,
-        channel: "rastaaslanradal",
-      };
-      var player = new Twitch.Player("twitch-embed", options);
-    </script>
-
+    {% if video.video_type == "Clip" %}
+        <iframe
+            src="https://clips.twitch.tv/embed?clip={{ video.video_id }}"
+            height="378"
+            width="620"
+            frameborder="0"
+            scrolling="no"
+            allowfullscreen="true">
+        </iframe>
+    {% else %}
+        <iframe
+            src="https://player.twitch.tv/?video={{ video.video_id }}"
+            frameborder="0"
+            allowfullscreen="true"
+            scrolling="no"
+            height="378"
+            width="620">
+        </iframe>
+    {% endif %}
     <p><a href="{% url 'vods' %}">Retour aux VODs</a> | <a href="{% url 'clips' %}">Retour aux Clips</a></p>
 </body>
 </html>
