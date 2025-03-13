@@ -8,7 +8,7 @@
     <h1>{{ video.title }}</h1>
     {% if video.video_type == "Clip" %}
         <iframe
-            src="https://clips.twitch.tv/embed?clip={{ video.video_id }}"
+            src="https://clips.twitch.tv/embed?clip={{ video.video_id }}&parent={{ request.get_host }}"
             height="378"
             width="620"
             frameborder="0"
@@ -17,7 +17,7 @@
         </iframe>
     {% else %}
         <iframe
-            src="https://player.twitch.tv/?video={{ video.video_id }}"
+            src="https://player.twitch.tv/?video={{ video.video_id }}&parent={{ request.get_host }}"
             frameborder="0"
             allowfullscreen="true"
             scrolling="no"
