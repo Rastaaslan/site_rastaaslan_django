@@ -16,7 +16,7 @@
 <body>
     <nav>
         <ul>
-            <li><a href="{% url 'home'%}">Accueil</a></li>
+            <li><a href="{% url 'home' %}">Accueil</a></li>
             <li><a href="{% url 'vods' %}">VODs</a></li>
             <li><a href="{% url 'clips' %}">Clips</a></li>
         </ul>
@@ -24,7 +24,7 @@
     <h1>Live Twitch</h1>
     {% if stream_data %}
         <iframe
-            src="https://player.twitch.tv/?channel={{ stream_data.0.user_name }}"
+            src="https://player.twitch.tv/?channel={{ stream_data.0.user_name }}&parent={{ request.get_host }}"
             height="378"
             width="620"
             frameborder="0"
@@ -32,7 +32,7 @@
             allowfullscreen="true">
         </iframe>
         <iframe
-            src="https://www.twitch.tv/embed/{{ stream_data.0.user_name }}/chat"
+            src="https://www.twitch.tv/embed/{{ stream_data.0.user_name }}/chat?parent={{ request.get_host }}"
             height="500"
             width="350">
         </iframe>
