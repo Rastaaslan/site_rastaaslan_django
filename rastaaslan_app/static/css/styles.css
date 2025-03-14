@@ -143,23 +143,19 @@ body {
     height: auto;
 }
 
-.navbar-brand {
-    font-weight: bold;
-    color: #ecf0f1 !important; /* Couleur de texte */
+.navbar-custom {
+    background-color: var(--bleu-indigo); /* Couleur de fond */
 }
 
+.navbar-brand,
 .nav-link {
-    color: #ecf0f1 !important; /* Couleur de texte */
+    color: var(--blanc-casse) !important; /* Couleur de texte */
 }
 
-.navbar-dark .navbar-toggler-icon {
-    color: #ecf0f1; /* Couleur de l'icône du toggler */
+.navbar-custom .navbar-toggler-icon {
+    color: var(--blanc-casse); /* Couleur de l'icône du toggler */
 }
 
-.bg-primary {
-    background-color: #3498db !important; /* Couleur principale */
-}
-
-.navbar-dark .navbar-nav .nav-link:hover {
-    color: #2ecc71 !important; /* Couleur secondaire pour le survol */
+.navbar-custom .nav-link:hover {
+    color: var(--terracotta) !important; /* Couleur de survol */
 }
