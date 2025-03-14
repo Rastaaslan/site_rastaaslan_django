@@ -8,7 +8,6 @@
 <!-- Vidéo principale -->
 {% if video.video_type == 'Clip' %}
         <iframe
-            class="embed-responsive-item"
             src="https://clips.twitch.tv/embed?clip={{ video.clip_id }}&parent=www.rastaaslan.xyz"
             frameborder="0"
             allowfullscreen="true"
@@ -18,7 +17,6 @@
         </iframe>
 {% elif video.video_type == 'VOD' %}
         <iframe
-            class="embed-responsive-item"
             src="https://player.twitch.tv/?video={{ video.twitch_video_id }}&parent=www.rastaaslan.xyz"
             frameborder="0"
             allowfullscreen="true"
