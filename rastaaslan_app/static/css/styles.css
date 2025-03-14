@@ -11,7 +11,7 @@
     --gris-fonce: #4F4F4F;
 }
 
-/* Typographie */
+/* Base */
 body {
     font-family: 'IBM Plex Sans', 'Work Sans', sans-serif;
     font-size: 16px;
@@ -21,9 +21,10 @@ body {
     padding: 0;
 }
 
+/* Typographie */
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Futura Rounded', 'Quicksand', sans-serif;
-    font-weight: 600; /* Semi-bold */
+    font-weight: 600;
     color: var(--terracotta);
 }
 
@@ -39,7 +40,7 @@ blockquote, .highlight {
     letter-spacing: 0.5px;
 }
 
-/* Boutons */
+/* Éléments interactifs */
 button {
     background-color: var(--terracotta);
     color: #ffffff;
@@ -54,17 +55,115 @@ button:hover {
     background-color: var(--vert-sauge);
 }
 
-/* Liens */
 a {
     color: var(--bleu-indigo);
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 a:hover {
     text-decoration: underline;
+    color: var(--terracotta);
 }
 
-/* Textures et Effets */
+/* Images et médias */
+img {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Layout */
+.container {
+    padding: 20px;
+    margin: 10px auto;
+    max-width: 1200px;
+}
+
+/* Navigation */
+.navbar-custom {
+    background-color: var(--bleu-indigo);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand,
+.nav-link {
+    color: var(--blanc-casse) !important;
+    transition: color 0.3s ease;
+}
+
+.navbar-custom .navbar-toggler-icon {
+    color: var(--blanc-casse);
+}
+
+.navbar-custom .nav-link:hover {
+    color: var(--terracotta) !important;
+}
+
+/* Carousel styles */
+.carousel {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    margin-bottom: 30px;
+}
+
+.carousel-item {
+    transition: transform 0.6s ease-in-out;
+}
+
+.carousel-inner {
+    border-radius: 8px;
+}
+
+.carousel-caption {
+    background-color: rgba(61, 64, 91, 0.7); /* --bleu-indigo with opacity */
+    border-radius: 4px;
+    padding: 10px;
+    bottom: 20px;
+}
+
+.carousel-caption h5 {
+    color: var(--blanc-casse);
+    margin-bottom: 0;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 10%;
+    opacity: 0.7;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+}
+
+.carousel-indicators {
+    bottom: 0;
+}
+
+.carousel-indicators li {
+    background-color: var(--creme-vintage);
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin: 0 4px;
+}
+
+.carousel-indicators .active {
+    background-color: var(--terracotta);
+}
+
+/* Animations et effets */
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+}
+
 .texture {
     background: var(--beige-papier);
     position: relative;
@@ -77,81 +176,31 @@ a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('path/to/vintage-noise.png'); /* Remplacez par le chemin de votre texture */
+    background: url('path/to/vintage-noise.png');
     opacity: 0.08;
     pointer-events: none;
 }
 
-/* Illustrations et Images */
-img {
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Animations et Transitions */
-.fade-in {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
-
-.fade-in.visible {
-    opacity: 1;
-}
-
-/* Exemple d'utilisation */
-.container {
-    padding: 20px;
-    margin: 10px auto;
-    max-width: 1200px;
-}
-
+/* Autres éléments */
 .header, .footer {
     background-color: var(--blanc-casse);
     padding: 15px;
     text-align: center;
 }
 
-.nav a {
-    margin: 0 15px;
-    color: var(--gris-fonce);
-}
-
-.nav a:hover {
-    color: var(--terracotta);
-}
-
-.nav ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.nav ul li {
-    display: inline;
-    margin-right: 10px;
-}
-
 .card {
     margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .card-img-top {
     width: 100%;
     height: auto;
-}
-
-.navbar-custom {
-    background-color: var(--bleu-indigo); /* Couleur de fond */
-}
-
-.navbar-brand,
-.nav-link {
-    color: var(--blanc-casse) !important; /* Couleur de texte */
-}
-
-.navbar-custom .navbar-toggler-icon {
-    color: var(--blanc-casse); /* Couleur de l'icône du toggler */
-}
-
-.navbar-custom .nav-link:hover {
-    color: var(--terracotta) !important; /* Couleur de survol */
 }
