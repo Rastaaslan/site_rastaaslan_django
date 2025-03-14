@@ -17,7 +17,14 @@
         {% for video in videos %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
                 <a href="{% url 'video_detail' video.video_id %}">
-                    <img src="{{ video.thumbnail_url }}" class="d-block w-100" alt="{{ video.title }}">
+                    <iframe
+                        src="https://clips.twitch.tv/embed?clip={{ video.video_id }}&parent=www.rastaaslan.xyz"
+                        frameborder="0"
+                        allowfullscreen="true"
+                        scrolling="no"
+                        height="378"
+                        width="620">
+                    </iframe>
                     <div class="carousel-caption d-none d-md-block">
                         <h5>{{ video.title }}</h5>
                     </div>
