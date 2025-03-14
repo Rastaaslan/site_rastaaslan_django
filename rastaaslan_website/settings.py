@@ -150,4 +150,4 @@ if not DEBUG:
     
     # Entête X-Content-Type-Options
     SECURE_CONTENT_TYPE_NOSNIFF = True
-    MIDDLEWARE.append('csp.middleware.CSPMiddleware')
+    # MIDDLEWARE.append('csp.middleware.CSPMiddleware')

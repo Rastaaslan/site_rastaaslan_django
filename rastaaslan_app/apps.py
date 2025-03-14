@@ -12,8 +12,6 @@ class RastaaslanAppConfig(AppConfig):
         Idéal pour enregistrer des signaux ou effectuer d'autres initialisations.
         """
         # Importer les signaux si nécessaire
-        import rastaaslan_app.signals  # À créer si vous avez des signaux
-        
         # Vous pouvez configurer d'autres éléments ici
         # Par exemple, initialisation de tâches périodiques, etc.
         pass
