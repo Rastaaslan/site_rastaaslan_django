@@ -8,8 +8,8 @@ def home(request):
 
 def live_view(request):
     twitch_user = 'RastaaslanRadal'
-    client_id = '3nnjhncyln9wija7vanfqf7lhsedh2'
-    client_secret = 'hvbs7v88ckuov3t4brbxvl1bacpyhk'
+    client_id = settings.TWITCH_CLIENT_ID
+    client_secret = settings.TWITCH_CLIENT_SECRET
 
     # Obtenir un token d'accès
     token_url = 'https://id.twitch.tv/oauth2/token'
@@ -40,9 +40,8 @@ def live_view(request):
     return render(request, 'rastaaslan_app/live.html', context)
 
 def vods_view(request):
-    twitch_user = 'RastaaslanRadal'
-    client_id = '3nnjhncyln9wija7vanfqf7lhsedh2'
-    client_secret = 'hvbs7v88ckuov3t4brbxvl1bacpyhk'
+    client_id = settings.TWITCH_CLIENT_ID
+    client_secret = settings.TWITCH_CLIENT_SECRET
 
     # Obtenir un token d'accès
     token_url = 'https://id.twitch.tv/oauth2/token'
@@ -63,7 +62,7 @@ def vods_view(request):
         'Client-ID': client_id,
         'Authorization': f'Bearer {access_token}'
     }
-    vods_url = f'https://api.twitch.tv/helix/videos?user_id=44504078'
+    vods_url = 'https://api.twitch.tv/helix/videos?user_id=44504078'
     vods_response = requests.get(vods_url, headers=headers)
     vods_data = vods_response.json().get('data', [])
 
@@ -86,9 +85,8 @@ def vods_view(request):
     return render(request, 'rastaaslan_app/vods.html', context)
 
 def clips_view(request):
-    twitch_user = 'RastaaslanRadal'
-    client_id = '3nnjhncyln9wija7vanfqf7lhsedh2'
-    client_secret = 'hvbs7v88ckuov3t4brbxvl1bacpyhk'
+    client_id = settings.TWITCH_CLIENT_ID
+    client_secret = settings.TWITCH_CLIENT_SECRET
 
     # Obtenir un token d'accès
     token_url = 'https://id.twitch.tv/oauth2/token'
@@ -109,7 +107,7 @@ def clips_view(request):
         'Client-ID': client_id,
         'Authorization': f'Bearer {access_token}'
     }
-    clips_url = f'https://api.twitch.tv/helix/clips?broadcaster_id=44504078'
+    clips_url = 'https://api.twitch.tv/helix/clips?broadcaster_id=44504078'
     clips_response = requests.get(clips_url, headers=headers)
     clips_data = clips_response.json().get('data', [])
 
