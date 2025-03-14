@@ -624,29 +624,31 @@ a:hover {
 .theme-toggle {
     display: flex;
     align-items: center;
-    cursor: pointer;
-    margin-left: 15px;
-    padding: 5px;
-    border-radius: 50%;
-    width: 38px;
-    height: 38px;
     justify-content: center;
-    transition: background-color var(--transition-speed);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: background-color 0.3s;
+    position: relative;
+    margin-left: 10px;
 }
 
 .theme-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .theme-toggle svg {
-    width: 24px;
-    height: 24px;
-    color: var(--nav-text);
-    transition: transform 0.5s ease;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    transition: opacity 0.3s, transform 0.3s;
 }
 
 .theme-toggle svg path {
-    fill: var(--nav-text);
+    fill: #EDEAE1; /* Couleur de l'icône claire pour contraster avec la nav sombre */
 }
 
 .theme-toggle .sun-icon,
@@ -657,7 +659,7 @@ a:hover {
 
 .theme-toggle .sun-icon {
     opacity: 0;
-    transform: rotate(90deg) scale(0.5);
+    transform: rotate(90deg) scale(0);
 }
 
 .theme-toggle .moon-icon {
@@ -665,6 +667,7 @@ a:hover {
     transform: rotate(0) scale(1);
 }
 
+/* Mode sombre (soleil visible) */
 [data-theme="dark"] .theme-toggle .sun-icon {
     opacity: 1;
     transform: rotate(0) scale(1);
@@ -672,7 +675,7 @@ a:hover {
 
 [data-theme="dark"] .theme-toggle .moon-icon {
     opacity: 0;
-    transform: rotate(-90deg) scale(0.5);
+    transform: rotate(-90deg) scale(0);
 }
 
 /* Adaptations additionnelles pour le thème sombre */
@@ -698,4 +701,17 @@ a:hover {
 /* Transitions douces pour tous les éléments */
 * {
     transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+/* Ajout d'un style spécifique pour la navbar */
+.navbar-nav .nav-item .theme-toggle {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+/* Pour mobile */
+@media (max-width: 991.98px) {
+    .navbar-nav .nav-item .theme-toggle {
+        margin: 8px auto;
+    }
 }
