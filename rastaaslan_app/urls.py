@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from .views import twitch_login, twitch_callback
 
 urlpatterns = [
     path('auth/twitch/', twitch_login, name='twitch_login'),
