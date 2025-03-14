@@ -33,8 +33,8 @@ ALLOWED_HOSTS = [
     'localhost',  # Utile pour le développement local
 ]
 
-TWITCH_CLIENT_ID = 'votre_client_id'
-TWITCH_CLIENT_SECRET = 'votre_client_secret'
+TWITCH_CLIENT_ID = '3nnjhncyln9wija7vanfqf7lhsedh2'
+TWITCH_CLIENT_SECRET = 'zvje5dvp26vwk6djlxyc8ehgo9f08l'
 TWITCH_REDIRECT_URI = 'https://rastaaslan.xyz/auth/twitch/callback'
 
 # Application definition
