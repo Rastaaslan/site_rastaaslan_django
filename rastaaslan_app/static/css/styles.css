@@ -353,3 +353,67 @@ img {
         transform: translateX(10%) scale(0.85);
     }
 }
+
+/* Icône de menu hamburger personnalisée */
+.burger-icon {
+    display: inline-block;
+    width: 24px;
+    height: 20px;
+    position: relative;
+    transform: rotate(0deg);
+    transition: .5s ease-in-out;
+    cursor: pointer;
+}
+
+.burger-icon span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: var(--blanc-casse);
+    border-radius: 3px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+}
+
+.burger-icon span:nth-child(1) {
+    top: 0px;
+}
+
+.burger-icon span:nth-child(2) {
+    top: 8px;
+}
+
+.burger-icon span:nth-child(3) {
+    top: 16px;
+}
+
+/* Animation quand le menu est ouvert */
+.navbar-toggler[aria-expanded="true"] .burger-icon span:nth-child(1) {
+    top: 8px;
+    transform: rotate(135deg);
+}
+
+.navbar-toggler[aria-expanded="true"] .burger-icon span:nth-child(2) {
+    opacity: 0;
+    left: -60px;
+}
+
+.navbar-toggler[aria-expanded="true"] .burger-icon span:nth-child(3) {
+    top: 8px;
+    transform: rotate(-135deg);
+}
+
+/* Amélioration du bouton navbar-toggler */
+.navbar-toggler {
+    border: 1px solid var(--blanc-casse);
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(237, 234, 225, 0.25);
+}

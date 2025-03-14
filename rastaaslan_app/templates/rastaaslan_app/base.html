@@ -14,7 +14,11 @@
     <nav class="navbar navbar-expand-lg navbar-custom">
         <a class="navbar-brand" href="{% url 'rastaaslan_app:home' %}">Rastaaslan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <div class="burger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
@@ -90,5 +94,35 @@
         }
     });
     </script>
+    <script>
+        $(document).ready(function(){
+            // Gérer l'état de l'icône quand le menu est ouvert/fermé
+            $('.navbar-toggler').on('click', function(){
+                // L'attribut aria-expanded est automatiquement géré par Bootstrap
+                // mais nous vérifions son état pour que notre code soit plus robuste
+                var isExpanded = $(this).attr('aria-expanded') === 'true';
+                
+                // Appliquer animation en fonction de l'état
+                if (isExpanded) {
+                    $(this).attr('aria-expanded', 'false');
+                } else {
+                    $(this).attr('aria-expanded', 'true');
+                }
+            });
+            
+            // Fermer le menu quand on clique sur un lien (mobile)
+            $('.navbar-nav a.nav-link').on('click', function(){
+                $('.navbar-collapse').collapse('hide');
+            });
+            
+            // Le reste du code JavaScript existant...
+            // Initialisation du carousel s'il existe
+            var $carousel = $('#carouselClips');
+            
+            if ($carousel.length > 0) {
+                // Code carousel existant...
+            }
+        });
+        </script>
 </body>
 </html>
