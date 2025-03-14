@@ -4,26 +4,25 @@
 
 {% block content %}
 <h1>Clips</h1>
-
 <!-- Carrousel pour les vidéos connexes avec animation de slide -->
-<div id="carouselRelated" class="carousel slide mt-4" data-ride="carousel" data-interval="5000">
+<div id="carouselClips" class="carousel slide mt-4" data-ride="carousel" data-interval="5000">
     <div class="carousel-inner">
-        {% for related_video in related_videos %}
+        {% for video in videos %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <a href="{% url 'video_detail' related_video.video_id %}">
-                    <img src="{{ related_video.thumbnail_url }}" class="d-block w-100" alt="{{ related_video.title }}">
+                <a href="{% url 'video_detail' video.video_id %}">
+                    <img src="{{ video.thumbnail_url }}" class="d-block w-100" alt="{{ video.title }}">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>{{ related_video.title }}</h5>
+                        <h5>{{ video.title }}</h5>
                     </div>
                 </a>
             </div>
         {% endfor %}
     </div>
-    <a class="carousel-control-prev" href="#carouselRelated" role="button" data-slide="prev">
+    <a class="carousel-control-prev" href="#carouselClips" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
     </a>
-    <a class="carousel-control-next" href="#carouselRelated" role="button" data-slide="next">
+    <a class="carousel-control-next" href="#carouselClips" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
