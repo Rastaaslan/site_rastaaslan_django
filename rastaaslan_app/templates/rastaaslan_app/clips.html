@@ -5,7 +5,14 @@
 {% block content %}
 <h1>Clips</h1>
 <!-- Carrousel pour les vidéos connexes avec animation de slide -->
-<div id="carouselClips" class="carousel slide mt-4" data-ride="carousel" data-interval="5000">
+<div id="carouselClips" class="carousel slide" data-ride="carousel" data-interval="5000">
+    <!-- Ajout des indicateurs -->
+    <ol class="carousel-indicators">
+        {% for video in videos %}
+            <li data-target="#carouselClips" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+        {% endfor %}
+    </ol>
+    
     <div class="carousel-inner">
         {% for video in videos %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
