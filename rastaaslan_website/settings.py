@@ -32,6 +32,9 @@ ALLOWED_HOSTS = [
     'localhost',  # Utile pour le développement local
 ]
 
+TWITCH_CLIENT_ID = 'votre_client_id'
+TWITCH_CLIENT_SECRET = 'votre_client_secret'
+TWITCH_REDIRECT_URI = 'https://rastaaslan.xyz/auth/twitch/callback'
 
 # Application definition
 
@@ -113,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 

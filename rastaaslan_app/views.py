@@ -1,6 +1,7 @@
 import requests
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Video
+from django.conf import settings
 
 def home(request):
     return render(request, 'rastaaslan_app/home.html')
@@ -138,3 +139,32 @@ def video_detail(request, video_id):
         'similar_videos': similar_videos
     }
     return render(request, 'rastaaslan_app/video_detail.html', context)
+
+def twitch_login(request):
+    auth_url = (
+        f"https://id.twitch.tv/oauth2/authorize"
+        f"?client_id={settings.TWITCH_CLIENT_ID}"
+        f"&redirect_uri={settings.TWITCH_REDIRECT_URI}"
+        f"&response_type=code"
+        f"&scope=chat:edit chat:read"
+    )
+    return redirect(auth_url)
+
+def twitch_callback(request):
+    code = request.GET.get('code')
+    token_url = 'https://id.twitch.tv/oauth2/token'
+    token_data = {
+        'client_id': settings.TWITCH_CLIENT_ID,
+        'client_secret': settings.TWITCH_CLIENT_SECRET,
+        'code': code,
+        'grant_type': 'authorization_code',
+        'redirect_uri': settings.TWITCH_REDIRECT_URI,
+    }
+    response = requests.post(token_url, data=token_data)
+    tokens = response.json()
+
+    # Stocker les tokens dans la session ou la base de données
+    request.session['twitch_access_token'] = tokens['access_token']
+    request.session['twitch_refresh_token'] = tokens['refresh_token']
+
+    return redirect('home')  # Rediriger vers la page d'accueil ou une autre page

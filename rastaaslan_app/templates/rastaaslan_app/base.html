@@ -1,0 +1,33 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Mon Site Web{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <style>
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Accueil</a></li>
+            <li><a href="{% url 'vods_view' %}">VODs</a></li>
+            <li><a href="{% url 'clips_view' %}">Clips</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        {% block content %}
+        <!-- Contenu dynamique ici -->
+        {% endblock %}
+    </div>
+</body>
+</html>

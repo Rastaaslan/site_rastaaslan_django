@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('auth/twitch/', twitch_login, name='twitch_login'),
+    path('auth/twitch/callback', twitch_callback, name='twitch_callback'),
     path('', views.home, name='home'),
     path('live/', views.live_view, name='live'),
     path('vods/', views.vods_view, name='vods'),
