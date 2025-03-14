@@ -49,38 +49,60 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function(){
-            // Initialisation du carousel
+            // Initialisation du carousel avec les options spécifiques
             var $carousel = $('#carouselClips');
             
+            // Désactiver le slide normal de Bootstrap
             $carousel.carousel({
                 interval: 5000,
-                ride: 'carousel'
+                wrap: true
             });
             
-            // Fonction pour ajuster les classes d'items adjacents
-            function adjustCarouselItems() {
-                var $items = $carousel.find('.carousel-item');
-                $items.removeClass('prev next');
+            // Recréer la fonctionnalité de slide avec notre approche
+            var $items = $carousel.find('.carousel-item');
+            var totalItems = $items.length;
+            
+            // Fonction pour positionner les éléments
+            function positionItems() {
                 var $active = $carousel.find('.carousel-item.active');
-                var $next = $active.next('.carousel-item');
-                var $prev = $active.prev('.carousel-item');
+                var activeIndex = $active.index();
                 
-                if (!$next.length) {
-                    $next = $items.first();
-                }
+                $items.css({
+                    'transform': 'scale(0.85)',
+                    'opacity': '0.6',
+                    'z-index': '1'
+                }).removeClass('visible-left visible-right');
                 
-                if (!$prev.length) {
-                    $prev = $items.last();
-                }
+                // Élément actif
+                $active.css({
+                    'transform': 'scale(1)',
+                    'opacity': '1',
+                    'z-index': '2'
+                });
                 
-                $next.addClass('next');
-                $prev.addClass('prev');
+                // Élément à gauche
+                var leftIndex = (activeIndex - 1 + totalItems) % totalItems;
+                $items.eq(leftIndex).css({
+                    'transform': 'translateX(-50%) scale(0.85)',
+                    'opacity': '0.6',
+                    'z-index': '1'
+                }).addClass('visible-left');
+                
+                // Élément à droite
+                var rightIndex = (activeIndex + 1) % totalItems;
+                $items.eq(rightIndex).css({
+                    'transform': 'translateX(50%) scale(0.85)',
+                    'opacity': '0.6',
+                    'z-index': '1'
+                }).addClass('visible-right');
             }
             
-            // Ajuster les classes au chargement et après chaque transition
-            adjustCarouselItems();
-            $carousel.on('slid.bs.carousel', adjustCarouselItems);
+            // Exécuter au chargement
+            positionItems();
+            
+            // Exécuter après chaque slide
+            $carousel.on('slid.bs.carousel', positionItems);
         });
-    </script>
+        </script>
 </body>
 </html>
