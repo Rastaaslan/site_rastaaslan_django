@@ -49,11 +49,38 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function(){
-          $('.carousel').carousel({
-            interval: 5000,
-            ride: 'carousel'
-          });
+            // Initialisation du carousel
+            var $carousel = $('#carouselClips');
+            
+            $carousel.carousel({
+                interval: 5000,
+                ride: 'carousel'
+            });
+            
+            // Fonction pour ajuster les classes d'items adjacents
+            function adjustCarouselItems() {
+                var $items = $carousel.find('.carousel-item');
+                $items.removeClass('prev next');
+                var $active = $carousel.find('.carousel-item.active');
+                var $next = $active.next('.carousel-item');
+                var $prev = $active.prev('.carousel-item');
+                
+                if (!$next.length) {
+                    $next = $items.first();
+                }
+                
+                if (!$prev.length) {
+                    $prev = $items.last();
+                }
+                
+                $next.addClass('next');
+                $prev.addClass('prev');
+            }
+            
+            // Ajuster les classes au chargement et après chaque transition
+            adjustCarouselItems();
+            $carousel.on('slid.bs.carousel', adjustCarouselItems);
         });
-      </script>
+    </script>
 </body>
 </html>
