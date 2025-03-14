@@ -1,9 +1,52 @@
-<!-- home.html -->
 {% extends 'rastaaslan_app/base.html' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Rastaaslan - Accueil{% endblock %}
 
 {% block content %}
-<h1>Bienvenue sur la page d'accueil</h1>
-<p>Contenu de la page d'accueil.</p>
+<div class="jumbotron">
+    <h1>Bienvenue sur Rastaaslan</h1>
+    <p class="lead">Retrouvez tous les VODs, clips et streams de RastaaslanRadal.</p>
+</div>
+
+<!-- Derniers clips -->
+<h2>Derniers clips</h2>
+<div class="row">
+    {% for clip in latest_clips %}
+        <div class="col-md-4">
+            <a href="{% url 'rastaaslan_app:video_detail' clip.video_id %}" class="card-link">
+                <div class="card mb-4">
+                    <img src="{{ clip.thumbnail_url }}" class="card-img-top" alt="{{ clip.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ clip.title }}</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <p>Aucun clip disponible pour le moment.</p>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Dernières VODs -->
+<h2>Dernières VODs</h2>
+<div class="row">
+    {% for vod in latest_vods %}
+        <div class="col-md-4">
+            <a href="{% url 'rastaaslan_app:video_detail' vod.video_id %}" class="card-link">
+                <div class="card mb-4">
+                    <img src="{{ vod.thumbnail_url }}" class="card-img-top" alt="{{ vod.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ vod.title }}</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <p>Aucune VOD disponible pour le moment.</p>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+from decouple import config, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,22 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6c8!s)hh5a)0xkl8@2m9m+h)md-2a5t^+i_*-zajcdc_sbnfy4'
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [
-    'rastaaslan.xyz',
-    'www.rastaaslan.xyz',
-    '62.4.21.212',  # Ajoutez également votre adresse IP si nécessaire
-    'localhost',  # Utile pour le développement local
-]
-
-TWITCH_CLIENT_ID = '3nnjhncyln9wija7vanfqf7lhsedh2'
-TWITCH_CLIENT_SECRET = 'zvje5dvp26vwk6djlxyc8ehgo9f08l'
-TWITCH_REDIRECT_URI = 'https://rastaaslan.xyz/auth/twitch/callback'
+TWITCH_CLIENT_ID = config('TWITCH_CLIENT_ID')
+TWITCH_CLIENT_SECRET = config('TWITCH_CLIENT_SECRET')
+TWITCH_REDIRECT_URI = config('TWITCH_REDIRECT_URI')
 
 # Application definition
 
@@ -86,11 +78,11 @@ WSGI_APPLICATION = 'rastaaslan_website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rastaaslan_database',
-        'USER': 'admin',
-        'PASSWORD': '@rastaaslanDamien25',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default=''),
     }
 }
 
@@ -131,10 +123,31 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    '/var/www/html/rastaaslan_app/static',
+    os.path.join(BASE_DIR, 'rastaaslan_app', 'static'),
 ]
-STATIC_ROOT = '/var/www/html/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# En production, vous pourriez utiliser Redis pour une mise en cache plus robuste:
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379/1',
+#     }
+# }
+
+if not DEBUG:
+    # HTTPs/SSL
+    SECURE_SSL_REDIRECT = True  # Rediriger HTTP vers HTTPS
+    SESSION_COOKIE_SECURE = True  # Cookies de session uniquement via HTTPS
+    CSRF_COOKIE_SECURE = True  # Cookies CSRF uniquement via HTTPS
+    
+    # Protection contre les attaques XSS
+    SECURE_BROWSER_XSS_FILTER = True
+    
+    # Entête X-Content-Type-Options
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    MIDDLEWARE.append('csp.middleware.CSPMiddleware')

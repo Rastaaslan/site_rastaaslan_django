@@ -5,6 +5,7 @@
 {% block content %}
 <h1>Clips</h1>
 
+{% if videos %}
 <!-- Carousel centré avec vignettes -->
 <div class="center-card-carousel-container">
     <div id="carouselClips" class="carousel slide center-card-carousel" data-ride="carousel">
@@ -12,7 +13,7 @@
             {% for video in videos %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <div class="carousel-item-content">
-                        <a href="{% url 'video_detail' video.video_id %}">
+                        <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}">
                             <img src="{{ video.thumbnail_url }}" class="d-block" alt="{{ video.title }}">
                             <div class="carousel-caption">
                                 <h5>{{ video.title }}</h5>
@@ -32,4 +33,77 @@
         </a>
     </div>
 </div>
+
+<!-- Grille de clips -->
+<div class="row mt-4">
+    {% for video in videos %}
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}" class="card-link">
+                <div class="card">
+                    <img src="{{ video.thumbnail_url }}" class="card-img-top" alt="{{ video.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ video.title }}</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if videos.has_other_pages %}
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if videos.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; Première</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ videos.previous_page_number }}">Précédente</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">&laquo; Première</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">Précédente</span>
+            </li>
+        {% endif %}
+        
+        {% for i in videos.paginator.page_range %}
+            {% if videos.number == i %}
+                <li class="page-item active">
+                    <span class="page-link">{{ i }}</span>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        
+        {% if videos.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ videos.next_page_number }}">Suivante</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ videos.paginator.num_pages }}">Dernière &raquo;</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Suivante</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">Dernière &raquo;</span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="alert alert-info">
+    Aucun clip n'est disponible pour le moment.
+</div>
+{% endif %}
 {% endblock %}

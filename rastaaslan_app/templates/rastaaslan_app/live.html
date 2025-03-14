@@ -5,23 +5,61 @@
 {% block content %}
 <h1>Live Stream</h1>
 
-<!-- Embedding de la vidéo Twitch -->
-<div class="embed-responsive embed-responsive-16by9">
-    <iframe
-        class="embed-responsive-item"
-        src="https://player.twitch.tv/?channel=votre_nom_de_chaîne"
-        height="720"
-        width="1280"
-        frameborder="0"
-        scrolling="no"
-        allowfullscreen="true">
-    </iframe>
-</div>
+{% if is_live %}
+    <div class="alert alert-success">
+        <strong>En direct maintenant!</strong> {{ stream_info.title }}
+    </div>
+    
+    <!-- Embedding de la vidéo Twitch avec le nom de chaîne dynamique -->
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe
+            class="embed-responsive-item"
+            src="https://player.twitch.tv/?channel={{ channel_name }}&parent=www.rastaaslan.xyz"
+            height="720"
+            width="1280"
+            frameborder="0"
+            scrolling="no"
+            allowfullscreen="true">
+        </iframe>
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <strong>Hors ligne.</strong> Le stream n'est pas en direct pour le moment.
+    </div>
+    
+    <!-- Afficher les dernières VODs à la place -->
+    <h2 class="mt-4">Regardez les dernières VODs en attendant</h2>
+    <div class="row">
+        {% for video in latest_vods %}
+            <div class="col-md-4">
+                <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}" class="card-link">
+                    <div class="card mb-4">
+                        <img src="{{ video.thumbnail_url }}" class="card-img-top" alt="{{ video.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ video.title }}</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <p>Aucune VOD disponible pour le moment.</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}
 
 {% block chat %}
-<!-- Inclure le code du chat ici -->
+<!-- Inclure le chat uniquement si le stream est en direct -->
+{% if is_live %}
 <div id="chat-container">
-    <!-- Votre composant de chat ici -->
+    <iframe
+        src="https://www.twitch.tv/embed/{{ channel_name }}/chat?parent=www.rastaaslan.xyz"
+        height="600"
+        width="350"
+        frameborder="0">
+    </iframe>
 </div>
+{% endif %}
 {% endblock %}

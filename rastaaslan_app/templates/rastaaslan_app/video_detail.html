@@ -1,37 +1,49 @@
 {% extends 'rastaaslan_app/base.html' %}
 
-{% block title %}Détails de la Vidéo{% endblock %}
+{% block title %}{{ video.title }} - Détails{% endblock %}
 
 {% block content %}
 <h1>{{ video.title }}</h1>
 
-<!-- Vidéo principale -->
-{% if video.video_type == 'Clip' %}
+<!-- Vidéo principale avec conteneur responsive -->
+<div class="embed-responsive embed-responsive-16by9 mb-4">
+    {% if video.video_type == 'Clip' %}
         <iframe
-            src="https://clips.twitch.tv/embed?clip={{ video.video_id }}&parent=www.rastaaslan.xyz"
+            class="embed-responsive-item"
+            src="https://clips.twitch.tv/embed?clip={{ video.video_id }}&parent=www.rastaaslan.xyz&parent=rastaaslan.xyz&parent=localhost"
             frameborder="0"
             allowfullscreen="true"
-            scrolling="no"
-            height="378"
-            width="620">
+            scrolling="no">
         </iframe>
-{% elif video.video_type == 'VOD' %}
+    {% elif video.video_type == 'VOD' %}
         <iframe
-            src="https://player.twitch.tv/?video={{ video.video_id }}&parent=www.rastaaslan.xyz"
+            class="embed-responsive-item"
+            src="https://player.twitch.tv/?video={{ video.video_id }}&parent=www.rastaaslan.xyz&parent=rastaaslan.xyz&parent=localhost"
             frameborder="0"
             allowfullscreen="true"
-            scrolling="no"
-            height="378"
-            width="620">
+            scrolling="no">
         </iframe>
-{% endif %}
+    {% endif %}
+</div>
+
+<!-- Informations sur la vidéo -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">À propos de cette vidéo</h5>
+        <p class="card-text">Type: {{ video.get_video_type_display }}</p>
+        <p class="card-text">Date d'ajout: {{ video.created_at|date:"d/m/Y H:i" }}</p>
+        <a href="{{ video.url }}" target="_blank" class="btn btn-primary">Voir sur Twitch</a>
+    </div>
+</div>
 
 <!-- Carrousel pour les vidéos connexes -->
+{% if related_videos %}
+<h2>Vidéos similaires</h2>
 <div id="carouselRelated" class="carousel slide mt-4" data-ride="carousel">
     <div class="carousel-inner">
         {% for related_video in related_videos %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <a href="{% url 'video_detail' related_video.video_id %}">
+                <a href="{% url 'rastaaslan_app:video_detail' related_video.video_id %}">
                     <img src="{{ related_video.thumbnail_url }}" class="d-block w-100" alt="{{ related_video.title }}">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>{{ related_video.title }}</h5>
@@ -49,4 +61,23 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+
+<!-- Grille de vidéos connexes pour les petits écrans -->
+<div class="row d-md-none mt-4">
+    {% for related_video in related_videos %}
+        <div class="col-6 mb-3">
+            <a href="{% url 'rastaaslan_app:video_detail' related_video.video_id %}">
+                <div class="card">
+                    <img src="{{ related_video.thumbnail_url }}" class="card-img-top" alt="{{ related_video.title }}">
+                    <div class="card-body p-2">
+                        <p class="card-title small">{{ related_video.title }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>Aucune vidéo similaire disponible.</p>
+{% endif %}
 {% endblock %}
