@@ -142,3 +142,11 @@ body {
     width: 100%;
     height: auto;
 }
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.nav-link {
+    margin-right: 10px;
+}
