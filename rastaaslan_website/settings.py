@@ -151,3 +151,22 @@ if not DEBUG:
     # Entête X-Content-Type-Options
     SECURE_CONTENT_TYPE_NOSNIFF = True
     # MIDDLEWARE.append('csp.middleware.CSPMiddleware')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}

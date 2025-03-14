@@ -44,7 +44,7 @@
             <div class="row">
                 {% for video in latest_vods|slice:"1:" %}
                     <div class="col-md-4 mb-4">
-                        <a href="{% url 'video_detail' video.video_id %}" class="card-link">
+                        <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}" class="card-link">
                             <div class="card">
                                 <img src="{{ video.thumbnail_url }}" class="card-img-top" alt="{{ video.title }}">
                                 <div class="card-body">

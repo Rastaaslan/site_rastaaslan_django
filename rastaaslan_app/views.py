@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from django.conf import settings
 from .models import Video
 from .twitch_utils import make_twitch_api_request, get_twitch_access_token
-
+import requests
 # Configuration constante pour le streamer
 TWITCH_USER_LOGIN = 'RastaaslanRadal'
 TWITCH_USER_ID = '44504078'  # ID utilisateur Twitch du streamer
