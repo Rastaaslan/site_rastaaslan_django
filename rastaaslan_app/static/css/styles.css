@@ -145,8 +145,21 @@ body {
 
 .navbar-brand {
     font-weight: bold;
+    color: #ecf0f1 !important; /* Couleur de texte */
 }
 
 .nav-link {
-    margin-right: 10px;
+    color: #ecf0f1 !important; /* Couleur de texte */
+}
+
+.navbar-dark .navbar-toggler-icon {
+    color: #ecf0f1; /* Couleur de l'icône du toggler */
+}
+
+.bg-primary {
+    background-color: #3498db !important; /* Couleur principale */
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #2ecc71 !important; /* Couleur secondaire pour le survol */
 }
