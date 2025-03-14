@@ -108,7 +108,7 @@ img {
 }
 
 .carousel-item {
-    transition: transform 0.6s ease-in-out;
+    transition: transform 0.6s ease-in-out !important;
 }
 
 .carousel-inner {
