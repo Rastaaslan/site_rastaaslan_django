@@ -13,36 +13,6 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <a class="navbar-brand" href="{% url 'rastaaslan_app:home' %}">Rastaaslan</a>
-        <div class="navbar-nav ml-auto">
-            <!-- Vos liens existants -->
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}">Accueil</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'vods' %}">VODs</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'clips' %}">Clips</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'live' %}">Live</a>
-            </li>
-            
-            <!-- Ajoutez le bouton de thème ici -->
-            <li class="nav-item">
-                <div class="theme-toggle" id="theme-toggle" title="Changer de thème">
-                    <!-- Icône de soleil (visible en mode sombre) -->
-                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 1.5a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-16a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 16a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zM4 12a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2H5a1 1 0 0 1-1-1zm16 0a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM6.34 6.34a1 1 0 0 1 1.42 0l.7.7a1 1 0 0 1-1.4 1.43l-.72-.7a1 1 0 0 1 0-1.43zm10.9 10.9a1 1 0 0 1 1.43 0l.7.71a1 1 0 1 1-1.42 1.42l-.7-.7a1 1 0 0 1 0-1.43zM17.66 6.34a1 1 0 0 1 0 1.43l-.7.7a1 1 0 0 1-1.43-1.42l.7-.7a1 1 0 0 1 1.43 0zm-10.9 10.9a1 1 0 0 1 0 1.43l-.71.7a1 1 0 0 1-1.42-1.42l.7-.7a1 1 0 0 1 1.43 0z"/>
-                    </svg>
-                    
-                    <!-- Icône d'étoile/lune (visible en mode clair) -->
-                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12.3 22h-.1a10.31 10.31 0 0 1-7.34-3.15 10.46 10.46 0 0 1-.26-14 10.13 10.13 0 0 1 4-2.74 1 1 0 0 1 1.06.22 1 1 0 0 1 .24 1 8.4 8.4 0 0 0 1.94 8.81 8.47 8.47 0 0 0 8.83 1.94 1 1 0 0 1 1.27 1.29A10.16 10.16 0 0 1 12.3 22zm-7.46-17.9a8.3 8.3 0 0 0-4.24 9.61 8.43 8.43 0 0 0 6.41 5.79 8.44 8.44 0 0 0 8.48-2.78 10.5 10.5 0 0 1-9.67-2.78A10.44 10.44 0 0 1 2.84 4.1z"/>
-                    </svg>
-                </div>
-            </li>
-        </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <div class="burger-icon">
                 <span></span>
@@ -64,13 +34,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'rastaaslan_app:live' %}">Live</a>
                 </li>
-                <!-- Ajouter seulement cette partie pour le bouton de thème -->
+                <!-- Bouton de thème -->
                 <li class="nav-item">
                     <div class="theme-toggle" id="theme-toggle" title="Changer de thème">
-                        <!-- Les SVGs comme avant -->
+                        <!-- Icône de soleil (visible en mode sombre) -->
                         <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 1.5a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-16a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 16a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zM4 12a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2H5a1 1 0 0 1-1-1zm16 0a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM6.34 6.34a1 1 0 0 1 1.42 0l.7.7a1 1 0 0 1-1.4 1.43l-.72-.7a1 1 0 0 1 0-1.43zm10.9 10.9a1 1 0 0 1 1.43 0l.7.71a1 1 0 1 1-1.42 1.42l-.7-.7a1 1 0 0 1 0-1.43zM17.66 6.34a1 1 0 0 1 0 1.43l-.7.7a1 1 0 0 1-1.43-1.42l.7-.7a1 1 0 0 1 1.43 0zm-10.9 10.9a1 1 0 0 1 0 1.43l-.71.7a1 1 0 0 1-1.42-1.42l.7-.7a1 1 0 0 1 1.43 0z"/>
                         </svg>
+                        
+                        <!-- Icône d'étoile/lune (visible en mode clair) -->
                         <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M12.3 22h-.1a10.31 10.31 0 0 1-7.34-3.15 10.46 10.46 0 0 1-.26-14 10.13 10.13 0 0 1 4-2.74 1 1 0 0 1 1.06.22 1 1 0 0 1 .24 1 8.4 8.4 0 0 0 1.94 8.81 8.47 8.47 0 0 0 8.83 1.94 1 1 0 0 1 1.27 1.29A10.16 10.16 0 0 1 12.3 22zm-7.46-17.9a8.3 8.3 0 0 0-4.24 9.61 8.43 8.43 0 0 0 6.41 5.79 8.44 8.44 0 0 0 8.48-2.78 10.5 10.5 0 0 1-9.67-2.78A10.44 10.44 0 0 1 2.84 4.1z"/>
                         </svg>
@@ -91,147 +63,92 @@
     {% endblock %}
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Scripts consolidés -->
+    <script>
     $(document).ready(function(){
-        // Initialisation du carousel s'il existe
-        var $carousel = $('#carouselClips');
+        // Thème clair/sombre
+        function setTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            localStorage.setItem('theme', themeName);
+        }
         
+        function toggleTheme() {
+            if (localStorage.getItem('theme') === 'dark') {
+                setTheme('light');
+            } else {
+                setTheme('dark');
+            }
+        }
+        
+        // Initialiser le thème
+        if (localStorage.getItem('theme') === 'dark') {
+            setTheme('dark');
+        } else if (localStorage.getItem('theme') === 'light') {
+            setTheme('light');
+        } else {
+            // Préférence système par défaut
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+        }
+        
+        // Clic sur le bouton de thème
+        $('#theme-toggle').on('click', function(){
+            toggleTheme();
+        });
+        
+        // Menu hamburger animation
+        $('.navbar-toggler').on('click', function(){
+            var isExpanded = $(this).attr('aria-expanded') === 'true';
+            
+            if (isExpanded) {
+                $(this).attr('aria-expanded', 'false');
+            } else {
+                $(this).attr('aria-expanded', 'true');
+            }
+        });
+        
+        // Fermer le menu sur mobile quand on clique sur un lien
+        $('.navbar-nav a.nav-link').on('click', function(){
+            $('.navbar-collapse').collapse('hide');
+        });
+        
+        // Initialisation du carousel
+        var $carousel = $('#carouselClips');
         if ($carousel.length > 0) {
-            // Ajustement du comportement du carousel
             $carousel.carousel({
                 interval: 5000
             });
             
-            // Fonction pour positionner correctement les éléments
             function positionCarouselItems() {
                 var $items = $carousel.find('.carousel-item');
                 var $active = $carousel.find('.carousel-item.active');
                 
                 if ($active.length === 0 || $items.length <= 1) {
-                    return; // Ne rien faire s'il n'y a pas d'élément actif ou un seul élément
+                    return;
                 }
                 
                 var activeIndex = $active.index();
                 var total = $items.length;
                 
-                // Réinitialiser les classes
                 $items.removeClass('left right');
                 
-                // Déterminer l'élément à gauche (précédent)
                 var leftIndex = (activeIndex - 1 + total) % total;
                 $items.eq(leftIndex).addClass('left');
                 
-                // Déterminer l'élément à droite (suivant)
                 var rightIndex = (activeIndex + 1) % total;
                 $items.eq(rightIndex).addClass('right');
             }
             
-            // Positionner les éléments au chargement
             positionCarouselItems();
-            
-            // Repositionner après chaque transition
             $carousel.on('slid.bs.carousel', positionCarouselItems);
         }
     });
     </script>
-    <script>
-        $(document).ready(function(){
-            // Gérer l'état de l'icône quand le menu est ouvert/fermé
-            $('.navbar-toggler').on('click', function(){
-                // L'attribut aria-expanded est automatiquement géré par Bootstrap
-                // mais nous vérifions son état pour que notre code soit plus robuste
-                var isExpanded = $(this).attr('aria-expanded') === 'true';
-                
-                // Appliquer animation en fonction de l'état
-                if (isExpanded) {
-                    $(this).attr('aria-expanded', 'false');
-                } else {
-                    $(this).attr('aria-expanded', 'true');
-                }
-            });
-            
-            // Fermer le menu quand on clique sur un lien (mobile)
-            $('.navbar-nav a.nav-link').on('click', function(){
-                $('.navbar-collapse').collapse('hide');
-            });
-            
-            // Le reste du code JavaScript existant...
-            // Initialisation du carousel s'il existe
-            var $carousel = $('#carouselClips');
-            
-            if ($carousel.length > 0) {
-                // Code carousel existant...
-            }
-        });
-        </script>
-        <script>
-            $(document).ready(function(){
-                // Fonction pour définir le thème
-                function setTheme(themeName) {
-                    // Appliquer l'attribut data-theme au document
-                    document.documentElement.setAttribute('data-theme', themeName);
-                    // Sauvegarder la préférence dans localStorage
-                    localStorage.setItem('theme', themeName);
-                }
-                
-                // Fonction pour basculer entre les thèmes
-                function toggleTheme() {
-                    // Si le thème actuel est "dark", passer à "light", sinon passer à "dark"
-                    if (localStorage.getItem('theme') === 'dark') {
-                        setTheme('light');
-                    } else {
-                        setTheme('dark');
-                    }
-                }
-                
-                // Fonction pour initialiser le thème au chargement de la page
-                function initTheme() {
-                    // Vérifier si une préférence est déjà stockée
-                    if (localStorage.getItem('theme') === 'dark') {
-                        setTheme('dark');
-                    } else if (localStorage.getItem('theme') === 'light') {
-                        setTheme('light');
-                    } else {
-                        // Si aucune préférence n'est stockée, vérifier la préférence du système
-                        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                            setTheme('dark');
-                        } else {
-                            setTheme('light');
-                        }
-                    }
-                }
-                
-                // Initialiser le thème
-                initTheme();
-                
-                // Ajouter l'événement de clic au bouton de thème
-                $('#theme-toggle').on('click', function(){
-                    toggleTheme();
-                });
-                
-                // Écouter les changements de préférence du système
-                if (window.matchMedia) {
-                    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-                        // Seulement si l'utilisateur n'a pas défini de préférence manuelle
-                        if (!localStorage.getItem('theme')) {
-                            if (e.matches) {
-                                setTheme('dark');
-                            } else {
-                                setTheme('light');
-                            }
-                        }
-                    });
-                }
-                
-                // Code existant... (carousel, etc.)
-                // Initialisation du carousel s'il existe
-                var $carousel = $('#carouselClips');
-                if ($carousel.length > 0) {
-                    // Votre code de carousel existant...
-                }
-            });
-            </script>
 </body>
 </html>
