@@ -45,64 +45,43 @@
     {% endblock %}
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            // Initialisation du carousel avec les options spécifiques
-            var $carousel = $('#carouselClips');
-            
-            // Désactiver le slide normal de Bootstrap
-            $carousel.carousel({
-                interval: 5000,
-                wrap: true
-            });
-            
-            // Recréer la fonctionnalité de slide avec notre approche
-            var $items = $carousel.find('.carousel-item');
-            var totalItems = $items.length;
-            
-            // Fonction pour positionner les éléments
-            function positionItems() {
-                var $active = $carousel.find('.carousel-item.active');
-                var activeIndex = $active.index();
-                
-                $items.css({
-                    'transform': 'scale(0.85)',
-                    'opacity': '0.6',
-                    'z-index': '1'
-                }).removeClass('visible-left visible-right');
-                
-                // Élément actif
-                $active.css({
-                    'transform': 'scale(1)',
-                    'opacity': '1',
-                    'z-index': '2'
-                });
-                
-                // Élément à gauche
-                var leftIndex = (activeIndex - 1 + totalItems) % totalItems;
-                $items.eq(leftIndex).css({
-                    'transform': 'translateX(-50%) scale(0.85)',
-                    'opacity': '0.6',
-                    'z-index': '1'
-                }).addClass('visible-left');
-                
-                // Élément à droite
-                var rightIndex = (activeIndex + 1) % totalItems;
-                $items.eq(rightIndex).css({
-                    'transform': 'translateX(50%) scale(0.85)',
-                    'opacity': '0.6',
-                    'z-index': '1'
-                }).addClass('visible-right');
-            }
-            
-            // Exécuter au chargement
-            positionItems();
-            
-            // Exécuter après chaque slide
-            $carousel.on('slid.bs.carousel', positionItems);
-        });
-        </script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+    // Initialisation du carousel
+    var $carousel = $('#carouselClips');
+    
+    // Ajustement du comportement du carousel
+    $carousel.carousel({
+        interval: 5000
+    });
+    
+    // Fonction pour positionner correctement les éléments
+    function positionCarouselItems() {
+        var $items = $carousel.find('.carousel-item');
+        var $active = $carousel.find('.carousel-item.active');
+        var activeIndex = $active.index();
+        var total = $items.length;
+        
+        // Réinitialiser les classes
+        $items.removeClass('left right');
+        
+        // Déterminer l'élément à gauche (précédent)
+        var leftIndex = (activeIndex - 1 + total) % total;
+        $items.eq(leftIndex).addClass('left');
+        
+        // Déterminer l'élément à droite (suivant)
+        var rightIndex = (activeIndex + 1) % total;
+        $items.eq(rightIndex).addClass('right');
+    }
+    
+    // Positionner les éléments au chargement
+    positionCarouselItems();
+    
+    // Repositionner après chaque transition
+    $carousel.on('slid.bs.carousel', positionCarouselItems);
+});
+</script>
 </body>
 </html>
