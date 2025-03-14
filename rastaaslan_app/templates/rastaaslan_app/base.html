@@ -1,3 +1,4 @@
+<!-- base.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -21,13 +22,13 @@
                     <a class="nav-link" href="{% url 'home' %}">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'vods' %}">VODs</a>
+                    <a class="nav-link" href="{% url 'vods_view' %}">VODs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'clips' %}">Clips</a>
+                    <a class="nav-link" href="{% url 'clips_view' %}">Clips</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'live' %}">Live</a>
+                    <a class="nav-link" href="{% url 'live_view' %}">Live</a>
                 </li>
             </ul>
         </div>
@@ -38,6 +39,10 @@
         <!-- Contenu dynamique ici -->
         {% endblock %}
     </div>
+
+    {% block chat %}
+    <!-- Le chat sera inclus ici si nécessaire -->
+    {% endblock %}
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
