@@ -1,11 +1,22 @@
-<!-- live.html -->
 {% extends 'rastaaslan_app/base.html' %}
 
 {% block title %}Live{% endblock %}
 
 {% block content %}
 <h1>Live Stream</h1>
-<!-- Contenu de la page live -->
+
+<!-- Embedding de la vidéo Twitch -->
+<div class="embed-responsive embed-responsive-16by9">
+    <iframe
+        class="embed-responsive-item"
+        src="https://player.twitch.tv/?channel=votre_nom_de_chaîne"
+        height="720"
+        width="1280"
+        frameborder="0"
+        scrolling="no"
+        allowfullscreen="true">
+    </iframe>
+</div>
 {% endblock %}
 
 {% block chat %}
