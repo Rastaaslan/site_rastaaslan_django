@@ -142,8 +142,3 @@ body {
     width: 100%;
     height: auto;
 }
-
-.carousel-item video {
-    height: 500px;
-    object-fit: cover;
-}
