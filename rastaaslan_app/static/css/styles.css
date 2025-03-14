@@ -120,10 +120,6 @@ img {
     color: var(--terracotta);
 }
 
-body {
-    font-family: Arial, sans-serif;
-}
-
 .nav ul {
     list-style-type: none;
     padding: 0;
