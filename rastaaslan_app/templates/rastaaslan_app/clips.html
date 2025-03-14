@@ -28,20 +28,4 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
-
-<!-- Vignettes pour les clips -->
-<div class="row">
-    {% for video in videos %}
-        <div class="col-md-4">
-            <a href="{% url 'video_detail' video.video_id %}" class="card-link">
-                <div class="card mb-4">
-                    <img src="{{ video.thumbnail_url }}" class="card-img-top" alt="{{ video.title }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ video.title }}</h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-    {% endfor %}
-</div>
 {% endblock %}
