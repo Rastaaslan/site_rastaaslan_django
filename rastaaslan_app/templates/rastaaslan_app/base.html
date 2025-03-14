@@ -1,23 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Mon Site Web{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="/var/www/html/rastaaslan_app/static/css/styles.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="{% url 'home' %}">Accueil</a></li>
-            <li><a href="{% url 'vods' %}">VODs</a></li>
-            <li><a href="{% url 'clips' %}">Clips</a></li>
-        </ul>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'home' %}">Rastaaslan</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'vods_view' %}">VODs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'clips_view' %}">Clips</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'live_view' %}">Live</a>
+                </li>
+            </ul>
+        </div>
     </nav>
-    <div class="container">
+
+    <div class="container mt-4">
         {% block content %}
         <!-- Contenu dynamique ici -->
         {% endblock %}
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
