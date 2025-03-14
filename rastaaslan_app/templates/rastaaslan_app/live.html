@@ -1,6 +1,6 @@
 {% extends 'rastaaslan_app/base.html' %}
 
-{% block title %}Live{% endblock %}
+{% block title %}Live - Rastaaslan{% endblock %}
 
 {% block content %}
 <h1>Live Stream</h1>
@@ -14,9 +14,7 @@
     <div class="embed-responsive embed-responsive-16by9">
         <iframe
             class="embed-responsive-item"
-            src="https://player.twitch.tv/?channel={{ channel_name }}&parent=www.rastaaslan.xyz"
-            height="720"
-            width="1280"
+            src="https://player.twitch.tv/?channel={{ channel_name }}&parent=www.rastaaslan.xyz&parent=rastaaslan.xyz"
             frameborder="0"
             scrolling="no"
             allowfullscreen="true">
@@ -24,40 +22,57 @@
     </div>
 {% else %}
     <div class="alert alert-info">
-        <strong>Hors ligne.</strong> Le stream n'est pas en direct pour le moment.
+        <strong>Hors ligne.</strong> Le stream n'est pas en direct pour le moment. Regardez les dernières VODs en attendant.
     </div>
     
-    <!-- Afficher les dernières VODs à la place -->
-    <h2 class="mt-4">Regardez les dernières VODs en attendant</h2>
-    <div class="row">
-        {% for video in latest_vods %}
-            <div class="col-md-4">
-                <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}" class="card-link">
-                    <div class="card mb-4">
-                        <img src="{{ video.thumbnail_url }}" class="card-img-top" alt="{{ video.title }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ video.title }}</h5>
-                        </div>
+    <!-- Afficher la dernière VOD en grand format -->
+    {% if latest_vods %}
+        <h2 class="mt-4">Dernière VOD</h2>
+        <div class="embed-responsive embed-responsive-16by9 mb-4">
+            <iframe
+                class="embed-responsive-item"
+                src="https://player.twitch.tv/?video={{ latest_vods.0.video_id }}&parent=www.rastaaslan.xyz&parent=rastaaslan.xyz"
+                frameborder="0"
+                scrolling="no"
+                allowfullscreen="true">
+            </iframe>
+        </div>
+        
+        <!-- Afficher les autres VODs récentes -->
+        {% if latest_vods.count > 1 %}
+            <h2 class="mt-4">Autres VODs récentes</h2>
+            <div class="row">
+                {% for video in latest_vods|slice:"1:" %}
+                    <div class="col-md-4 mb-4">
+                        <a href="{% url 'video_detail' video.video_id %}" class="card-link">
+                            <div class="card">
+                                <img src="{{ video.thumbnail_url }}" class="card-img-top" alt="{{ video.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ video.title }}</h5>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                {% endfor %}
             </div>
-        {% empty %}
-            <div class="col-12">
-                <p>Aucune VOD disponible pour le moment.</p>
-            </div>
-        {% endfor %}
-    </div>
+        {% endif %}
+    {% else %}
+        <div class="alert alert-warning">
+            <strong>Aucune VOD disponible.</strong> Revenez plus tard pour voir du contenu.
+        </div>
+    {% endif %}
 {% endif %}
 {% endblock %}
 
 {% block chat %}
 <!-- Inclure le chat uniquement si le stream est en direct -->
 {% if is_live %}
-<div id="chat-container">
+<div id="chat-container" class="mt-4">
+    <h2>Chat en direct</h2>
     <iframe
-        src="https://www.twitch.tv/embed/{{ channel_name }}/chat?parent=www.rastaaslan.xyz"
+        src="https://www.twitch.tv/embed/{{ channel_name }}/chat?parent=www.rastaaslan.xyz&parent=rastaaslan.xyz"
         height="600"
-        width="350"
+        width="100%"
         frameborder="0">
     </iframe>
 </div>

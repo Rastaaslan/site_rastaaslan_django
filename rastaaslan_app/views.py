@@ -20,9 +20,17 @@ def home(request):
     return render(request, 'rastaaslan_app/home.html', context)
 
 def live_view(request):
-    # Obtenir les informations du stream
-    stream_data = make_twitch_api_request(f'streams', {'user_login': TWITCH_USER_LOGIN})
+    """Vue pour la page de live stream avec fallback sur les VODs récentes."""
+    # Configuration Twitch
+    twitch_user = 'RastaaslanRadal'
     
+    # Utiliser l'utilitaire Twitch pour obtenir un token et faire la requête
+    from .twitch_utils import make_twitch_api_request
+    
+    # Obtenir les informations du stream
+    stream_data = make_twitch_api_request(f'streams', {'user_login': twitch_user})
+    
+    # Vérifier si le stream est en direct
     is_live = False
     stream_info = None
     
@@ -30,11 +38,47 @@ def live_view(request):
         is_live = True
         stream_info = stream_data['data'][0]
     
+    # Si le stream n'est pas en direct, récupérer les dernières VODs
+    latest_vods = []
+    if not is_live:
+        # Récupérer les 6 dernières VODs de la base de données
+        from .models import Video
+        latest_vods = Video.objects.filter(video_type='VOD').order_by('-created_at')[:6]
+        
+        # Si aucune VOD n'est disponible en base de données, essayer de les récupérer depuis l'API
+        if not latest_vods:
+            # Utiliser le user_id pour RastaaslanRadal
+            user_id = '44504078'
+            vods_data = make_twitch_api_request('videos', {'user_id': user_id})
+            
+            if vods_data and vods_data.get('data'):
+                # Enregistrer les VODs en base de données
+                for vod in vods_data['data'][:6]:  # Limiter à 6 VODs
+                    # Remplacer les paramètres de dimension dans l'URL de la vignette
+                    thumbnail_url = vod['thumbnail_url'].replace('%{width}', '320').replace('%{height}', '180')
+                    
+                    # Créer ou mettre à jour la VOD dans la base de données
+                    Video.objects.update_or_create(
+                        video_id=vod['id'],
+                        defaults={
+                            'title': vod['title'],
+                            'video_type': 'VOD',
+                            'url': vod['url'],
+                            'thumbnail_url': thumbnail_url
+                        }
+                    )
+                
+                # Récupérer à nouveau les VODs maintenant qu'elles sont enregistrées
+                latest_vods = Video.objects.filter(video_type='VOD').order_by('-created_at')[:6]
+    
+    # Préparer le contexte pour le template
     context = {
         'is_live': is_live,
         'stream_info': stream_info,
-        'channel_name': TWITCH_USER_LOGIN
+        'channel_name': twitch_user,
+        'latest_vods': latest_vods
     }
+    
     return render(request, 'rastaaslan_app/live.html', context)
 
 def vods_view(request):
