@@ -8,11 +8,13 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome pour l'icône de thème -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
-        <a class="navbar-brand" href="{% url 'rastaaslan_app:home' %}">Rastaaslan</a>
+        <a class="navbar-brand" href="{% url 'home' %}">Rastaaslan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <div class="burger-icon">
                 <span></span>
@@ -23,30 +25,22 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'rastaaslan_app:home' %}">Accueil</a>
+                    <a class="nav-link" href="{% url 'home' %}">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'rastaaslan_app:vods' %}">VODs</a>
+                    <a class="nav-link" href="{% url 'vods' %}">VODs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'rastaaslan_app:clips' %}">Clips</a>
+                    <a class="nav-link" href="{% url 'clips' %}">Clips</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'rastaaslan_app:live' %}">Live</a>
+                    <a class="nav-link" href="{% url 'live' %}">Live</a>
                 </li>
-                <!-- Bouton de thème -->
+                <!-- Bouton de thème avec Font Awesome -->
                 <li class="nav-item">
-                    <div class="theme-toggle" id="theme-toggle" title="Changer de thème">
-                        <!-- Icône de soleil (visible en mode sombre) -->
-                        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0 1.5a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-16a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 16a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zM4 12a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2H5a1 1 0 0 1-1-1zm16 0a1 1 0 0 1-1 1h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 1 1zM6.34 6.34a1 1 0 0 1 1.42 0l.7.7a1 1 0 0 1-1.4 1.43l-.72-.7a1 1 0 0 1 0-1.43zm10.9 10.9a1 1 0 0 1 1.43 0l.7.71a1 1 0 1 1-1.42 1.42l-.7-.7a1 1 0 0 1 0-1.43zM17.66 6.34a1 1 0 0 1 0 1.43l-.7.7a1 1 0 0 1-1.43-1.42l.7-.7a1 1 0 0 1 1.43 0zm-10.9 10.9a1 1 0 0 1 0 1.43l-.71.7a1 1 0 0 1-1.42-1.42l.7-.7a1 1 0 0 1 1.43 0z"/>
-                        </svg>
-                        
-                        <!-- Icône d'étoile/lune (visible en mode clair) -->
-                        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12.3 22h-.1a10.31 10.31 0 0 1-7.34-3.15 10.46 10.46 0 0 1-.26-14 10.13 10.13 0 0 1 4-2.74 1 1 0 0 1 1.06.22 1 1 0 0 1 .24 1 8.4 8.4 0 0 0 1.94 8.81 8.47 8.47 0 0 0 8.83 1.94 1 1 0 0 1 1.27 1.29A10.16 10.16 0 0 1 12.3 22zm-7.46-17.9a8.3 8.3 0 0 0-4.24 9.61 8.43 8.43 0 0 0 6.41 5.79 8.44 8.44 0 0 0 8.48-2.78 10.5 10.5 0 0 1-9.67-2.78A10.44 10.44 0 0 1 2.84 4.1z"/>
-                        </svg>
-                    </div>
+                    <a class="nav-link" href="#" id="theme-toggle" title="Changer de thème">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -66,20 +60,19 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
-    <!-- Scripts consolidés -->
+    <!-- Script consolidé -->
     <script>
     $(document).ready(function(){
-        // Thème clair/sombre
+        // 1. Gestion du thème clair/sombre
         function setTheme(themeName) {
             document.documentElement.setAttribute('data-theme', themeName);
             localStorage.setItem('theme', themeName);
-        }
-        
-        function toggleTheme() {
-            if (localStorage.getItem('theme') === 'dark') {
-                setTheme('light');
+            
+            // Mettre à jour l'icône
+            if (themeName === 'dark') {
+                $('#theme-icon').removeClass('fa-moon').addClass('fa-sun');
             } else {
-                setTheme('dark');
+                $('#theme-icon').removeClass('fa-sun').addClass('fa-moon');
             }
         }
         
@@ -97,12 +90,17 @@
             }
         }
         
-        // Clic sur le bouton de thème
-        $('#theme-toggle').on('click', function(){
-            toggleTheme();
+        // Changer de thème au clic
+        $('#theme-toggle').on('click', function(e){
+            e.preventDefault();
+            if (localStorage.getItem('theme') === 'dark') {
+                setTheme('light');
+            } else {
+                setTheme('dark');
+            }
         });
         
-        // Menu hamburger animation
+        // 2. Gestion du menu burger
         $('.navbar-toggler').on('click', function(){
             var isExpanded = $(this).attr('aria-expanded') === 'true';
             
@@ -118,7 +116,7 @@
             $('.navbar-collapse').collapse('hide');
         });
         
-        // Initialisation du carousel
+        // 3. Gestion du carousel
         var $carousel = $('#carouselClips');
         if ($carousel.length > 0) {
             $carousel.carousel({
