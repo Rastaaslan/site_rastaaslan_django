@@ -154,11 +154,36 @@ img {
 
 /* Navigation */
 .navbar-custom {
-    background-color: var(--bg-primary) !important; /* Même couleur que le fond */
-    border-bottom: 1px solid var(--card-border); /* Ligne de séparation */
-    transition: background-color var(--transition-speed) var(--transition-timing), 
-                border-color var(--transition-speed) var(--transition-timing);
+    background-color: var(--bg-primary) !important;
+    border-bottom: none; /* Supprimer la bordure existante */
+    transition: background-color var(--transition-speed) var(--transition-timing);
     padding: 0.75rem 1rem;
+    position: relative; /* Nécessaire pour le positionnement du pseudo-élément */
+}
+
+/* Ajouter un séparateur stylisé avec un pseudo-élément */
+.navbar-custom::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%); /* Centrer horizontalement */
+    width: 30%; /* Largeur de 30% */
+    height: 2px; /* Épaisseur de base */
+    background: linear-gradient(
+        to right,
+        transparent,
+        var(--accent-color) 20%,
+        var(--accent-color) 80%,
+        transparent
+    );
+    /* Créer un effet de dégradé pour que ce soit plus épais au centre */
+    box-shadow: 0 0 4px var(--accent-color); /* Ajouter une ombre douce pour l'effet d'épaisseur */
+}
+
+/* Version pour le thème sombre */
+[data-theme="dark"] .navbar-custom::after {
+    box-shadow: 0 0 5px var(--accent-color); /* Ombre légèrement plus prononcée pour le thème sombre */
 }
 
 /* Logo (Rastaaslan) */
