@@ -839,33 +839,35 @@ img {
         font-size: 0.9rem;
     }
 
+
+}
+
     /* Ajout des styles pour le jumbotron */
-.jumbotron {
-    background-color: var(--bg-secondary);
-    border-radius: 8px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px var(--shadow-color);
-    transition: background-color var(--transition-speed) var(--transition-timing),
-                color var(--transition-speed) var(--transition-timing);
-}
-
-.jumbotron h1 {
-    color: var(--accent-color);
-}
-
-.jumbotron p {
-    color: var(--text-primary);
-    font-size: 1.25rem;
-}
-
-/* Thème sombre pour le jumbotron */
-[data-theme="dark"] .jumbotron {
-    background-color: var(--gris-bleute);
-    color: var(--text-primary);
-}
-
-[data-theme="dark"] .jumbotron .lead {
-    color: var(--text-primary);
-}
-}
+    .jumbotron {
+        background-color: var(--bg-secondary);
+        border-radius: 8px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px var(--shadow-color);
+        transition: background-color var(--transition-speed) var(--transition-timing),
+                    color var(--transition-speed) var(--transition-timing);
+    }
+    
+    .jumbotron h1 {
+        color: var(--accent-color);
+    }
+    
+    .jumbotron p {
+        color: var(--text-primary);
+        font-size: 1.25rem;
+    }
+    
+    /* Thème sombre pour le jumbotron */
+    [data-theme="dark"] .jumbotron {
+        background-color: var(--gris-bleute);
+        color: var(--text-primary);
+    }
+    
+    [data-theme="dark"] .jumbotron .lead {
+        color: var(--text-primary);
+    }
