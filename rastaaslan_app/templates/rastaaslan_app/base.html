@@ -65,14 +65,31 @@
     $(document).ready(function(){
         // 1. Gestion du thème clair/sombre avec effet de transition
         function setTheme(themeName) {
-            // Créer un effet de flash pour la transition
-            const flash = document.createElement('div');
-            flash.className = 'theme-transition-flash';
-            document.body.appendChild(flash);
+            // Débogage - Afficher le thème en cours de définition
+            console.log("Changement de thème vers:", themeName);
             
-            // Appliquer le thème
+            // Appliquer le thème explicitement sur html et body
             document.documentElement.setAttribute('data-theme', themeName);
+            document.documentElement.style.backgroundColor = 
+                themeName === 'dark' ? '#1a1a2e' : '#F8F3E6';
+            
+            // Stockage local
             localStorage.setItem('theme', themeName);
+            
+            // Effet visuel plus prononcé
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = themeName === 'dark' ? 
+                'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.2)';
+            overlay.style.zIndex = '9999';
+            overlay.style.pointerEvents = 'none';
+            overlay.style.transition = 'opacity 0.5s ease';
+            
+            document.body.appendChild(overlay);
             
             // Mettre à jour l'icône
             if (themeName === 'dark') {
@@ -81,10 +98,13 @@
                 $('#theme-icon').removeClass('fa-sun').addClass('fa-moon');
             }
             
-            // Supprimer l'élément de flash après l'animation
+            // Effet de fondu
             setTimeout(() => {
-                document.body.removeChild(flash);
-            }, 500);
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(overlay);
+                }, 500);
+            }, 50);
         }
         
         // Initialiser le thème
