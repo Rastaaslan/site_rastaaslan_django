@@ -865,7 +865,7 @@ img {
     
     /* Thème sombre pour le jumbotron */
     [data-theme="dark"] .jumbotron {
-        background-color: var(--gris-bleute);
+        background-color: var(--vert-sauge);
         color: var(--text-primary);
     }
     
