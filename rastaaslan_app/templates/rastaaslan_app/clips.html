@@ -6,187 +6,254 @@
 <h1>Clips</h1>
 
 {% if videos %}
-<!-- Liste horizontale défilante -->
-<div class="horizontal-scroll-container">
-    <div class="scroll-arrow scroll-left">
-        <i class="fas fa-chevron-left"></i>
-    </div>
+    <!-- Navigation - onglets des catégories de clips -->
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link active" id="recent-tab" data-toggle="tab" href="#recent" role="tab">Clips récents</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="popular-tab" data-toggle="tab" href="#popular" role="tab">Clips populaires</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="all-tab" data-toggle="tab" href="#all" role="tab">Tous les clips</a>
+        </li>
+    </ul>
     
-    <div class="thumbnails-scroll-wrapper">
-        <div class="thumbnails-row">
-            {% for video in videos %}
-                <div class="thumbnail-item">
-                    <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}" class="thumbnail-link">
-                        <div class="thumbnail-card">
-                            <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}">
-                            <div class="thumbnail-caption">
-                                <h5>{{ video.title }}</h5>
-                            </div>
-                        </div>
-                    </a>
+    <div class="tab-content">
+        <!-- Onglet des clips récents - défilement horizontal -->
+        <div class="tab-pane fade show active" id="recent" role="tabpanel">
+            <div class="horizontal-scroll-container">
+                <div class="scroll-arrow scroll-left">
+                    <i class="fas fa-chevron-left"></i>
                 </div>
-            {% endfor %}
-        </div>
-    </div>
-    
-    <div class="scroll-arrow scroll-right">
-        <i class="fas fa-chevron-right"></i>
-    </div>
-</div>
-
-<!-- Grille de clips en dessous -->
-<h2 class="mt-5">Tous les clips</h2>
-<div class="row mt-4">
-    {% for video in videos %}
-        <div class="col-md-4 mb-4">
-            <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}" class="card-link">
-                <div class="card">
-                    <img src="{{ video.thumbnail_url }}" class="card-img-top" alt="{{ video.title }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ video.title }}</h5>
+                
+                <div class="thumbnails-scroll-wrapper">
+                    <div class="thumbnails-row">
+                        {% for video in videos %}
+                            <div class="thumbnail-item">
+                                <a href="{% url 'video_detail' video.video_id %}" class="thumbnail-link">
+                                    <div class="thumbnail-card">
+                                        <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}">
+                                        <div class="thumbnail-caption">
+                                            <h5>{{ video.title }}</h5>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
-            </a>
+                
+                <div class="scroll-arrow scroll-right">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
         </div>
-    {% endfor %}
-</div>
-
-<!-- Pagination -->
-{% if videos.has_other_pages %}
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        {% if videos.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page=1">&laquo; Première</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="?page={{ videos.previous_page_number }}">Précédente</a>
-            </li>
-        {% else %}
-            <li class="page-item disabled">
-                <span class="page-link">&laquo; Première</span>
-            </li>
-            <li class="page-item disabled">
-                <span class="page-link">Précédente</span>
-            </li>
-        {% endif %}
         
-        {% for i in videos.paginator.page_range %}
-            {% if videos.number == i %}
-                <li class="page-item active">
-                    <span class="page-link">{{ i }}</span>
-                </li>
-            {% else %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                </li>
+        <!-- Onglet des clips populaires - défilement horizontal -->
+        <div class="tab-pane fade" id="popular" role="tabpanel">
+            <div class="horizontal-scroll-container">
+                <div class="scroll-arrow scroll-left">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                
+                <div class="thumbnails-scroll-wrapper">
+                    <div class="thumbnails-row">
+                        {% for video in videos %}
+                            <div class="thumbnail-item">
+                                <a href="{% url 'video_detail' video.video_id %}" class="thumbnail-link">
+                                    <div class="thumbnail-card">
+                                        <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}">
+                                        <div class="thumbnail-caption">
+                                            <h5>{{ video.title }}</h5>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="scroll-arrow scroll-right">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet tous les clips - grille verticale avec pagination -->
+        <div class="tab-pane fade" id="all" role="tabpanel">
+            <!-- Grille de clips -->
+            <div class="row mt-4">
+                {% for video in videos %}
+                    <div class="col-md-4 mb-4">
+                        <a href="{% url 'video_detail' video.video_id %}" class="card-link">
+                            <div class="card">
+                                <img src="{{ video.thumbnail_url }}" class="card-img-top" alt="{{ video.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ video.title }}</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if videos.has_other_pages %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if videos.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1">&laquo; Première</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ videos.previous_page_number }}">Précédente</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">&laquo; Première</span>
+                        </li>
+                        <li class="page-item disabled">
+                            <span class="page-link">Précédente</span>
+                        </li>
+                    {% endif %}
+                    
+                    {% for i in videos.paginator.page_range %}
+                        {% if videos.number == i %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ i }}</span>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if videos.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ videos.next_page_number }}">Suivante</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ videos.paginator.num_pages }}">Dernière &raquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">Suivante</span>
+                        </li>
+                        <li class="page-item disabled">
+                            <span class="page-link">Dernière &raquo;</span>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
             {% endif %}
-        {% endfor %}
-        
-        {% if videos.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ videos.next_page_number }}">Suivante</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="?page={{ videos.paginator.num_pages }}">Dernière &raquo;</a>
-            </li>
-        {% else %}
-            <li class="page-item disabled">
-                <span class="page-link">Suivante</span>
-            </li>
-            <li class="page-item disabled">
-                <span class="page-link">Dernière &raquo;</span>
-            </li>
-        {% endif %}
-    </ul>
-</nav>
-{% endif %}
-
+        </div>
+    </div>
 {% else %}
-<div class="alert alert-info">
-    Aucun clip n'est disponible pour le moment.
-</div>
+    <div class="alert alert-info">
+        Aucun clip n'est disponible pour le moment.
+    </div>
 {% endif %}
 
 <!-- Script pour le défilement horizontal -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Récupérer les éléments
-    const scrollWrapper = document.querySelector('.thumbnails-scroll-wrapper');
-    const thumbnailsRow = document.querySelector('.thumbnails-row');
-    const leftArrow = document.querySelector('.scroll-left');
-    const rightArrow = document.querySelector('.scroll-right');
+    // Initialisation des onglets
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        // Réinitialiser tous les scrolls horizontaux quand on change d'onglet
+        initializeScrolls();
+    });
     
-    if (!scrollWrapper || !thumbnailsRow || !leftArrow || !rightArrow) return;
-    
-    // Largeur de défilement (300px par défaut)
-    const scrollAmount = 300;
-    
-    // Fonction pour faire défiler vers la gauche
-    leftArrow.addEventListener('click', function() {
-        scrollWrapper.scrollBy({
-            left: -scrollAmount,
-            behavior: 'smooth'
+    function initializeScrolls() {
+        // Cibler tous les wrappers de défilement dans tous les onglets
+        document.querySelectorAll('.thumbnails-scroll-wrapper').forEach(function(scrollWrapper) {
+            // Obtenir les éléments parents pertinents
+            const scrollContainer = scrollWrapper.closest('.horizontal-scroll-container');
+            if (!scrollContainer) return;
+            
+            const leftArrow = scrollContainer.querySelector('.scroll-left');
+            const rightArrow = scrollContainer.querySelector('.scroll-right');
+            
+            if (!leftArrow || !rightArrow) return;
+            
+            // Largeur de défilement
+            const scrollAmount = 300;
+            
+            // Fonction pour faire défiler vers la gauche
+            leftArrow.addEventListener('click', function() {
+                scrollWrapper.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Fonction pour faire défiler vers la droite
+            rightArrow.addEventListener('click', function() {
+                scrollWrapper.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Fonction pour mettre à jour l'opacité des flèches
+            function updateArrows() {
+                const maxScrollLeft = scrollWrapper.scrollWidth - scrollWrapper.clientWidth;
+                leftArrow.style.opacity = scrollWrapper.scrollLeft > 0 ? '1' : '0.3';
+                rightArrow.style.opacity = scrollWrapper.scrollLeft < maxScrollLeft ? '1' : '0.3';
+            }
+            
+            // Mise à jour initiale des flèches
+            updateArrows();
+            
+            // Mettre à jour en cas de défilement
+            scrollWrapper.addEventListener('scroll', updateArrows);
+            
+            // Défilement avec la molette
+            scrollWrapper.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                scrollWrapper.scrollBy({
+                    left: e.deltaY < 0 ? -100 : 100,
+                    behavior: 'smooth'
+                });
+                updateArrows();
+            });
+            
+            // Défilement tactile
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            
+            scrollWrapper.addEventListener('mousedown', (e) => {
+                isDown = true;
+                scrollWrapper.classList.add('active');
+                startX = e.pageX - scrollWrapper.offsetLeft;
+                scrollLeft = scrollWrapper.scrollLeft;
+            });
+            
+            scrollWrapper.addEventListener('mouseleave', () => {
+                isDown = false;
+                scrollWrapper.classList.remove('active');
+            });
+            
+            scrollWrapper.addEventListener('mouseup', () => {
+                isDown = false;
+                scrollWrapper.classList.remove('active');
+            });
+            
+            scrollWrapper.addEventListener('mousemove', (e) => {
+                if(!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - scrollWrapper.offsetLeft;
+                const walk = (x - startX) * 2;
+                scrollWrapper.scrollLeft = scrollLeft - walk;
+                updateArrows();
+            });
         });
-    });
+    }
     
-    // Fonction pour faire défiler vers la droite
-    rightArrow.addEventListener('click', function() {
-        scrollWrapper.scrollBy({
-            left: scrollAmount,
-            behavior: 'smooth'
-        });
-    });
-    
-    // Afficher/cacher les flèches en fonction de la position de défilement
-    scrollWrapper.addEventListener('scroll', function() {
-        const maxScrollLeft = scrollWrapper.scrollWidth - scrollWrapper.clientWidth;
-        
-        leftArrow.style.opacity = scrollWrapper.scrollLeft > 0 ? '1' : '0.3';
-        rightArrow.style.opacity = scrollWrapper.scrollLeft < maxScrollLeft ? '1' : '0.3';
-    });
-    
-    // Initialiser l'opacité des flèches
-    leftArrow.style.opacity = '0.3';
-    
-    // Défilement avec la molette de la souris
-    scrollWrapper.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        scrollWrapper.scrollBy({
-            left: e.deltaY < 0 ? -100 : 100,
-            behavior: 'smooth'
-        });
-    });
-    
-    // Défilement tactile
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-    
-    scrollWrapper.addEventListener('mousedown', (e) => {
-        isDown = true;
-        scrollWrapper.classList.add('active');
-        startX = e.pageX - scrollWrapper.offsetLeft;
-        scrollLeft = scrollWrapper.scrollLeft;
-    });
-    
-    scrollWrapper.addEventListener('mouseleave', () => {
-        isDown = false;
-        scrollWrapper.classList.remove('active');
-    });
-    
-    scrollWrapper.addEventListener('mouseup', () => {
-        isDown = false;
-        scrollWrapper.classList.remove('active');
-    });
-    
-    scrollWrapper.addEventListener('mousemove', (e) => {
-        if(!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - scrollWrapper.offsetLeft;
-        const walk = (x - startX) * 2; // Vitesse de déplacement
-        scrollWrapper.scrollLeft = scrollLeft - walk;
-    });
+    // Initialiser les défilements au chargement
+    initializeScrolls();
 });
 </script>
 {% endblock %}

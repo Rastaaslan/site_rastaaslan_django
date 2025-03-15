@@ -110,9 +110,25 @@ def vods_view(request):
     }
     return render(request, 'rastaaslan_app/vods.html', context)
 
+# Fonction clips_view mise à jour pour prendre en charge 
+# les différentes catégories de clips
+
 def clips_view(request):
+    """
+    Vue pour afficher les clips avec différents tris possibles.
+    Supporte une version simple avec un seul ensemble de clips,
+    extensible pour des catégories multiples.
+    """
+    from .twitch_utils import make_twitch_api_request
+    from django.core.paginator import Paginator
+    from .models import Video
+    import random
+    
+    # Obtenir le paramètre de tri (optionnel)
+    sort = request.GET.get('sort', 'recent')  # Par défaut, trier par date
+    
     # Récupérer les clips depuis l'API Twitch
-    clips_data = make_twitch_api_request('clips', {'broadcaster_id': TWITCH_USER_ID})
+    clips_data = make_twitch_api_request('clips', {'broadcaster_id': '44504078'})
     
     # Traiter les données et les sauvegarder
     if clips_data and clips_data.get('data'):
@@ -127,16 +143,33 @@ def clips_view(request):
                 }
             )
     
-    # Pagination des résultats
-    clips_list = Video.objects.filter(video_type='Clip').order_by('-created_at')
-    paginator = Paginator(clips_list, 9)  # 9 clips par page
+    # Récupérer tous les clips de la base de données
+    all_clips = Video.objects.filter(video_type='Clip')
     
+    # Pour une version plus avancée, vous pourriez implémenter ces différents tris
+    # Ici, nous simulons différentes catégories avec le même ensemble de clips
+    # Dans une vraie implémentation, vous utiliseriez des requêtes différentes
+    
+    """
+    # Clips triés par date (les plus récents)
+    recent_clips = all_clips.order_by('-created_at')
+    
+    # Clips triés par popularité (simulation - à remplacer par votre logique)
+    popular_clips = all_clips.order_by('?')  # Ordre aléatoire pour simuler
+    """
+    
+    # Pour l'instant, utiliser le même ensemble pour tous les onglets
+    clips = all_clips.order_by('-created_at')
+    
+    # Pagination
+    paginator = Paginator(clips, 9)  # 9 clips par page
     page = request.GET.get('page')
     videos = paginator.get_page(page)
     
     context = {
-        'videos': videos
+        'videos': videos,
     }
+    
     return render(request, 'rastaaslan_app/clips.html', context)
 
 def video_detail(request, video_id):
