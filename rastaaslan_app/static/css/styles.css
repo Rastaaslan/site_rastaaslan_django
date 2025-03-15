@@ -855,7 +855,7 @@ img {
     }
     
     .jumbotron h1 {
-        color: var(--accent-color);
+        color: var(--gris-fonce);
     }
     
     .jumbotron p {
