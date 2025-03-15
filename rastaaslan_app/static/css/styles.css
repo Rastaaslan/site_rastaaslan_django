@@ -249,8 +249,22 @@ img {
     border-radius: 4px;
 }
 
+/* Correction pour le burger menu */
+.burger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 18px;
+    width: 22px;
+}
+
 .burger-icon span {
-    background: var(--text-primary);
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: var(--text-primary) !important;
+    transition: background-color var(--transition-speed) var(--transition-timing);
+    border-radius: 2px;
 }
 
 /* Responsive - ajustements pour petit écran */
