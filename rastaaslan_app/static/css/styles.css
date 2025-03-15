@@ -36,7 +36,7 @@
     --bg-secondary: #16213e;
     --text-primary: #e6e6e6;
     --text-secondary: #b8c1ec;
-    --accent-color: #e07a5f;
+    --accent-color: var(--vert-sauge);
     --accent-hover: #81b29a;
     --nav-bg: #0f3460;
     --nav-text: #edeae1;
