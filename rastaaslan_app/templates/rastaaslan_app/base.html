@@ -18,7 +18,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">Rastaaslan</a>
+            <a class="navbar-brand" href="{% url 'rastaaslan_app:home' %}">Rastaaslan</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <div class="burger-icon">
                     <span></span>
@@ -29,16 +29,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Accueil</a>
+                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'rastaaslan_app:home' %}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if 'vods' in request.path %}active{% endif %}" href="{% url 'vods' %}">VODs</a>
+                        <a class="nav-link {% if 'vods' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:vods' %}">VODs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if 'clips' in request.path %}active{% endif %}" href="{% url 'clips' %}">Clips</a>
+                        <a class="nav-link {% if 'clips' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:clips' %}">Clips</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if 'live' in request.path %}active{% endif %}" href="{% url 'live' %}">Live</a>
+                        <a class="nav-link {% if 'live' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:live' %}">Live</a>
                     </li>
                 </ul>
                 <!-- Bouton de thème avec Font Awesome -->
