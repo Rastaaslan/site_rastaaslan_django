@@ -16,7 +16,7 @@
         <div class="thumbnails-row">
             {% for video in videos %}
                 <div class="thumbnail-item">
-                    <a href="{% url 'video_detail' video.video_id %}" class="thumbnail-link">
+                    <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}" class="thumbnail-link">
                         <div class="thumbnail-card">
                             <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}">
                             <div class="thumbnail-caption">
@@ -39,7 +39,7 @@
 <div class="row mt-4">
     {% for video in videos %}
         <div class="col-md-4 mb-4">
-            <a href="{% url 'video_detail' video.video_id %}" class="card-link">
+            <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}" class="card-link">
                 <div class="card">
                     <img src="{{ video.thumbnail_url }}" class="card-img-top" alt="{{ video.title }}">
                     <div class="card-body">
