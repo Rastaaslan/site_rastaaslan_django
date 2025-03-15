@@ -844,7 +844,7 @@ img {
 
     /* Ajout des styles pour le jumbotron */
     .jumbotron {
-        background-color: var(--bg-secondary);
+        background-color: var(--bleu-indigo);
         border-radius: 8px;
         padding: 2rem;
         margin-bottom: 2rem;
@@ -869,5 +869,5 @@ img {
     }
     
     [data-theme="dark"] .jumbotron .lead {
-        color: var(--accent-color);
+        color: var(--text-primary);
     }
