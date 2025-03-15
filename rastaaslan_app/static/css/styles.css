@@ -853,6 +853,10 @@ img {
         transition: background-color var(--transition-speed) var(--transition-timing),
                     color var(--transition-speed) var(--transition-timing);
     }
+
+    .jumbotron .lead {
+        color: var(--text-primary);
+    }
     
     .jumbotron h1 {
         color: var(--gris-fonce);
@@ -866,9 +870,9 @@ img {
     /* Thème sombre pour le jumbotron */
     [data-theme="dark"] .jumbotron {
         background-color: var(--vert-sauge);
-        color: var(--text-secondary);
+        color: var(--text-primary);
     }
     
     [data-theme="dark"] .jumbotron .lead {
-        color: var(--text-secondary);
+        color: var(--text-primary);
     }
