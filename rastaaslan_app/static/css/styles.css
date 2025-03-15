@@ -845,7 +845,7 @@ img {
 
     /* Ajout des styles pour le jumbotron */
     .jumbotron {
-        background-color: var(--bleu-indigo);
+        background-color: var(--vert-sauge);
         border-radius: 8px;
         padding: 2rem;
         margin-bottom: 2rem;
