@@ -874,5 +874,5 @@ img {
     }
     
     [data-theme="dark"] .jumbotron .lead {
-        color: var(--text-primary) !important;
+        color: var(--text-secondary) !important;
     }
