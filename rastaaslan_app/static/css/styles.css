@@ -9,7 +9,7 @@
     --beige-papier: #F8F3E6;
     --blanc-casse: #EDEAE1;
     --gris-fonce: #4F4F4F;
-    --vert-pastel: #8A9A80;
+    --vert-pastel: #c6d8bb;
     
     /* Variables de transition */
     --transition-speed: 0.4s;
@@ -845,7 +845,7 @@ img {
 
     /* Ajout des styles pour le jumbotron */
     .jumbotron {
-        background-color: var(--vert-sauge);
+        background-color: var(--vert-pastel);
         border-radius: 8px;
         padding: 2rem;
         margin-bottom: 2rem;
