@@ -358,127 +358,6 @@ img {
     height: auto;
 }
 
-/* Styles pour le carousel centré - VERSION CORRIGÉE */
-.center-card-carousel-container {
-    position: relative;
-    padding: 20px 0;
-    overflow: hidden;
-    margin-bottom: 30px;
-}
-
-.center-card-carousel {
-    position: relative;
-    padding: 0 50px;
-}
-
-/* Reset des propriétés de Bootstrap qui causent des conflits */
-.center-card-carousel .carousel-inner {
-    display: flex;
-    overflow: visible;
-}
-
-.center-card-carousel .carousel-item {
-    margin-right: 0 !important;  /* Annule le margin-right: -100% de Bootstrap */
-    float: none !important;      /* Annule le float: left de Bootstrap */
-    visibility: hidden;  /* Cache tous les éléments par défaut */
-    position: relative;
-    width: 33.333%;
-    transition: all 0.6s ease;
-    opacity: 0; /* Par défaut, masqué */
-}
-
-/* Rendre visible l'élément actif et ceux adjacents */
-.center-card-carousel .carousel-item.active,
-.center-card-carousel .carousel-item.left,
-.center-card-carousel .carousel-item.right {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* Élément central (actif) */
-.center-card-carousel .carousel-item.active {
-    z-index: 2;
-    transform: translateX(33.333%) scale(1);
-}
-
-/* Élément à gauche */
-.center-card-carousel .carousel-item.left {
-    z-index: 1;
-    transform: translateX(0) scale(0.85);
-    opacity: 0.6;
-}
-
-/* Élément à droite */
-.center-card-carousel .carousel-item.right {
-    z-index: 1;
-    transform: translateX(66.666%) scale(0.85);
-    opacity: 0.6;
-}
-
-.center-card-carousel .carousel-item-content {
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 6px 12px var(--shadow-color);
-    margin: 0 5px;
-    transition: box-shadow var(--transition-speed) var(--transition-timing);
-}
-
-.center-card-carousel .carousel-item img {
-    width: 100%;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-}
-
-.center-card-carousel .carousel-item.active img:hover {
-    transform: scale(1.05);
-}
-
-.center-card-carousel .carousel-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(61, 64, 91, 0.7);
-    padding: 10px;
-    margin: 0;
-    border-radius: 0 0 10px 10px;
-}
-
-.center-card-carousel .carousel-caption h5 {
-    color: var(--nav-text);
-    margin: 0;
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.center-card-carousel .carousel-control-prev,
-.center-card-carousel .carousel-control-next {
-    width: 40px;
-    height: 40px;
-    background-color: var(--nav-bg);
-    border-radius: 50%;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.8;
-    z-index: 20;
-}
-
-.center-card-carousel .carousel-control-prev {
-    left: 10px;
-}
-
-.center-card-carousel .carousel-control-next {
-    right: 10px;
-}
-
-.center-card-carousel .carousel-control-prev:hover,
-.center-card-carousel .carousel-control-next:hover {
-    opacity: 1;
-}
-
 /* Correction des boutons de contrôle pour tous les carrousels */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
@@ -648,7 +527,133 @@ img {
     transform: rotate(15deg);
 }
 
-/* Responsive pour les petits écrans */
+/* Conteneur principal pour le défilement horizontal */
+.horizontal-scroll-container {
+    position: relative;
+    width: 100%;
+    margin: 30px 0;
+}
+
+/* Wrapper avec défilement horizontal */
+.thumbnails-scroll-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch; /* Pour une meilleure expérience sur iOS */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE et Edge */
+    padding: 20px 0;
+}
+
+/* Cacher la scrollbar pour Chrome, Safari et Opera */
+.thumbnails-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* Rangée de miniatures */
+.thumbnails-row {
+    display: inline-flex;
+    padding: 0 10px;
+}
+
+/* Élément de miniature individuel */
+.thumbnail-item {
+    flex: 0 0 auto;
+    width: 280px;
+    margin-right: 20px;
+    transition: transform 0.3s ease;
+}
+
+.thumbnail-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Lien de miniature */
+.thumbnail-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Carte de miniature */
+.thumbnail-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px var(--shadow-color);
+    background-color: var(--card-bg);
+    transition: box-shadow var(--transition-speed) var(--transition-timing),
+                background-color var(--transition-speed) var(--transition-timing);
+    height: 100%;
+    position: relative;
+}
+
+/* Image de miniature */
+.thumbnail-card img {
+    width: 100%;
+    height: 158px; /* Ratio 16:9 pour une largeur de 280px */
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+    display: block;
+}
+
+/* Légende de miniature */
+.thumbnail-caption {
+    padding: 10px;
+    background-color: var(--card-bg);
+    transition: background-color var(--transition-speed) var(--transition-timing);
+}
+
+.thumbnail-caption h5 {
+    margin: 0;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-primary);
+}
+
+/* Flèches de défilement */
+.scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: var(--nav-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: opacity 0.3s ease, background-color var(--transition-speed) var(--transition-timing);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-arrow i {
+    color: var(--nav-text);
+    font-size: 1rem;
+}
+
+.scroll-left {
+    left: 10px;
+}
+
+.scroll-right {
+    right: 10px;
+}
+
+.scroll-arrow:hover {
+    background-color: var(--accent-color);
+}
+
+/* Styles pour l'état actif lors du défilement avec la souris */
+.thumbnails-scroll-wrapper.active {
+    cursor: grabbing;
+}
+
+/* Responsive */
 @media (max-width: 991px) {
     .center-card-carousel .carousel-item.active {
         transform: translateX(25%) scale(1);
@@ -659,7 +664,20 @@ img {
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
+    .thumbnail-item {
+        width: 220px;
+    }
+    
+    .thumbnail-card img {
+        height: 124px; /* Maintenir le ratio 16:9 */
+    }
+    
+    .scroll-arrow {
+        width: 36px;
+        height: 36px;
+    }
+    
     .center-card-carousel .carousel-item.active {
         transform: translateX(15%) scale(1);
     }
@@ -682,7 +700,24 @@ img {
     }
 }
 
-@media (max-width: 575px) {
+@media (max-width: 576px) {
+    .thumbnail-item {
+        width: 180px;
+    }
+    
+    .thumbnail-card img {
+        height: 101px; /* Maintenir le ratio 16:9 */
+    }
+    
+    .thumbnail-caption h5 {
+        font-size: 0.8rem;
+    }
+    
+    .scroll-arrow {
+        width: 32px;
+        height: 32px;
+    }
+    
     .center-card-carousel .carousel-item.active {
         transform: translateX(5%) scale(1);
     }

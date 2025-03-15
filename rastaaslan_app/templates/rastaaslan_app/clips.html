@@ -6,35 +6,40 @@
 <h1>Clips</h1>
 
 {% if videos %}
-<!-- Carrousel standard (plus fiable) -->
-<div id="carouselClips" class="carousel slide mb-4" data-ride="carousel">
-    <div class="carousel-inner">
-        {% for video in videos %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}">
-                    <img src="{{ video.thumbnail_url }}" class="d-block w-100" alt="{{ video.title }}">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>{{ video.title }}</h5>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
+<!-- Liste horizontale défilante -->
+<div class="horizontal-scroll-container">
+    <div class="scroll-arrow scroll-left">
+        <i class="fas fa-chevron-left"></i>
     </div>
-    <a class="carousel-control-prev" href="#carouselClips" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselClips" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
+    
+    <div class="thumbnails-scroll-wrapper">
+        <div class="thumbnails-row">
+            {% for video in videos %}
+                <div class="thumbnail-item">
+                    <a href="{% url 'video_detail' video.video_id %}" class="thumbnail-link">
+                        <div class="thumbnail-card">
+                            <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}">
+                            <div class="thumbnail-caption">
+                                <h5>{{ video.title }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="scroll-arrow scroll-right">
+        <i class="fas fa-chevron-right"></i>
+    </div>
 </div>
 
-<!-- Grille de clips -->
+<!-- Grille de clips en dessous -->
+<h2 class="mt-5">Tous les clips</h2>
 <div class="row mt-4">
     {% for video in videos %}
         <div class="col-md-4 mb-4">
-            <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}" class="card-link">
+            <a href="{% url 'video_detail' video.video_id %}" class="card-link">
                 <div class="card">
                     <img src="{{ video.thumbnail_url }}" class="card-img-top" alt="{{ video.title }}">
                     <div class="card-body">
@@ -103,19 +108,85 @@
 </div>
 {% endif %}
 
-<!-- Script spécifique à cette page pour s'assurer que le carrousel fonctionne -->
+<!-- Script pour le défilement horizontal -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // S'assurer que le carrousel est bien initialisé
-    setTimeout(function() {
-        var carousel = $('#carouselClips');
-        if (carousel.length > 0) {
-            carousel.carousel({
-                interval: 5000
-            });
-            console.log("Carrousel des clips initialisé localement");
-        }
-    }, 100);
+    // Récupérer les éléments
+    const scrollWrapper = document.querySelector('.thumbnails-scroll-wrapper');
+    const thumbnailsRow = document.querySelector('.thumbnails-row');
+    const leftArrow = document.querySelector('.scroll-left');
+    const rightArrow = document.querySelector('.scroll-right');
+    
+    if (!scrollWrapper || !thumbnailsRow || !leftArrow || !rightArrow) return;
+    
+    // Largeur de défilement (300px par défaut)
+    const scrollAmount = 300;
+    
+    // Fonction pour faire défiler vers la gauche
+    leftArrow.addEventListener('click', function() {
+        scrollWrapper.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Fonction pour faire défiler vers la droite
+    rightArrow.addEventListener('click', function() {
+        scrollWrapper.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Afficher/cacher les flèches en fonction de la position de défilement
+    scrollWrapper.addEventListener('scroll', function() {
+        const maxScrollLeft = scrollWrapper.scrollWidth - scrollWrapper.clientWidth;
+        
+        leftArrow.style.opacity = scrollWrapper.scrollLeft > 0 ? '1' : '0.3';
+        rightArrow.style.opacity = scrollWrapper.scrollLeft < maxScrollLeft ? '1' : '0.3';
+    });
+    
+    // Initialiser l'opacité des flèches
+    leftArrow.style.opacity = '0.3';
+    
+    // Défilement avec la molette de la souris
+    scrollWrapper.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        scrollWrapper.scrollBy({
+            left: e.deltaY < 0 ? -100 : 100,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Défilement tactile
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    
+    scrollWrapper.addEventListener('mousedown', (e) => {
+        isDown = true;
+        scrollWrapper.classList.add('active');
+        startX = e.pageX - scrollWrapper.offsetLeft;
+        scrollLeft = scrollWrapper.scrollLeft;
+    });
+    
+    scrollWrapper.addEventListener('mouseleave', () => {
+        isDown = false;
+        scrollWrapper.classList.remove('active');
+    });
+    
+    scrollWrapper.addEventListener('mouseup', () => {
+        isDown = false;
+        scrollWrapper.classList.remove('active');
+    });
+    
+    scrollWrapper.addEventListener('mousemove', (e) => {
+        if(!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - scrollWrapper.offsetLeft;
+        const walk = (x - startX) * 2; // Vitesse de déplacement
+        scrollWrapper.scrollLeft = scrollLeft - walk;
+    });
 });
 </script>
 {% endblock %}
