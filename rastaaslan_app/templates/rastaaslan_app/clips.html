@@ -6,32 +6,28 @@
 <h1>Clips</h1>
 
 {% if videos %}
-<!-- Carousel centré avec vignettes -->
-<div class="center-card-carousel-container">
-    <div id="carouselClips" class="carousel slide center-card-carousel" data-ride="carousel">
-        <div class="carousel-inner">
-            {% for video in videos %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <div class="carousel-item-content">
-                        <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}">
-                            <img src="{{ video.thumbnail_url }}" class="d-block" alt="{{ video.title }}">
-                            <div class="carousel-caption">
-                                <h5>{{ video.title }}</h5>
-                            </div>
-                        </a>
+<!-- Carrousel standard (plus fiable) -->
+<div id="carouselClips" class="carousel slide mb-4" data-ride="carousel">
+    <div class="carousel-inner">
+        {% for video in videos %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <a href="{% url 'rastaaslan_app:video_detail' video.video_id %}">
+                    <img src="{{ video.thumbnail_url }}" class="d-block w-100" alt="{{ video.title }}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ video.title }}</h5>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-        <a class="carousel-control-prev" href="#carouselClips" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselClips" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+                </a>
+            </div>
+        {% endfor %}
     </div>
+    <a class="carousel-control-prev" href="#carouselClips" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselClips" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
 </div>
 
 <!-- Grille de clips -->
@@ -106,4 +102,20 @@
     Aucun clip n'est disponible pour le moment.
 </div>
 {% endif %}
+
+<!-- Script spécifique à cette page pour s'assurer que le carrousel fonctionne -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // S'assurer que le carrousel est bien initialisé
+    setTimeout(function() {
+        var carousel = $('#carouselClips');
+        if (carousel.length > 0) {
+            carousel.carousel({
+                interval: 5000
+            });
+            console.log("Carrousel des clips initialisé localement");
+        }
+    }, 100);
+});
+</script>
 {% endblock %}
