@@ -43,26 +43,47 @@
     --card-border: rgba(255, 255, 255, 0.1);
     --shadow-color: rgba(0, 0, 0, 0.3);
 }
-/* Styles explicites pour le fond */
-html[data-theme="light"] {
-    background-color: #F8F3E6 !important; /* beige-papier */
+
+/* Rendre tous les conteneurs potentiels transparents */
+html, 
+body, 
+.container,
+.container-fluid,
+main,
+.wrapper,
+.content,
+.content-wrapper,
+.page-wrapper,
+.main-content {
+    background-color: transparent !important;
 }
 
-html[data-theme="dark"] {
-    background-color: #1a1a2e !important; /* bleu foncé */
-}
-/* Base */
+/* Assurer que html a la couleur de fond correcte */
 html {
+    background-color: var(--bg-primary) !important;
     transition: background-color var(--transition-speed) var(--transition-timing);
 }
 
+/* Base */
 body {
     font-family: 'IBM Plex Sans', 'Work Sans', sans-serif;
     font-size: 16px;
     color: var(--text-primary);
-    background-color: transparent !important;
     margin: 0;
     padding: 0;
+    transition: color var(--transition-speed) var(--transition-timing);
+}
+
+/* Élément d'arrière-plan pour garantir la transition */
+.theme-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -999;
+    background-color: var(--bg-primary);
+    transition: background-color var(--transition-speed) var(--transition-timing);
 }
 
 /* Typographie */
@@ -128,13 +149,12 @@ img {
     padding: 20px;
     margin: 10px auto;
     max-width: 1200px;
-    transition: background-color var(--transition-speed) var(--transition-timing);
-    background-color: transparent !important;
+    transition: color var(--transition-speed) var(--transition-timing);
 }
 
 /* Navigation */
 .navbar-custom {
-    background-color: var(--nav-bg);
+    background-color: var(--nav-bg) !important;
     box-shadow: 0 2px 4px var(--shadow-color);
     transition: background-color var(--transition-speed) var(--transition-timing);
 }
@@ -317,7 +337,7 @@ img {
     margin-bottom: 20px;
     border-radius: 8px;
     overflow: hidden;
-    background-color: var(--card-bg);
+    background-color: var(--card-bg) !important;
     border-color: var(--card-border);
     box-shadow: 0 4px 6px var(--shadow-color);
     transition: transform 0.3s ease, 
@@ -560,6 +580,7 @@ img {
     border-radius: 4px;
     transition: background-color var(--transition-speed) var(--transition-timing), 
                 color var(--transition-speed) var(--transition-timing);
+    background-color: var(--bg-secondary) !important;
 }
 
 .alert-success {

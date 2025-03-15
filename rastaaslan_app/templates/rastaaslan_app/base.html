@@ -6,15 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Mon Site Web{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.1">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.2">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome pour l'icône de thème -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
+    <!-- Élément d'arrière-plan pour garantir la transition -->
+    <div class="theme-background"></div>
+    
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
-        <a class="navbar-brand" href="{% url 'rastaaslan_app:home' %}">Rastaaslan</a>
+        <a class="navbar-brand" href="{% url 'home' %}">Rastaaslan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <div class="burger-icon">
                 <span></span>
@@ -25,16 +28,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'rastaaslan_app:home' %}">Accueil</a>
+                    <a class="nav-link" href="{% url 'home' %}">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'rastaaslan_app:vods' %}">VODs</a>
+                    <a class="nav-link" href="{% url 'vods' %}">VODs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'rastaaslan_app:clips' %}">Clips</a>
+                    <a class="nav-link" href="{% url 'clips' %}">Clips</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'rastaaslan_app:live' %}">Live</a>
+                    <a class="nav-link" href="{% url 'live' %}">Live</a>
                 </li>
                 <!-- Bouton de thème avec Font Awesome -->
                 <li class="nav-item">
@@ -65,31 +68,22 @@
     $(document).ready(function(){
         // 1. Gestion du thème clair/sombre avec effet de transition
         function setTheme(themeName) {
-            // Débogage - Afficher le thème en cours de définition
-            console.log("Changement de thème vers:", themeName);
+            // Créer un effet de flash pour la transition
+            const flash = document.createElement('div');
+            flash.className = 'theme-transition-flash';
+            document.body.appendChild(flash);
             
-            // Appliquer le thème explicitement sur html et body
+            // Appliquer le thème explicitement
             document.documentElement.setAttribute('data-theme', themeName);
             document.documentElement.style.backgroundColor = 
+                themeName === 'dark' ? '#1a1a2e' : '#F8F3E6';
+                
+            // Mettre à jour l'arrière-plan
+            document.querySelector('.theme-background').style.backgroundColor = 
                 themeName === 'dark' ? '#1a1a2e' : '#F8F3E6';
             
             // Stockage local
             localStorage.setItem('theme', themeName);
-            
-            // Effet visuel plus prononcé
-            const overlay = document.createElement('div');
-            overlay.style.position = 'fixed';
-            overlay.style.top = '0';
-            overlay.style.left = '0';
-            overlay.style.width = '100%';
-            overlay.style.height = '100%';
-            overlay.style.backgroundColor = themeName === 'dark' ? 
-                'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.2)';
-            overlay.style.zIndex = '9999';
-            overlay.style.pointerEvents = 'none';
-            overlay.style.transition = 'opacity 0.5s ease';
-            
-            document.body.appendChild(overlay);
             
             // Mettre à jour l'icône
             if (themeName === 'dark') {
@@ -98,28 +92,32 @@
                 $('#theme-icon').removeClass('fa-sun').addClass('fa-moon');
             }
             
-            // Effet de fondu
+            // Supprimer l'élément de flash après l'animation
             setTimeout(() => {
-                overlay.style.opacity = '0';
-                setTimeout(() => {
-                    document.body.removeChild(overlay);
-                }, 500);
-            }, 50);
+                document.body.removeChild(flash);
+            }, 500);
+            
+            console.log("Thème changé à:", themeName);
         }
         
         // Initialiser le thème
-        if (localStorage.getItem('theme') === 'dark') {
-            setTheme('dark');
-        } else if (localStorage.getItem('theme') === 'light') {
-            setTheme('light');
-        } else {
-            // Préférence système par défaut
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        function initTheme() {
+            if (localStorage.getItem('theme') === 'dark') {
                 setTheme('dark');
-            } else {
+            } else if (localStorage.getItem('theme') === 'light') {
                 setTheme('light');
+            } else {
+                // Préférence système par défaut
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    setTheme('dark');
+                } else {
+                    setTheme('light');
+                }
             }
         }
+        
+        // Initialiser le thème au chargement
+        initTheme();
         
         // Changer de thème au clic avec un effet plus subtil
         $('#theme-toggle').on('click', function(e) {
@@ -153,7 +151,9 @@
         
         // Fermer le menu sur mobile quand on clique sur un lien
         $('.navbar-nav a.nav-link').on('click', function(){
-            $('.navbar-collapse').collapse('hide');
+            if (window.innerWidth < 992) {
+                $('.navbar-collapse').collapse('hide');
+            }
         });
         
         // 3. Gestion du carousel
