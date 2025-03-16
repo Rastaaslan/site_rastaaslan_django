@@ -56,7 +56,7 @@ ROOT_URLCONF = 'rastaaslan_website.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'rastaaslan_app', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

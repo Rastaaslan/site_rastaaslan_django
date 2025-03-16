@@ -1,0 +1,160 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}?v=1.5">
+  <style>
+    /* Ajustements spécifiques pour l'interface d'administration */
+    :root {
+      --primary: var(--accent-color) !important;
+      --secondary: var(--text-secondary) !important;
+      --link-fg: var(--accent-color) !important;
+      --link-hover-color: var(--accent-hover) !important;
+      --button-hover-bg: var(--accent-hover) !important;
+    }
+    
+    /* Assurer la lisibilité des formulaires dans le thème sombre */
+    [data-theme="dark"] input, 
+    [data-theme="dark"] select, 
+    [data-theme="dark"] textarea {
+      background-color: rgba(255, 255, 255, 0.1) !important;
+      color: var(--text-primary) !important;
+    }
+    
+    /* Conserver les styles spécifiques d'admin */
+    #header {
+      background: var(--nav-bg) !important;
+      color: var(--nav-text) !important;
+    }
+    
+    .module h2, .module caption, .inline-group h2 {
+      background: var(--accent-color) !important;
+      color: white !important;
+    }
+    
+    /* Style pour les liens d'action */
+    .object-tools a:link, .object-tools a:visited {
+      background: var(--accent-color) !important;
+    }
+    
+    .object-tools a:hover, .object-tools a:focus {
+      background: var(--accent-hover) !important;
+    }
+    
+    /* Style pour les boutons de soumission */
+    input[type=submit], button[type=submit] {
+      background: var(--accent-color) !important;
+      color: white !important;
+    }
+    
+    input[type=submit]:hover, button[type=submit]:hover {
+      background: var(--accent-hover) !important;
+    }
+    
+    /* Assurer que le thème s'applique correctement à l'ensemble de la page */
+    body {
+      background-color: var(--bg-primary) !important;
+      color: var(--text-primary) !important;
+    }
+    
+    /* Style pour le tableau de bord */
+    #content h1 {
+      color: var(--accent-color) !important;
+    }
+    
+    .dashboard .module table th {
+      background: var(--bg-secondary) !important;
+    }
+  </style>
+  
+  <!-- Ajouter Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+  <a href="{% url 'admin:index' %}">
+    <i class="fas fa-cog"></i> Administration Rastaaslan
+  </a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}
+<div class="sidebar-shortcuts">
+  <a href="{% url 'rastaaslan_app:home' %}" class="sidebar-shortcut" target="_blank">
+    <i class="fas fa-home"></i> Voir le site
+  </a>
+  <a href="{% url 'rastaaslan_app:forum_home' %}" class="sidebar-shortcut" target="_blank">
+    <i class="fas fa-comments"></i> Forum
+  </a>
+  <a href="{% url 'rastaaslan_app:live' %}" class="sidebar-shortcut" target="_blank">
+    <i class="fas fa-video"></i> Page Live
+  </a>
+</div>
+<style>
+  .sidebar-shortcuts {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-shortcut {
+    padding: 8px 15px;
+    margin-bottom: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: var(--nav-text) !important;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  .sidebar-shortcut:hover {
+    background: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+  }
+  .sidebar-shortcut i {
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+  }
+</style>
+{% endblock %}
+
+{% block footer %}
+<div id="footer">
+  <script>
+    // Détection du thème actuel dans localStorage
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      
+      // Ajouter un bouton de changement de thème dans l'interface d'administration
+      const userTools = document.querySelector('#user-tools');
+      if (userTools) {
+        const themeToggle = document.createElement('a');
+        themeToggle.href = '#';
+        themeToggle.id = 'admin-theme-toggle';
+        themeToggle.innerHTML = currentTheme === 'dark' 
+          ? '<i class="fas fa-sun"></i> Mode clair' 
+          : '<i class="fas fa-moon"></i> Mode sombre';
+        themeToggle.style.marginLeft = '15px';
+        
+        themeToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', newTheme);
+          localStorage.setItem('theme', newTheme);
+          
+          // Mettre à jour l'icône et le texte
+          this.innerHTML = newTheme === 'dark' 
+            ? '<i class="fas fa-sun"></i> Mode clair' 
+            : '<i class="fas fa-moon"></i> Mode sombre';
+        });
+        
+        userTools.appendChild(themeToggle);
+      }
+    });
+  </script>
+</div>
+{% endblock %}

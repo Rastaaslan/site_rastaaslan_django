@@ -1,0 +1,84 @@
+{% extends "admin/login.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}?v=1.5">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+  body {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    font-family: 'IBM Plex Sans', 'Work Sans', sans-serif !important;
+  }
+  
+  #header {
+    background: var(--nav-bg) !important;
+    color: var(--nav-text) !important;
+  }
+  
+  h1 {
+    color: var(--accent-color) !important;
+  }
+  
+  .login #container {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+    box-shadow: 0 4px 10px var(--shadow-color) !important;
+  }
+  
+  .button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: var(--accent-color) !important;
+    color: white !important;
+  }
+  
+  .button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: var(--accent-hover) !important;
+  }
+
+  input[type=text], input[type=password], textarea, select {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--card-border) !important;
+  }
+  
+  .form-row {
+    padding: 8px 12px !important;
+    border-bottom: 1px solid var(--card-border) !important;
+  }
+  
+  #container {
+    min-width: 320px !important;
+  }
+  
+  #site-name {
+    font-size: 1.5rem !important;
+  }
+  
+  #site-name i {
+    margin-right: 8px;
+  }
+  
+  .login #content {
+    padding: 20px 30px !important;
+  }
+</style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+  <i class="fas fa-cog"></i> Administration Rastaaslan
+</h1>
+{% endblock %}
+
+{% block content %}
+{{ block.super }}
+<script>
+  // Appliquer le thème actuel au chargement
+  document.addEventListener('DOMContentLoaded', function() {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+  });
+</script>
+{% endblock %}
