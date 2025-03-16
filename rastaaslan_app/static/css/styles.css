@@ -967,3 +967,36 @@ img {
     border-top-color: var(--card-border);
     transition: border-color var(--transition-speed) var(--transition-timing);
 }
+
+/* Réduction de la hauteur de la navbar en format portrait */
+@media (max-width: 991.98px) {
+    .navbar-custom {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    
+    /* Ajuster la taille du logo/titre pour contribuer à la réduction de hauteur */
+    .navbar-brand {
+        font-size: 1.25rem;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    
+    /* Réduire la taille du bouton hamburger */
+    .navbar-toggler {
+        padding: 0.25rem 0.5rem;
+    }
+    
+    /* Réduire légèrement la taille de l'icône hamburger */
+    .burger-icon {
+        height: 16px;
+        width: 20px;
+    }
+}
+
+/* Assurer que le menu déplié a suffisamment d'espace */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        margin-top: 0.5rem;
+    }
+}
