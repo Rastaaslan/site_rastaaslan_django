@@ -839,40 +839,131 @@ img {
         padding: 0.5rem 0.75rem;
         font-size: 0.9rem;
     }
-
-
 }
 
-    /* Ajout des styles pour le jumbotron */
-    .jumbotron {
-        background-color: var(--vert-pastel) !important;
-        border-radius: 8px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 4px 6px var(--shadow-color);
-        transition: background-color var(--transition-speed) var(--transition-timing),
-                    color var(--transition-speed) var(--transition-timing);
-    }
+/* Ajout des styles pour le jumbotron */
+.jumbotron {
+    background-color: var(--vert-pastel) !important;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                color var(--transition-speed) var(--transition-timing);
+}
 
-    .jumbotron .lead {
+.jumbotron .lead {
+    color: var(--text-primary);
+}
+
+.jumbotron h1 {
+    color: var(--gris-fonce);
+}
+
+.jumbotron p {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+}
+
+/* Thème sombre pour le jumbotron */
+[data-theme="dark"] .jumbotron {
+    background-color: var(--vert-sauge);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .jumbotron .lead {
+    color: var(--gris-fonce) !important;
+}
+
+/* Correction pour la navbar en mode mobile */
+@media (max-width: 991.98px) {
+    .navbar-toggler {
+        border-color: var(--text-primary);
+        padding: 0.5rem;
+        outline: none !important;
+    }
+    
+    .navbar-toggler:focus {
+        outline: none;
+    }
+    
+    .burger-icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 18px;
+        width: 22px;
+    }
+    
+    .burger-icon span {
+        display: block;
+        height: 2px;
+        width: 100%;
+        background-color: var(--text-primary);
+        transition: background-color var(--transition-speed) var(--transition-timing);
+        border-radius: 2px;
+    }
+    
+    /* Centrer la navbar en mode mobile */
+    .navbar-nav {
+        text-align: center;
+        padding-top: 1rem;
+    }
+    
+    .navbar-nav .nav-item {
+        margin: 0.25rem 0;
+    }
+    
+    /* Améliorer l'apparence des dropdowns en mode mobile */
+    .navbar-nav .dropdown-menu {
+        background-color: var(--bg-secondary);
+        border-color: var(--card-border);
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+    
+    .navbar-nav .dropdown-item {
         color: var(--text-primary);
     }
     
-    .jumbotron h1 {
-        color: var(--gris-fonce);
+    .navbar-nav .dropdown-item:hover {
+        background-color: var(--accent-color);
+        color: white;
     }
     
-    .jumbotron p {
-        color: var(--text-primary);
-        font-size: 1.25rem;
+    /* Ajuster le toggle de thème en mode mobile */
+    .theme-toggle {
+        margin: 1rem auto;
     }
-    
-    /* Thème sombre pour le jumbotron */
-    [data-theme="dark"] .jumbotron {
-        background-color: var(--vert-sauge);
-        color: var(--text-primary);
-    }
-    
-    [data-theme="dark"] .jumbotron .lead {
-        color: var(--gris-fonce) !important;
-    }
+}
+
+/* Améliorer l'apparence des liens actifs */
+.nav-link.active {
+    color: var(--accent-color) !important;
+    font-weight: 600;
+}
+
+/* Style pour le dropdown utilisateur */
+.dropdown-menu {
+    background-color: var(--bg-secondary);
+    border-color: var(--card-border);
+    box-shadow: 0 4px 10px var(--shadow-color);
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                border-color var(--transition-speed) var(--transition-timing);
+}
+
+.dropdown-item {
+    color: var(--text-primary);
+    transition: color var(--transition-speed) var(--transition-timing),
+                background-color var(--transition-speed) var(--transition-timing);
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.dropdown-divider {
+    border-top-color: var(--card-border);
+    transition: border-color var(--transition-speed) var(--transition-timing);
+}

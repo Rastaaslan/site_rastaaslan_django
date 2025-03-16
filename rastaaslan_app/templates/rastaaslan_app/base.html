@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Mon Site Web{% endblock %}</title>
+    <title>{% block title %}Rastaaslan{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.5">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -17,13 +17,14 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
-            <!-- Logo / Brand -->
+            <!-- Logo / Titre du site -->
             <a class="navbar-brand" href="{% url 'rastaaslan_app:home' %}">
-                RastaAslan
+                Rastaaslan
             </a>
             
             <!-- Bouton hamburger pour mobile -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" 
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <div class="burger-icon">
                     <span></span>
                     <span></span>
@@ -31,58 +32,55 @@
                 </div>
             </button>
             
-            <!-- Contenu de la navbar -->
+            <!-- Contenu de la navigation -->
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'rastaaslan_app:home' %}">Accueil</a>
+                    <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'rastaaslan_app:home' %}">Accueil</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'live' %}active{% endif %}" href="{% url 'rastaaslan_app:live' %}">Live</a>
+                    <li class="nav-item {% if request.resolver_match.url_name == 'live' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'rastaaslan_app:live' %}">Live</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'vods' %}active{% endif %}" href="{% url 'rastaaslan_app:vods' %}">VODs</a>
+                    <li class="nav-item {% if request.resolver_match.url_name == 'vods' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'rastaaslan_app:vods' %}">VODs</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'clips' %}active{% endif %}" href="{% url 'rastaaslan_app:clips' %}">Clips</a>
+                    <li class="nav-item {% if request.resolver_match.url_name == 'clips' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'rastaaslan_app:clips' %}">Clips</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if 'forum' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'rastaaslan_app:forum_home' %}">Forum</a>
+                    <li class="nav-item {% if 'forum' in request.resolver_match.url_name %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'rastaaslan_app:forum_home' %}">Forum</a>
                     </li>
                 </ul>
                 
-                <!-- Menu utilisateur -->
-                <ul class="navbar-nav">
+                <!-- Partie droite de la navbar -->
+                <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user-circle mr-1"></i> {{ user.username }}
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" 
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ user.username }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="{% url 'rastaaslan_app:profile' %}">
-                                    <i class="fas fa-user mr-2"></i> Mon profil
+                                    <i class="fas fa-user fa-fw mr-2"></i>Mon profil
                                 </a>
                                 {% if user.is_staff %}
                                     <a class="dropdown-item" href="{% url 'admin:index' %}">
-                                        <i class="fas fa-cog mr-2"></i> Administration
+                                        <i class="fas fa-cog fa-fw mr-2"></i>Administration
                                     </a>
                                 {% endif %}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{% url 'rastaaslan_app:logout' %}">
-                                    <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion
+                                    <i class="fas fa-sign-out-alt fa-fw mr-2"></i>Déconnexion
                                 </a>
                             </div>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'rastaaslan_app:login' %}">
-                                <i class="fas fa-sign-in-alt mr-1"></i> Connexion
-                            </a>
+                            <a class="nav-link" href="{% url 'rastaaslan_app:login' %}">Connexion</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'rastaaslan_app:register' %}">
-                                <i class="fas fa-user-plus mr-1"></i> Inscription
-                            </a>
+                            <a class="nav-link" href="{% url 'rastaaslan_app:register' %}">Inscription</a>
                         </li>
                     {% endif %}
                     
