@@ -68,10 +68,14 @@ def make_twitch_api_request(endpoint, params=None):
     api_url = f'https://api.twitch.tv/helix/{endpoint}'
     
     try:
-        response = requests.get(api_url, headers=headers, params=params)
+        # Ajoutez un timeout plus long
+        response = requests.get(api_url, headers=headers, params=params, timeout=30)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
+        # Améliorer le logging
+        import logging
+        logger = logging.getLogger(__name__)
         logger.error(f"Erreur lors de la requête à l'API Twitch ({endpoint}): {e}")
         return None
 

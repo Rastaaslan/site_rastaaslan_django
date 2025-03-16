@@ -11,25 +11,34 @@ from ..forms import ForumTopicForm, ForumPostForm
 
 def forum_home(request):
     """Vue pour la page d'accueil du forum"""
+    # Utilisation de values() et annotate pour optimiser les requêtes
     categories = ForumCategory.objects.all().order_by('order')
     
-    # Enrichir les catégories avec des statistiques
-    for category in categories:
-        category.topics_count = category.topics.count()
-        category.posts_count = ForumPost.objects.filter(topic__category=category).count()
-        # Dernier message
-        category.last_post = ForumPost.objects.filter(topic__category=category).order_by('-created_at').first()
+    # Requête optimisée pour récupérer les statistiques
+    categories_with_stats = categories.annotate(
+        topics_count=Count('topics', distinct=True),
+        posts_count=Count('topics__posts', distinct=True)
+    )
     
-    # Statistiques globales du forum
+    # Requête pour obtenir le dernier message par catégorie
+    latest_posts = {}
+    for category in categories:
+        latest_post = ForumPost.objects.filter(
+            topic__category=category
+        ).order_by('-created_at').select_related('author', 'topic').first()
+        latest_posts[category.id] = latest_post
+    
+    # Statistiques globales (optimisées)
     stats = {
         'topics_count': ForumTopic.objects.count(),
         'posts_count': ForumPost.objects.count(),
         'users_count': UserProfile.objects.count(),
-        'latest_user': UserProfile.objects.order_by('-date_joined').first() if UserProfile.objects.exists() else None,
+        'latest_user': UserProfile.objects.order_by('-date_joined').first()
     }
     
     context = {
-        'categories': categories,
+        'categories': categories_with_stats,
+        'latest_posts': latest_posts,
         'stats': stats,
     }
     
