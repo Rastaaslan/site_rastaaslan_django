@@ -1,0 +1,228 @@
+{% extends 'rastaaslan_app/base.html' %}
+
+{% block title %}Résultats de recherche - Forum{% endblock %}
+
+{% block content %}
+<!-- Fil d'Ariane -->
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'rastaaslan_app:forum_home' %}">Forum</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Recherche</li>
+    </ol>
+</nav>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Résultats de recherche</h1>
+</div>
+
+<!-- Résumé de la recherche -->
+<div class="alert alert-info mb-4">
+    <p class="mb-0">
+        <strong>{{ total_results }}</strong> résultat(s) pour la recherche "<strong>{{ query }}</strong>"
+    </p>
+</div>
+
+<!-- Nouvelle recherche -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form action="{% url 'rastaaslan_app:search_forum' %}" method="get" class="form-inline">
+            <div class="input-group w-100">
+                <input type="text" name="q" class="form-control" placeholder="Rechercher dans le forum..." value="{{ query }}">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Rechercher
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Onglets des résultats -->
+<ul class="nav nav-tabs mb-3" id="searchResultsTabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="topics-tab" data-toggle="tab" href="#topics" role="tab" aria-controls="topics" aria-selected="true">
+            Sujets ({{ topics.paginator.count }})
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="false">
+            Messages ({{ posts.paginator.count }})
+        </a>
+    </li>
+</ul>
+
+<div class="tab-content" id="searchResultsTabContent">
+    <!-- Résultats de sujets -->
+    <div class="tab-pane fade show active" id="topics" role="tabpanel" aria-labelledby="topics-tab">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Sujets correspondants</h5>
+            </div>
+            
+            {% if topics %}
+                <div class="list-group list-group-flush">
+                    {% for topic in topics %}
+                        <a href="{% url 'rastaaslan_app:forum_topic' topic.category.slug topic.slug %}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ topic.title }}</h5>
+                                <small>{{ topic.created_at|date:"d/m/Y" }}</small>
+                            </div>
+                            <p class="mb-1">{{ topic.content|truncatechars:150 }}</p>
+                            <small>
+                                Catégorie: <span class="badge badge-info">{{ topic.category.name }}</span> | 
+                                Par: {{ topic.author.username }}
+                            </small>
+                        </a>
+                    {% endfor %}
+                </div>
+                
+                <!-- Pagination pour les sujets -->
+                {% if topics.has_other_pages %}
+                    <div class="card-footer">
+                        <nav aria-label="Pagination des sujets">
+                            <ul class="pagination justify-content-center mb-0">
+                                {% if topics.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?q={{ query }}&topics_page=1" aria-label="Première page">
+                                            <span aria-hidden="true">&laquo;&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?q={{ query }}&topics_page={{ topics.previous_page_number }}" aria-label="Page précédente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link" aria-hidden="true">&laquo;&laquo;</span>
+                                    </li>
+                                    <li class="page-item disabled">
+                                        <span class="page-link" aria-hidden="true">&laquo;</span>
+                                    </li>
+                                {% endif %}
+                                
+                                <li class="page-item">
+                                    <span class="page-link">
+                                        {{ topics.number }} sur {{ topics.paginator.num_pages }}
+                                    </span>
+                                </li>
+                                
+                                {% if topics.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?q={{ query }}&topics_page={{ topics.next_page_number }}" aria-label="Page suivante">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?q={{ query }}&topics_page={{ topics.paginator.num_pages }}" aria-label="Dernière page">
+                                            <span aria-hidden="true">&raquo;&raquo;</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link" aria-hidden="true">&raquo;</span>
+                                    </li>
+                                    <li class="page-item disabled">
+                                        <span class="page-link" aria-hidden="true">&raquo;&raquo;</span>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="card-body">
+                    <p class="text-center mb-0">Aucun sujet ne correspond à votre recherche.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Résultats de messages -->
+    <div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Messages correspondants</h5>
+            </div>
+            
+            {% if posts %}
+                <div class="list-group list-group-flush">
+                    {% for post in posts %}
+                        <a href="{{ post.get_absolute_url }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Dans "{{ post.topic.title }}"</h5>
+                                <small>{{ post.created_at|date:"d/m/Y" }}</small>
+                            </div>
+                            <p class="mb-1">{{ post.content|truncatechars:150 }}</p>
+                            <small>
+                                Catégorie: <span class="badge badge-info">{{ post.topic.category.name }}</span> | 
+                                Par: {{ post.author.username }}
+                            </small>
+                        </a>
+                    {% endfor %}
+                </div>
+                
+                <!-- Pagination pour les messages -->
+                {% if posts.has_other_pages %}
+                    <div class="card-footer">
+                        <nav aria-label="Pagination des messages">
+                            <ul class="pagination justify-content-center mb-0">
+                                {% if posts.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?q={{ query }}&posts_page=1" aria-label="Première page">
+                                            <span aria-hidden="true">&laquo;&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?q={{ query }}&posts_page={{ posts.previous_page_number }}" aria-label="Page précédente">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link" aria-hidden="true">&laquo;&laquo;</span>
+                                    </li>
+                                    <li class="page-item disabled">
+                                        <span class="page-link" aria-hidden="true">&laquo;</span>
+                                    </li>
+                                {% endif %}
+                                
+                                <li class="page-item">
+                                    <span class="page-link">
+                                        {{ posts.number }} sur {{ posts.paginator.num_pages }}
+                                    </span>
+                                </li>
+                                
+                                {% if posts.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?q={{ query }}&posts_page={{ posts.next_page_number }}" aria-label="Page suivante">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?q={{ query }}&posts_page={{ posts.paginator.num_pages }}" aria-label="Dernière page">
+                                            <span aria-hidden="true">&raquo;&raquo;</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link" aria-hidden="true">&raquo;</span>
+                                    </li>
+                                    <li class="page-item disabled">
+                                        <span class="page-link" aria-hidden="true">&raquo;&raquo;</span>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="card-body">
+                    <p class="text-center mb-0">Aucun message ne correspond à votre recherche.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

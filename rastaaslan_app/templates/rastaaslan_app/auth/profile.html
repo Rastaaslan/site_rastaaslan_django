@@ -1,0 +1,132 @@
+{% extends 'rastaaslan_app/base.html' %}
+
+{% block title %}Profil de {{ profile.user.username }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Informations du profil -->
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                {% if profile.avatar %}
+                    <img src="{{ profile.avatar }}" class="rounded-circle img-thumbnail mb-3" alt="Avatar de {{ profile.user.username }}" style="width: 150px; height: 150px; object-fit: cover;">
+                {% else %}
+                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 150px; height: 150px;">
+                        <span class="text-white" style="font-size: 48px;">{{ profile.user.username|first|upper }}</span>
+                    </div>
+                {% endif %}
+                
+                <h3 class="card-title">{{ profile.user.username }}</h3>
+                
+                {% if profile.user.first_name or profile.user.last_name %}
+                    <p class="text-muted">{{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+                {% endif %}
+                
+                <p class="text-muted">
+                    <i class="fas fa-calendar-alt"></i> Membre depuis {{ profile.date_joined|date:"F Y" }}
+                </p>
+                
+                {% if profile.is_streamer %}
+                    <div class="badge badge-primary mb-2">Streamer</div>
+                {% endif %}
+                
+                {% if profile.twitch_username %}
+                    <p><a href="https://twitch.tv/{{ profile.twitch_username }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                        <i class="fab fa-twitch"></i> {{ profile.twitch_username }}
+                    </a></p>
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if user.is_authenticated and user.id == profile.user.id %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="{% url 'rastaaslan_app:edit_profile' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-user-edit"></i> Modifier mon profil
+                        </a>
+                        <a href="{% url 'rastaaslan_app:change_password' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-key"></i> Changer mon mot de passe
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Bio et statistiques -->
+    <div class="col-md-8">
+        <!-- Biographie -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">À propos</h5>
+            </div>
+            <div class="card-body">
+                {% if profile.bio %}
+                    <p>{{ profile.bio|linebreaks }}</p>
+                {% else %}
+                    <p class="text-muted">Cet utilisateur n'a pas encore ajouté de biographie.</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Statistiques du forum -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Activité sur le forum</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center mb-4">
+                    <div class="col-6">
+                        <h4>{{ forum_stats.topics_count }}</h4>
+                        <p class="text-muted">Sujets créés</p>
+                    </div>
+                    <div class="col-6">
+                        <h4>{{ forum_stats.posts_count }}</h4>
+                        <p class="text-muted">Messages publiés</p>
+                    </div>
+                </div>
+                
+                <!-- Derniers sujets -->
+                {% if forum_stats.recent_topics %}
+                    <h6>Derniers sujets créés</h6>
+                    <div class="list-group mb-4">
+                        {% for topic in forum_stats.recent_topics %}
+                            <a href="{% url 'rastaaslan_app:forum_topic' topic.category.slug topic.slug %}" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{ topic.title }}</h6>
+                                    <small>{{ topic.created_at|date:"d/m/Y" }}</small>
+                                </div>
+                                <small class="text-muted">
+                                    Dans <span class="badge badge-info">{{ topic.category.name }}</span>
+                                </small>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <!-- Derniers messages -->
+                {% if forum_stats.recent_posts %}
+                    <h6>Derniers messages publiés</h6>
+                    <div class="list-group">
+                        {% for post in forum_stats.recent_posts %}
+                            <a href="{{ post.get_absolute_url }}" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{ post.topic.title }}</h6>
+                                    <small>{{ post.created_at|date:"d/m/Y" }}</small>
+                                </div>
+                                <small class="text-muted">
+                                    Dans <span class="badge badge-info">{{ post.topic.category.name }}</span>
+                                </small>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

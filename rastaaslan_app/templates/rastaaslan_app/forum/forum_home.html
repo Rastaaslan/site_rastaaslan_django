@@ -1,0 +1,117 @@
+{% extends 'rastaaslan_app/base.html' %}
+
+{% block title %}Forum{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Forum</h1>
+    <div>
+        <a href="{% url 'rastaaslan_app:create_topic' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nouveau sujet
+        </a>
+    </div>
+</div>
+
+<!-- Barre de recherche -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form action="{% url 'rastaaslan_app:search_forum' %}" method="get" class="form-inline">
+            <div class="input-group w-100">
+                <input type="text" name="q" class="form-control" placeholder="Rechercher dans le forum..." required>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Rechercher
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Statistiques -->
+<div class="card mb-4">
+    <div class="card-body py-2">
+        <div class="row text-center">
+            <div class="col-md-3 col-6 py-2">
+                <i class="fas fa-comments fa-2x text-info mb-2"></i>
+                <h5>{{ stats.topics_count }}</h5>
+                <p class="mb-0">Sujets</p>
+            </div>
+            <div class="col-md-3 col-6 py-2">
+                <i class="fas fa-comment-dots fa-2x text-success mb-2"></i>
+                <h5>{{ stats.posts_count }}</h5>
+                <p class="mb-0">Messages</p>
+            </div>
+            <div class="col-md-3 col-6 py-2">
+                <i class="fas fa-users fa-2x text-warning mb-2"></i>
+                <h5>{{ stats.users_count }}</h5>
+                <p class="mb-0">Membres</p>
+            </div>
+            <div class="col-md-3 col-6 py-2">
+                <i class="fas fa-user-plus fa-2x text-primary mb-2"></i>
+                {% if stats.latest_user %}
+                    <h5>{{ stats.latest_user.user.username }}</h5>
+                    <p class="mb-0">Dernier inscrit</p>
+                {% else %}
+                    <h5>-</h5>
+                    <p class="mb-0">Dernier inscrit</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Liste des catégories -->
+{% for category in categories %}
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">
+            {% if category.icon %}
+                <i class="{{ category.icon }} mr-2"></i>
+            {% endif %}
+            <a href="{% url 'rastaaslan_app:forum_category' category.slug %}">{{ category.name }}</a>
+        </h5>
+        <a href="{% url 'rastaaslan_app:create_topic_category' category.slug %}" class="btn btn-sm btn-outline-primary">
+            <i class="fas fa-plus"></i> Nouveau sujet
+        </a>
+    </div>
+    <div class="card-body">
+        <p>{{ category.description }}</p>
+        
+        <div class="row text-center">
+            <div class="col-md-4 col-6 py-2">
+                <i class="fas fa-comments text-info"></i>
+                <p class="mb-0"><strong>{{ category.topics_count }}</strong> sujets</p>
+            </div>
+            <div class="col-md-4 col-6 py-2">
+                <i class="fas fa-comment-dots text-success"></i>
+                <p class="mb-0"><strong>{{ category.posts_count }}</strong> réponses</p>
+            </div>
+            <div class="col-md-4 py-2">
+                {% if category.last_post %}
+                    <i class="fas fa-clock text-warning"></i>
+                    <p class="mb-0">
+                        <a href="{{ category.last_post.get_absolute_url }}">
+                            {{ category.last_post.topic.title|truncatechars:30 }}
+                        </a>
+                        <br>
+                        <small class="text-muted">
+                            par {{ category.last_post.author.username }} 
+                            le {{ category.last_post.created_at|date:"d/m/Y H:i" }}
+                        </small>
+                    </p>
+                {% else %}
+                    <i class="fas fa-clock text-muted"></i>
+                    <p class="mb-0">Aucune activité récente</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="alert alert-info">
+    Aucune catégorie n'a encore été créée sur le forum.
+</div>
+{% endfor %}
+
+{% endblock %}

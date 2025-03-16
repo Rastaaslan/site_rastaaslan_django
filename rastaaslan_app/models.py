@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import URLValidator
 from django.utils.text import slugify
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class Video(models.Model):
@@ -43,7 +45,7 @@ class Video(models.Model):
     
     def get_absolute_url(self):
         """Retourne l'URL pour accéder à cette vidéo spécifique."""
-        return reverse('video_detail', args=[self.video_id])
+        return reverse('rastaaslan_app:video_detail', args=[self.video_id])
     
     def get_embed_url(self):
         """Retourne l'URL d'intégration appropriée selon le type de vidéo."""
@@ -81,3 +83,136 @@ class Video(models.Model):
         if video_type:
             queryset = queryset.filter(video_type=video_type)
         return queryset.order_by('-created_at')[:limit]
+
+
+class UserProfile(models.Model):
+    """
+    Modèle étendant l'utilisateur Django par défaut avec des informations supplémentaires
+    """
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    avatar = models.URLField("Avatar", blank=True, null=True, help_text="URL de votre avatar")
+    bio = models.TextField("Biographie", blank=True, max_length=500)
+    twitch_username = models.CharField("Nom d'utilisateur Twitch", max_length=25, blank=True)
+    is_streamer = models.BooleanField("Statut de streamer", default=False)
+    date_joined = models.DateTimeField("Date d'inscription", auto_now_add=True)
+    
+    class Meta:
+        verbose_name = "Profil utilisateur"
+        verbose_name_plural = "Profils utilisateurs"
+    
+    def __str__(self):
+        return f"Profil de {self.user.username}"
+    
+    def get_absolute_url(self):
+        return reverse('rastaaslan_app:profile', args=[self.user.username])
+
+
+class ForumCategory(models.Model):
+    """
+    Modèle pour les catégories du forum
+    """
+    name = models.CharField("Nom", max_length=100)
+    slug = models.SlugField("Slug", unique=True)
+    description = models.TextField("Description", blank=True)
+    icon = models.CharField("Icône Font Awesome", max_length=50, blank=True, 
+                           help_text="Classe CSS de l'icône Font Awesome (ex: fas fa-gamepad)")
+    order = models.IntegerField("Ordre d'affichage", default=0)
+    created_at = models.DateTimeField("Date de création", auto_now_add=True)
+    
+    class Meta:
+        verbose_name = "Catégorie du forum"
+        verbose_name_plural = "Catégories du forum"
+        ordering = ['order', 'name']
+    
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('rastaaslan_app:forum_category', args=[self.slug])
+    
+    def get_topic_count(self):
+        return self.topics.count()
+    
+    def get_post_count(self):
+        return ForumPost.objects.filter(topic__category=self).count()
+    
+    def get_last_post(self):
+        return ForumPost.objects.filter(topic__category=self).order_by('-created_at').first()
+
+
+class ForumTopic(models.Model):
+    """
+    Modèle pour les sujets du forum
+    """
+    title = models.CharField("Titre", max_length=255)
+    slug = models.SlugField("Slug", max_length=255, unique=True)
+    category = models.ForeignKey(ForumCategory, on_delete=models.CASCADE, related_name='topics')
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='forum_topics')
+    content = models.TextField("Contenu")
+    created_at = models.DateTimeField("Date de création", auto_now_add=True)
+    updated_at = models.DateTimeField("Date de mise à jour", auto_now=True)
+    is_pinned = models.BooleanField("Épinglé", default=False)
+    is_locked = models.BooleanField("Verrouillé", default=False)
+    views_count = models.PositiveIntegerField("Nombre de vues", default=0)
+    
+    class Meta:
+        verbose_name = "Sujet de forum"
+        verbose_name_plural = "Sujets de forum"
+        ordering = ['-is_pinned', '-created_at']
+    
+    def __str__(self):
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse('rastaaslan_app:forum_topic', args=[self.category.slug, self.slug])
+    
+    def get_post_count(self):
+        # Le compte inclut le post initial
+        return self.posts.count()
+    
+    def get_last_post(self):
+        return self.posts.order_by('-created_at').first()
+    
+    def increment_views(self):
+        self.views_count += 1
+        self.save(update_fields=['views_count'])
+
+
+class ForumPost(models.Model):
+    """
+    Modèle pour les messages du forum
+    """
+    topic = models.ForeignKey(ForumTopic, on_delete=models.CASCADE, related_name='posts')
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='forum_posts')
+    content = models.TextField("Contenu")
+    created_at = models.DateTimeField("Date de création", auto_now_add=True)
+    updated_at = models.DateTimeField("Date de mise à jour", auto_now=True)
+    is_edited = models.BooleanField("Édité", default=False)
+    
+    class Meta:
+        verbose_name = "Message du forum"
+        verbose_name_plural = "Messages du forum"
+        ordering = ['created_at']
+    
+    def __str__(self):
+        return f"Message de {self.author.username} dans {self.topic.title}"
+    
+    def save(self, *args, **kwargs):
+        # Marquer comme édité si ce n'est pas une création
+        if self.pk and not self.is_edited:
+            self.is_edited = True
+        
+        super().save(*args, **kwargs)
+        
+        # Mettre à jour la date de mise à jour du sujet
+        if self.topic:
+            self.topic.updated_at = timezone.now()
+            self.topic.save(update_fields=['updated_at'])
+    
+    def get_absolute_url(self):
+        return f"{self.topic.get_absolute_url()}#post-{self.id}"

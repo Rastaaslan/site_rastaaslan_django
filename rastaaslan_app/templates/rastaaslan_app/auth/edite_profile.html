@@ -1,0 +1,100 @@
+{% extends 'rastaaslan_app/base.html' %}
+
+{% block title %}Modification du profil{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h1 class="h4 mb-0">Modifier mon profil</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+                    
+                    <h5 class="mb-3">Informations personnelles</h5>
+                    
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.first_name.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                            <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.last_name.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.email.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <h5 class="mt-4 mb-3">Profil public</h5>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.avatar.id_for_label }}">{{ form.avatar.label }}</label>
+                        {{ form.avatar }}
+                        {% if form.avatar.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.avatar.errors }}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            Entrez l'URL d'une image pour votre avatar (laissez vide pour utiliser l'avatar par défaut).
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.bio.id_for_label }}">{{ form.bio.label }}</label>
+                        {{ form.bio }}
+                        {% if form.bio.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.bio.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.twitch_username.id_for_label }}">{{ form.twitch_username.label }}</label>
+                        {{ form.twitch_username }}
+                        {% if form.twitch_username.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.twitch_username.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                        <a href="{% url 'rastaaslan_app:profile' %}" class="btn btn-outline-secondary ml-2">Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
