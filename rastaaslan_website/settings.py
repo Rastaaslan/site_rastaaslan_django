@@ -209,3 +209,6 @@ LOGGING = {
         },
     },
 }
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20971520  # 20 Mo en octets
+FILE_UPLOAD_MAX_MEMORY_SIZE = 20971520  # 20 Mo en octets
