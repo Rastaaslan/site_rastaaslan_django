@@ -1,4 +1,4 @@
-<!-- base.html -->
+<!-- Modification de rastaaslan_app/templates/rastaaslan_app/base.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,70 +17,7 @@
     
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'rastaaslan_app:home' %}">Rastaaslan</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <div class="burger-icon">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'rastaaslan_app:home' %}">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if 'vods' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:vods' %}">VODs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if 'clips' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:clips' %}">Clips</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if 'live' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:live' %}">Live</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if 'forum' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:forum_home' %}">Forum</a>
-                    </li>
-                </ul>
-                
-                <!-- Menu utilisateur -->
-                <ul class="navbar-nav ml-auto">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user-circle mr-1"></i> {{ user.username }}
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{% url 'rastaaslan_app:profile' %}">
-                                    <i class="fas fa-user mr-2"></i> Mon profil
-                                </a>
-                                <a class="dropdown-item" href="{% url 'rastaaslan_app:edit_profile' %}">
-                                    <i class="fas fa-user-edit mr-2"></i> Modifier profil
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{% url 'rastaaslan_app:logout' %}">
-                                    <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion
-                                </a>
-                            </div>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if 'login' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:login' %}">Connexion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if 'register' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:register' %}">Inscription</a>
-                        </li>
-                    {% endif %}
-                </ul>
-                
-                <!-- Bouton de thème avec Font Awesome -->
-                <a class="nav-link" href="#" id="theme-toggle" title="Changer de thème">
-                    <i class="fas fa-moon" id="theme-icon"></i>
-                </a>
-            </div>
-        </div>
+        <!-- Contenu de la navigation... -->
     </nav>
 
     <div class="container mt-4">
@@ -99,156 +36,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
-    <!-- Script consolidé -->
-    <script>
-    $(document).ready(function(){
-        // 1. Gestion du thème clair/sombre avec effet de transition
-        function setTheme(themeName) {
-            // Créer un effet de flash pour la transition
-            const flash = document.createElement('div');
-            flash.className = 'theme-transition-flash';
-            document.body.appendChild(flash);
-            
-            // Appliquer le thème explicitement
-            document.documentElement.setAttribute('data-theme', themeName);
-            document.documentElement.style.backgroundColor = 
-                themeName === 'dark' ? '#1a1a2e' : '#F8F3E6';
-                
-            // Mettre à jour l'arrière-plan
-            document.querySelector('.theme-background').style.backgroundColor = 
-                themeName === 'dark' ? '#1a1a2e' : '#F8F3E6';
-            
-            // Stockage local
-            localStorage.setItem('theme', themeName);
-            
-            // Mettre à jour l'icône
-            if (themeName === 'dark') {
-                $('#theme-icon').removeClass('fa-moon').addClass('fa-sun');
-            } else {
-                $('#theme-icon').removeClass('fa-sun').addClass('fa-moon');
-            }
-            
-            // Supprimer l'élément de flash après l'animation
-            setTimeout(() => {
-                document.body.removeChild(flash);
-            }, 500);
-            
-            console.log("Thème changé à:", themeName);
-        }
-        
-        // Initialiser le thème
-        function initTheme() {
-            if (localStorage.getItem('theme') === 'dark') {
-                setTheme('dark');
-            } else if (localStorage.getItem('theme') === 'light') {
-                setTheme('light');
-            } else {
-                // Préférence système par défaut
-                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    setTheme('dark');
-                } else {
-                    setTheme('light');
-                }
-            }
-        }
-        
-        // Initialiser le thème au chargement
-        initTheme();
-        
-        // Changer de thème au clic avec un effet plus subtil
-        $('#theme-toggle').on('click', function(e) {
-            e.preventDefault();
-            
-            // Désactiver le bouton pendant la transition pour éviter les clics multiples
-            $(this).css('pointer-events', 'none');
-            
-            if (localStorage.getItem('theme') === 'dark') {
-                setTheme('light');
-            } else {
-                setTheme('dark');
-            }
-            
-            // Réactiver le bouton après la transition
-            setTimeout(() => {
-                $(this).css('pointer-events', 'auto');
-            }, 500);
-        });
-        
-        // 2. Gestion du menu burger
-        $('.navbar-toggler').on('click', function(){
-            var isExpanded = $(this).attr('aria-expanded') === 'true';
-            
-            if (isExpanded) {
-                $(this).attr('aria-expanded', 'false');
-            } else {
-                $(this).attr('aria-expanded', 'true');
-            }
-        });
-        
-        // Fermer le menu sur mobile quand on clique sur un lien
-        $('.navbar-nav a.nav-link').on('click', function(){
-            if (window.innerWidth < 992) {
-                $('.navbar-collapse').collapse('hide');
-            }
-        });
-        
-        // 3. Gestion des carrousels
-        var $carousels = $('.carousel');
-        if ($carousels.length > 0) {
-            console.log("Initialisation des carrousels, nombre trouvé:", $carousels.length);
-            
-            $carousels.each(function() {
-                var $carousel = $(this);
-                var carouselId = $carousel.attr('id') || 'carousel-sans-id';
-                console.log("Initialisation du carrousel:", carouselId);
-                
-                // Réinitialiser explicitement chaque carrousel
-                $carousel.carousel({
-                    interval: 5000
-                });
-                
-                // Vérifier si c'est un carrousel centré
-                if ($carousel.hasClass('center-card-carousel')) {
-                    console.log("Carrousel centré détecté:", carouselId);
-                    
-                    // Gestion spécifique au carrousel centré
-                    function positionCenteredItems() {
-                        var $items = $carousel.find('.carousel-item');
-                        var $active = $carousel.find('.carousel-item.active');
-                        
-                        if ($active.length === 0 || $items.length <= 1) {
-                            console.log("Carrousel", carouselId, ": pas d'élément actif ou un seul élément");
-                            return;
-                        }
-                        
-                        var activeIndex = $active.index();
-                        var total = $items.length;
-                        
-                        $items.removeClass('left right');
-                        
-                        var leftIndex = (activeIndex - 1 + total) % total;
-                        $items.eq(leftIndex).addClass('left');
-                        
-                        var rightIndex = (activeIndex + 1) % total;
-                        $items.eq(rightIndex).addClass('right');
-                        
-                        console.log("Carrousel", carouselId, "positionné - active:", activeIndex, "left:", leftIndex, "right:", rightIndex);
-                    }
-                    
-                    // Appeler immédiatement et lors des transitions
-                    setTimeout(positionCenteredItems, 100); // Délai court pour s'assurer que le DOM est à jour
-                    $carousel.on('slid.bs.carousel', positionCenteredItems);
-                    
-                    // Vérifier après 500ms au cas où l'initialisation était retardée
-                    setTimeout(positionCenteredItems, 500);
-                }
-            });
-            
-            console.log("Tous les carrousels ont été initialisés");
-        } else {
-            console.log("Aucun carrousel trouvé sur cette page");
-        }
-    });
-    </script>
+    <!-- Scripts factorisés -->
+    <script src="{% static 'js/theme.js' %}?v=1.0"></script>
+    <script src="{% static 'js/carousel.js' %}?v=1.0"></script>
+    <script src="{% static 'js/horizontal-scroll.js' %}?v=1.0"></script>
+    
+    <!-- Scripts spécifiques à la page -->
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

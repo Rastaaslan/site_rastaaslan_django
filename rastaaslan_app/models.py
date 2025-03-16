@@ -3,6 +3,8 @@ from django.core.validators import URLValidator
 from django.utils.text import slugify
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 
 
@@ -104,7 +106,22 @@ class UserProfile(models.Model):
         return f"Profil de {self.user.username}"
     
     def get_absolute_url(self):
-        return reverse('rastaaslan_app:profile', args=[self.user.username])
+        return reverse('rastaaslan_app:profile_user', args=[self.user.username])
+
+    @property
+    def forum_activity(self):
+        """Retourne les statistiques d'activité du forum pour cet utilisateur"""
+        return {
+            'topics_count': self.user.forum_topics.count(),
+            'posts_count': self.user.forum_posts.count()
+        }
+
+
+# Signal pour créer automatiquement un profil lorsqu'un utilisateur est créé
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
 
 
 class ForumCategory(models.Model):
@@ -139,6 +156,12 @@ class ForumCategory(models.Model):
     def get_last_post(self):
         return ForumPost.objects.filter(topic__category=self).order_by('-created_at').first()
 
+    def save(self, *args, **kwargs):
+        # Générer un slug automatiquement si non fourni
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
 
 class ForumTopic(models.Model):
     """
@@ -159,6 +182,10 @@ class ForumTopic(models.Model):
         verbose_name = "Sujet de forum"
         verbose_name_plural = "Sujets de forum"
         ordering = ['-is_pinned', '-created_at']
+        indexes = [
+            models.Index(fields=['category', 'created_at']),
+            models.Index(fields=['is_pinned', 'created_at']),
+        ]
     
     def __str__(self):
         return self.title
@@ -166,6 +193,14 @@ class ForumTopic(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
+            
+            # Assurer l'unicité du slug
+            counter = 1
+            original_slug = self.slug
+            while ForumTopic.objects.filter(slug=self.slug).exists():
+                self.slug = f"{original_slug}-{counter}"
+                counter += 1
+                
         super().save(*args, **kwargs)
     
     def get_absolute_url(self):
@@ -179,8 +214,15 @@ class ForumTopic(models.Model):
         return self.posts.order_by('-created_at').first()
     
     def increment_views(self):
+        # Note: Cette méthode est remplacée par une approche plus sûre avec F() dans les vues
         self.views_count += 1
         self.save(update_fields=['views_count'])
+        
+    @property
+    def reply_count(self):
+        """Nombre de réponses (excluant le post initial)"""
+        count = self.posts.count() - 1
+        return max(0, count)  # Assurer que le résultat n'est jamais négatif
 
 
 class ForumPost(models.Model):
@@ -198,9 +240,12 @@ class ForumPost(models.Model):
         verbose_name = "Message du forum"
         verbose_name_plural = "Messages du forum"
         ordering = ['created_at']
+        indexes = [
+            models.Index(fields=['topic', 'created_at']),
+        ]
     
     def __str__(self):
-        return f"Message de {self.author.username} dans {self.topic.title}"
+        return f"Message de {self.author.username if self.author else 'utilisateur supprimé'} dans {self.topic.title}"
     
     def save(self, *args, **kwargs):
         # Marquer comme édité si ce n'est pas une création
@@ -211,8 +256,13 @@ class ForumPost(models.Model):
         
         # Mettre à jour la date de mise à jour du sujet
         if self.topic:
-            self.topic.updated_at = timezone.now()
-            self.topic.save(update_fields=['updated_at'])
+            # Utiliser update pour éviter les problèmes de concurrence
+            ForumTopic.objects.filter(pk=self.topic.pk).update(updated_at=timezone.now())
     
     def get_absolute_url(self):
         return f"{self.topic.get_absolute_url()}#post-{self.id}"
+
+    @property
+    def is_first_post(self):
+        """Vérifie si ce post est le premier du sujet"""
+        return self == self.topic.posts.order_by('created_at').first()
