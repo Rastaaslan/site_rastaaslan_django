@@ -1,0 +1,51 @@
+{% extends 'rastaaslan_app/base.html' %}
+
+{% block title %}Modifier un message - Forum{% endblock %}
+
+{% block content %}
+<!-- Fil d'Ariane -->
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'rastaaslan_app:forum_home' %}">Forum</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'rastaaslan_app:forum_category' post.topic.category.slug %}">{{ post.topic.category.name }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'rastaaslan_app:forum_topic' post.topic.category.slug post.topic.slug %}">{{ post.topic.title }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Modifier le message</li>
+    </ol>
+</nav>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h1 class="h4 mb-0">Modifier le message</h1>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            
+            <div class="form-group">
+                <label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label>
+                {{ form.content }}
+                {% if form.content.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.content.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Enregistrer les modifications
+                </button>
+                <a href="{{ post.get_absolute_url }}" class="btn btn-outline-secondary ml-2">
+                    Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

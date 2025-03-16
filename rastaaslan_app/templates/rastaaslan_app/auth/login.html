@@ -1,0 +1,58 @@
+{% extends 'rastaaslan_app/base.html' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h1 class="h4 mb-0">Connexion</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.username.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.password.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="remember-me" name="remember">
+                        <label class="form-check-label" for="remember-me">Se souvenir de moi</label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Se connecter</button>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <p class="mb-0">Pas de compte ? <a href="{% url 'rastaaslan_app:register' %}">Inscrivez-vous</a></p>
+                <!-- Optionnel : Lien de récupération de mot de passe -->
+                <!-- <p class="mt-2 mb-0"><a href="#">Mot de passe oublié ?</a></p> -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

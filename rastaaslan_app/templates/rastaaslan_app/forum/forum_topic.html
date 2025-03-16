@@ -1,0 +1,200 @@
+{% extends 'rastaaslan_app/base.html' %}
+
+{% block title %}{{ topic.title }} - Forum{% endblock %}
+
+{% block content %}
+<!-- Fil d'Ariane -->
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'rastaaslan_app:forum_home' %}">Forum</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'rastaaslan_app:forum_category' topic.category.slug %}">{{ topic.category.name }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ topic.title }}</li>
+    </ol>
+</nav>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>{{ topic.title }}</h1>
+    <div>
+        {% if user.is_authenticated %}
+            {% if not topic.is_locked or user.is_staff %}
+                <a href="#reply-form" class="btn btn-primary">
+                    <i class="fas fa-reply"></i> Répondre
+                </a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'rastaaslan_app:login' %}?next={{ request.path }}" class="btn btn-outline-primary">
+                <i class="fas fa-sign-in-alt"></i> Connectez-vous pour répondre
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Indicateurs de statut -->
+<div class="mb-4">
+    {% if topic.is_pinned %}
+        <span class="badge badge-danger">
+            <i class="fas fa-thumbtack"></i> Épinglé
+        </span>
+    {% endif %}
+    
+    {% if topic.is_locked %}
+        <span class="badge badge-warning">
+            <i class="fas fa-lock"></i> Verrouillé
+        </span>
+    {% endif %}
+    
+    <span class="badge badge-info">
+        <i class="fas fa-folder"></i> {{ topic.category.name }}
+    </span>
+    
+    <span class="badge badge-secondary">
+        <i class="fas fa-eye"></i> {{ topic.views_count }} vues
+    </span>
+    
+    <span class="badge badge-secondary">
+        <i class="fas fa-comments"></i> {{ posts.paginator.count }} messages
+    </span>
+</div>
+
+<!-- Messages -->
+{% for post in posts %}
+    <div class="card mb-4" id="post-{{ post.id }}">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <a href="{% url 'rastaaslan_app:profile_user' post.author.username %}">
+                    <strong>{{ post.author.username }}</strong>
+                </a>
+                {% if post.author.is_staff %}
+                    <span class="badge badge-danger ml-1">Admin</span>
+                {% endif %}
+            </div>
+            <div class="text-muted small">
+                {{ post.created_at|date:"d/m/Y H:i" }}
+                {% if post.is_edited %}
+                    <span class="ml-2">(Modifié)</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-body">
+            {{ post.content|linebreaks }}
+        </div>
+        {% if user.is_authenticated and not topic.is_locked or user.is_staff %}
+            <div class="card-footer text-right">
+                <!-- Actions -->
+                {% if user.is_staff or post.author == user %}
+                    <a href="{% url 'rastaaslan_app:edit_post' post.id %}" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-edit"></i> Modifier
+                    </a>
+                    <a href="{% url 'rastaaslan_app:delete_post' post.id %}" class="btn btn-sm btn-outline-danger" 
+                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce message ?');">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </a>
+                {% endif %}
+                <a href="#reply-form" class="btn btn-sm btn-outline-secondary" 
+                   onclick="document.getElementById('id_content').value += '@{{ post.author.username }}: ';">
+                    <i class="fas fa-reply"></i> Citer
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}
+
+<!-- Pagination -->
+{% if posts.has_other_pages %}
+    <nav aria-label="Pagination des messages">
+        <ul class="pagination justify-content-center">
+            {% if posts.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="Première page">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Page précédente">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&laquo;&laquo;</span>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                </li>
+            {% endif %}
+            
+            {% for i in posts.paginator.page_range %}
+                {% if posts.number == i %}
+                    <li class="page-item active">
+                        <span class="page-link">
+                            {{ i }}
+                            <span class="sr-only">(current)</span>
+                        </span>
+                    </li>
+                {% elif i > posts.number|add:'-3' and i < posts.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if posts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Page suivante">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.paginator.num_pages }}" aria-label="Dernière page">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&raquo;</span>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&raquo;&raquo;</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+
+<!-- Formulaire de réponse -->
+{% if user.is_authenticated and not topic.is_locked or user.is_staff %}
+    <div class="card mb-4" id="reply-form">
+        <div class="card-header">
+            <h5 class="mb-0">Répondre au sujet</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+                
+                <div class="form-group">
+                    {{ form.content }}
+                    {% if form.content.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ form.content.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Envoyer ma réponse
+                </button>
+            </form>
+        </div>
+    </div>
+{% elif topic.is_locked and user.is_authenticated %}
+    <div class="alert alert-warning">
+        <i class="fas fa-lock"></i> Ce sujet est verrouillé et n'accepte plus de nouvelles réponses.
+    </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,62 @@
+[
+    {
+      "model": "rastaaslan_app.forumcategory",
+      "pk": 1,
+      "fields": {
+        "name": "Général",
+        "slug": "general",
+        "description": "Discussions générales sur Rastaaslan et la communauté",
+        "icon": "fas fa-comments",
+        "order": 1,
+        "created_at": "2025-03-16T14:45:00Z"
+      }
+    },
+    {
+      "model": "rastaaslan_app.forumcategory",
+      "pk": 2,
+      "fields": {
+        "name": "Gaming",
+        "slug": "gaming",
+        "description": "Discussions sur les jeux vidéo et le streaming gaming",
+        "icon": "fas fa-gamepad",
+        "order": 2,
+        "created_at": "2025-03-16T14:45:00Z"
+      }
+    },
+    {
+      "model": "rastaaslan_app.forumcategory",
+      "pk": 3,
+      "fields": {
+        "name": "Suggestions",
+        "slug": "suggestions",
+        "description": "Suggestions pour améliorer le stream ou le site web",
+        "icon": "fas fa-lightbulb",
+        "order": 3,
+        "created_at": "2025-03-16T14:45:00Z"
+      }
+    },
+    {
+      "model": "rastaaslan_app.forumcategory",
+      "pk": 4,
+      "fields": {
+        "name": "Questions & Réponses",
+        "slug": "questions-reponses",
+        "description": "Posez vos questions à la communauté ou au streamer",
+        "icon": "fas fa-question-circle",
+        "order": 4,
+        "created_at": "2025-03-16T14:45:00Z"
+      }
+    },
+    {
+      "model": "rastaaslan_app.forumcategory",
+      "pk": 5,
+      "fields": {
+        "name": "Événements",
+        "slug": "evenements",
+        "description": "Annonces et discussions sur les événements à venir",
+        "icon": "fas fa-calendar-alt",
+        "order": 5,
+        "created_at": "2025-03-16T14:45:00Z"
+      }
+    }
+  ]

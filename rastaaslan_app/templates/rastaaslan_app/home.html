@@ -49,4 +49,36 @@
         </div>
     {% endfor %}
 </div>
+
+<!-- Derniers sujets du forum -->
+<h2>Discussions récentes</h2>
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Derniers sujets du forum</h5>
+        <a href="{% url 'rastaaslan_app:forum_home' %}" class="btn btn-sm btn-outline-primary">
+            Voir tous les sujets
+        </a>
+    </div>
+    <div class="list-group list-group-flush">
+        {% for topic in latest_topics %}
+            <a href="{% url 'rastaaslan_app:forum_topic' topic.category.slug topic.slug %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1">{{ topic.title }}</h6>
+                    <small>{{ topic.created_at|date:"d/m/Y" }}</small>
+                </div>
+                <p class="mb-1 text-muted small">{{ topic.content|truncatechars:100 }}</p>
+                <small>
+                    Par {{ topic.author.username }} dans <span class="badge badge-info">{{ topic.category.name }}</span>
+                </small>
+            </a>
+        {% empty %}
+            <div class="list-group-item text-center py-3">
+                <p class="mb-0">Aucun sujet disponible pour le moment.</p>
+                <a href="{% url 'rastaaslan_app:create_topic' %}" class="btn btn-sm btn-primary mt-2">
+                    Créer le premier sujet
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

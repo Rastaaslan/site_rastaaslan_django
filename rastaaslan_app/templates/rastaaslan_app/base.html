@@ -40,7 +40,41 @@
                     <li class="nav-item">
                         <a class="nav-link {% if 'live' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:live' %}">Live</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'forum' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:forum_home' %}">Forum</a>
+                    </li>
                 </ul>
+                
+                <!-- Menu utilisateur -->
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user-circle mr-1"></i> {{ user.username }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{% url 'rastaaslan_app:profile' %}">
+                                    <i class="fas fa-user mr-2"></i> Mon profil
+                                </a>
+                                <a class="dropdown-item" href="{% url 'rastaaslan_app:edit_profile' %}">
+                                    <i class="fas fa-user-edit mr-2"></i> Modifier profil
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'rastaaslan_app:logout' %}">
+                                    <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion
+                                </a>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'login' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:login' %}">Connexion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'register' in request.path %}active{% endif %}" href="{% url 'rastaaslan_app:register' %}">Inscription</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                
                 <!-- Bouton de thème avec Font Awesome -->
                 <a class="nav-link" href="#" id="theme-toggle" title="Changer de thème">
                     <i class="fas fa-moon" id="theme-icon"></i>
@@ -50,6 +84,8 @@
     </nav>
 
     <div class="container mt-4">
+        {% include 'rastaaslan_app/includes/messages.html' %}
+        
         {% block content %}
         <!-- Contenu dynamique ici -->
         {% endblock %}
