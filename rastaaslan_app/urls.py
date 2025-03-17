@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 
 # Import direct des vues sans utiliser les imports du fichier __init__.py
 from .views.video_views import home, live_view, vods_view, clips_view, video_detail
-from .views.auth_views import register, login_view, profile_view, edit_profile, change_password, twitch_login, twitch_callback
+from .views.auth_views import register, login_view, profile_view, my_profile_view, edit_profile, change_password, twitch_login, twitch_callback
 from .views.forum_views import (
     forum_home, forum_category, forum_topic, create_topic, 
     edit_post, delete_post, search_forum, react_to_post, preview_markdown
@@ -34,7 +34,7 @@ urlpatterns = [
     path('profile/edit/', edit_profile, name='edit_profile'),
     path('profile/change-password/', change_password, name='change_password'),
     path('profile/<str:username>/', profile_view, name='profile_user'),
-    path('profile/', profile_view, name='profile'),
+    path('profile/', my_profile_view, name='profile'),  # Utiliser directement my_profile_view ici
     
     # Forum
     path('forum/', forum_home, name='forum_home'),

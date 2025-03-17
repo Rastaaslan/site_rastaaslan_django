@@ -74,15 +74,9 @@ def my_profile_view(request):
     
     return render(request, 'rastaaslan_app/auth/profile.html', context)
 
-def profile_view(request, username=None):
+@login_required
+def profile_view(request, username):
     """Vue pour afficher un profil utilisateur"""
-    # Si username est None, vérifier que l'utilisateur est connecté
-    if username is None:
-        if not request.user.is_authenticated:
-            # Rediriger vers la page de connexion avec next=profile
-            return redirect(f"{reverse('rastaaslan_app:login')}?next={reverse('rastaaslan_app:profile')}")
-        return my_profile_view(request)
-        
     # Profil d'un autre utilisateur
     user_profile = get_object_or_404(UserProfile, user__username=username)
     
