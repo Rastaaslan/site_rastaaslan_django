@@ -227,7 +227,6 @@ class ForumTopic(models.Model):
         count = self.posts.count() - 1
         return max(0, count)  # Assurer que le résultat n'est jamais négatif
 
-    @property
     def has_unread_posts(self, user):
         """Vérifie si un utilisateur a des messages non lus dans ce sujet"""
         if not user.is_authenticated:
