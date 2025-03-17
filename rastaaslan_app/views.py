@@ -3,8 +3,8 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.conf import settings
 from django.core.cache import cache
-from ..models import Video, ForumTopic
-from ..twitch_utils import fetch_and_update_videos, get_stream_status
+from .models import Video, ForumTopic
+from .twitch_utils import fetch_and_update_videos, get_stream_status
 
 # Configuration du logger
 logger = logging.getLogger(__name__)
