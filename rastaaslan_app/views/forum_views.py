@@ -156,7 +156,9 @@ def forum_category(request, category_slug):
     # Ajouter des informations additionnelles pour chaque sujet
     topics = list(topics_queryset)
     for topic in topics:
-        topic.reply_count = topic.posts.count() - 1  # Exclut le post initial
+        # Utiliser la propriété reply_count au lieu de l'assigner
+        # Ne plus faire : topic.reply_count = topic.posts.count() - 1
+        
         topic.last_post = topic.posts.order_by('-created_at').first()
         
         # Vérifier si le sujet a des messages non lus pour l'utilisateur connecté
@@ -212,6 +214,7 @@ def forum_topic(request, category_slug, topic_slug):
     form = None
     if request.user.is_authenticated and (not topic.is_locked or request.user.is_staff):
         if request.method == 'POST':
+            from ..forms import ForumPostForm
             form = ForumPostForm(request.POST)
             if form.is_valid():
                 # Vérifier la limite de débit
