@@ -53,14 +53,31 @@ def login_view(request):
     return render(request, 'rastaaslan_app/auth/login.html', {'form': form})
 
 @login_required
-def profile_view(request, username=None):
+def my_profile_view(request):
+    """Vue pour afficher le profil de l'utilisateur connecté"""
+    # Récupérer le profil de l'utilisateur connecté
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+    
+    # Obtenir les statistiques du forum pour l'utilisateur
+    forum_stats = {
+        'topics_count': ForumTopic.objects.filter(author=user_profile.user).count(),
+        'posts_count': ForumPost.objects.filter(author=user_profile.user).count(),
+        'recent_topics': ForumTopic.objects.filter(author=user_profile.user).order_by('-created_at')[:5],
+        'recent_posts': ForumPost.objects.filter(author=user_profile.user).select_related('topic').order_by('-created_at')[:5]
+    }
+    
+    context = {
+        'profile': user_profile,
+        'forum_stats': forum_stats,
+    }
+    
+    return render(request, 'rastaaslan_app/auth/profile.html', context)
+
+@login_required
+def profile_view(request, username):
     """Vue pour afficher un profil utilisateur"""
-    if username:
-        # Profil d'un autre utilisateur
-        user_profile = get_object_or_404(UserProfile, user__username=username)
-    else:
-        # Profil de l'utilisateur connecté
-        user_profile = get_object_or_404(UserProfile, user=request.user)
+    # Profil d'un autre utilisateur
+    user_profile = get_object_or_404(UserProfile, user__username=username)
     
     # Obtenir les statistiques du forum pour l'utilisateur
     forum_stats = {
@@ -87,7 +104,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Votre profil a été mis à jour avec succès !")
-            return redirect('rastaaslan_app:profile')
+            return redirect('rastaaslan_app:my_profile')
     else:
         form = UserProfileForm(instance=profile)
     
@@ -103,7 +120,7 @@ def change_password(request):
             # Maintenir la session active après le changement de mot de passe
             update_session_auth_hash(request, user)
             messages.success(request, "Votre mot de passe a été changé avec succès !")
-            return redirect('rastaaslan_app:profile')
+            return redirect('rastaaslan_app:my_profile')
     else:
         form = CustomPasswordChangeForm(request.user)
     

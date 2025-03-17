@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from markdown import markdown
+import bleach
+import re
 
 
 class Video(models.Model):
@@ -224,6 +227,34 @@ class ForumTopic(models.Model):
         count = self.posts.count() - 1
         return max(0, count)  # Assurer que le résultat n'est jamais négatif
 
+    def has_unread_posts(self, user):
+        """Vérifie si un utilisateur a des messages non lus dans ce sujet"""
+        if not user.is_authenticated:
+            return False
+            
+        # Vérifier si l'utilisateur a déjà consulté ce sujet
+        topic_view = UserTopicView.objects.filter(user=user, topic=self).first()
+        if not topic_view:
+            return True  # Jamais consulté = non lu
+            
+        # Vérifier s'il y a des nouveaux messages depuis la dernière consultation
+        return self.posts.filter(created_at__gt=topic_view.last_viewed).exists()
+
+
+class UserTopicView(models.Model):
+    """Garde une trace de quand un utilisateur a vu un sujet"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='topic_views')
+    topic = models.ForeignKey(ForumTopic, on_delete=models.CASCADE, related_name='user_views')
+    last_viewed = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ('user', 'topic')
+        verbose_name = "Vue de sujet par utilisateur"
+        verbose_name_plural = "Vues de sujets par utilisateurs"
+        
+    def __str__(self):
+        return f"{self.user.username} - {self.topic.title}"
+
 
 class ForumPost(models.Model):
     """
@@ -235,6 +266,7 @@ class ForumPost(models.Model):
     created_at = models.DateTimeField("Date de création", auto_now_add=True)
     updated_at = models.DateTimeField("Date de mise à jour", auto_now=True)
     is_edited = models.BooleanField("Édité", default=False)
+    mentioned_users = models.ManyToManyField(User, related_name='post_mentions', blank=True, verbose_name="Utilisateurs mentionnés")
     
     class Meta:
         verbose_name = "Message du forum"
@@ -248,11 +280,17 @@ class ForumPost(models.Model):
         return f"Message de {self.author.username if self.author else 'utilisateur supprimé'} dans {self.topic.title}"
     
     def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        
         # Marquer comme édité si ce n'est pas une création
         if self.pk and not self.is_edited:
             self.is_edited = True
         
         super().save(*args, **kwargs)
+        
+        # Traiter les mentions
+        if is_new or self.is_edited:
+            self.process_mentions()
         
         # Mettre à jour la date de mise à jour du sujet
         if self.topic:
@@ -266,3 +304,60 @@ class ForumPost(models.Model):
     def is_first_post(self):
         """Vérifie si ce post est le premier du sujet"""
         return self == self.topic.posts.order_by('created_at').first()
+        
+    @property
+    def content_html(self):
+        """Convertit le contenu Markdown en HTML sécurisé"""
+        allowed_tags = [
+            'a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i', 'li',
+            'ol', 'ul', 'p', 'strong', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            'pre', 'span', 'img', 'br', 'hr'
+        ]
+        allowed_attrs = {
+            'a': ['href', 'title', 'rel'],
+            'img': ['src', 'alt', 'title', 'width', 'height']
+        }
+        
+        html = markdown(self.content, extensions=['extra', 'nl2br', 'sane_lists'])
+        clean_html = bleach.clean(html, tags=allowed_tags, attributes=allowed_attrs)
+        return clean_html
+        
+    def process_mentions(self):
+        """Extrait et traite les mentions (@username)"""
+        mention_pattern = r'@(\w+)'
+        usernames = re.findall(mention_pattern, self.content)
+        
+        # Effacer les anciennes mentions
+        self.mentioned_users.clear()
+        
+        # Ajouter les nouvelles mentions
+        for username in set(usernames):  # Utiliser un set pour éviter les doublons
+            try:
+                user = User.objects.get(username=username)
+                self.mentioned_users.add(user)
+                # Envoyer notification (géré par le système de notifications)
+            except User.DoesNotExist:
+                pass
+
+
+class PostReaction(models.Model):
+    """Réactions sur les messages du forum (like, merci, etc.)"""
+    REACTION_TYPES = [
+        ('like', '👍 Like'),
+        ('thanks', '🙏 Merci'),
+        ('funny', '😂 Drôle'),
+        ('insightful', '💡 Pertinent'),
+    ]
+    
+    post = models.ForeignKey(ForumPost, on_delete=models.CASCADE, related_name='reactions')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_reactions')
+    reaction_type = models.CharField(max_length=20, choices=REACTION_TYPES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ('post', 'user', 'reaction_type')
+        verbose_name = "Réaction à un message"
+        verbose_name_plural = "Réactions aux messages"
+        
+    def __str__(self):
+        return f"{self.user.username} a réagi avec {self.get_reaction_type_display()} au message de {self.post.author.username}"

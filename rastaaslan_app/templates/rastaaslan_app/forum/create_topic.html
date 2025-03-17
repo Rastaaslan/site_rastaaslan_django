@@ -1,6 +1,56 @@
 {% extends 'rastaaslan_app/base.html' %}
+{% load static %}
 
 {% block title %}Nouveau sujet - Forum{% endblock %}
+
+{% block extra_css %}
+<!-- Ajout de CSS pour le support Markdown et la prévisualisation -->
+<style>
+    .markdown-content {
+        line-height: 1.6;
+    }
+    .markdown-content img {
+        max-width: 100%;
+    }
+    .markdown-content blockquote {
+        border-left: 3px solid var(--accent-color);
+        padding-left: 1rem;
+        color: var(--text-secondary);
+        font-style: italic;
+    }
+    .markdown-content code {
+        background-color: rgba(0, 0, 0, 0.05);
+        padding: 2px 4px;
+        border-radius: 3px;
+    }
+    .markdown-content pre {
+        background-color: rgba(0, 0, 0, 0.05);
+        padding: 1rem;
+        border-radius: 5px;
+        overflow-x: auto;
+    }
+    
+    /* Style pour la prévisualisation Markdown */
+    .preview-container {
+        border: 1px solid var(--card-border);
+        border-radius: 0.25rem;
+        padding: 1rem;
+        margin-top: 1rem;
+        background: var(--bg-secondary);
+    }
+    
+    .preview-toggle {
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        user-select: none;
+    }
+    
+    .post-mention {
+        color: var(--accent-color);
+        font-weight: 500;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
 <!-- Fil d'Ariane -->
@@ -8,7 +58,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'rastaaslan_app:forum_home' %}">Forum</a></li>
         {% if category_slug %}
-            <li class="breadcrumb-item"><a href="{% url 'rastaaslan_app:forum_category' category_slug %}">{{ form.category.value }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'rastaaslan_app:forum_category' category_slug %}">{{ form.category.initial.name }}</a></li>
         {% endif %}
         <li class="breadcrumb-item active" aria-current="page">Nouveau sujet</li>
     </ol>
@@ -19,7 +69,7 @@
         <h1 class="h4 mb-0">Créer un nouveau sujet</h1>
     </div>
     <div class="card-body">
-        <form method="post">
+        <form method="post" id="topic-form">
             {% csrf_token %}
             
             {% if form.non_field_errors %}
@@ -56,6 +106,35 @@
                         {{ form.content.errors }}
                     </div>
                 {% endif %}
+                <small class="form-text text-muted">
+                    Supporte la syntaxe <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">Markdown</a>. 
+                    Utilisez @username pour mentionner un utilisateur.
+                </small>
+                
+                <!-- Barre d'outils Markdown -->
+                <div class="btn-group btn-group-sm mt-2" role="group" aria-label="Markdown formatting">
+                    <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="bold"><i class="fas fa-bold"></i></button>
+                    <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="italic"><i class="fas fa-italic"></i></button>
+                    <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="heading"><i class="fas fa-heading"></i></button>
+                    <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="link"><i class="fas fa-link"></i></button>
+                    <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="image"><i class="fas fa-image"></i></button>
+                    <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="code"><i class="fas fa-code"></i></button>
+                    <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="quote"><i class="fas fa-quote-right"></i></button>
+                    <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="list-ul"><i class="fas fa-list-ul"></i></button>
+                    <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="list-ol"><i class="fas fa-list-ol"></i></button>
+                </div>
+                
+                <!-- Toggle de prévisualisation -->
+                <div class="form-check mt-3">
+                    <input type="checkbox" class="form-check-input" id="preview-toggle">
+                    <label class="form-check-label preview-toggle" for="preview-toggle">Afficher la prévisualisation</label>
+                </div>
+                
+                <!-- Conteneur de prévisualisation -->
+                <div class="preview-container mt-3 d-none">
+                    <h6>Prévisualisation</h6>
+                    <div class="markdown-content" id="preview-content"></div>
+                </div>
             </div>
             
             <div class="form-group">
@@ -69,4 +148,127 @@
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Prévisualisation Markdown
+    const previewToggle = document.getElementById('preview-toggle');
+    const previewContainer = document.querySelector('.preview-container');
+    const previewContent = document.getElementById('preview-content');
+    const contentTextarea = document.getElementById('id_content');
+    
+    if (previewToggle && previewContainer && previewContent && contentTextarea) {
+        previewToggle.addEventListener('change', function() {
+            if (this.checked) {
+                // Afficher la prévisualisation
+                previewContainer.classList.remove('d-none');
+                
+                // Générer la prévisualisation
+                const formData = new FormData();
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                formData.append('content', contentTextarea.value);
+                
+                fetch('/forum/markdown/preview/', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    previewContent.innerHTML = data.html;
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                // Masquer la prévisualisation
+                previewContainer.classList.add('d-none');
+            }
+        });
+        
+        // Mettre à jour la prévisualisation lors de la saisie (avec debounce)
+        let previewTimeout;
+        contentTextarea.addEventListener('input', function() {
+            if (previewToggle.checked) {
+                clearTimeout(previewTimeout);
+                previewTimeout = setTimeout(function() {
+                    const formData = new FormData();
+                    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                    formData.append('content', contentTextarea.value);
+                    
+                    fetch('/forum/markdown/preview/', {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'same-origin'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        previewContent.innerHTML = data.html;
+                    })
+                    .catch(error => console.error('Error:', error));
+                }, 500);
+            }
+        });
+    }
+    
+    // Boutons de formatage Markdown
+    const markdownButtons = document.querySelectorAll('.markdown-btn');
+    markdownButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const format = this.dataset.format;
+            const textarea = document.querySelector('#id_content');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            
+            let formattedText = '';
+            
+            switch (format) {
+                case 'bold':
+                    formattedText = `**${selectedText}**`;
+                    break;
+                case 'italic':
+                    formattedText = `*${selectedText}*`;
+                    break;
+                case 'heading':
+                    formattedText = `## ${selectedText}`;
+                    break;
+                case 'link':
+                    formattedText = selectedText ? `[${selectedText}](url)` : '[texte du lien](url)';
+                    break;
+                case 'image':
+                    formattedText = `![${selectedText || 'alt text'}](url)`;
+                    break;
+                case 'code':
+                    formattedText = selectedText.includes('\n') ? 
+                        '```\n' + selectedText + '\n```' : 
+                        '`' + selectedText + '`';
+                    break;
+                case 'quote':
+                    formattedText = selectedText.split('\n').map(line => `> ${line}`).join('\n');
+                    break;
+                case 'list-ul':
+                    formattedText = selectedText ? 
+                        selectedText.split('\n').map(line => `- ${line}`).join('\n') : 
+                        '- élément de liste\n- élément de liste\n- élément de liste';
+                    break;
+                case 'list-ol':
+                    formattedText = selectedText ? 
+                        selectedText.split('\n').map((line, i) => `${i+1}. ${line}`).join('\n') : 
+                        '1. premier élément\n2. deuxième élément\n3. troisième élément';
+                    break;
+            }
+            
+            textarea.focus();
+            document.execCommand('insertText', false, formattedText);
+            
+            // Mettre à jour la prévisualisation si elle est visible
+            if (previewToggle && previewToggle.checked) {
+                const event = new Event('input');
+                textarea.dispatchEvent(event);
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

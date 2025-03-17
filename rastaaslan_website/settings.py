@@ -209,3 +209,27 @@ LOGGING = {
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20971520  # 20 Mo en octets
 FILE_UPLOAD_MAX_MEMORY_SIZE = 20971520  # 20 Mo en octets
+
+FORUM_RATE_LIMIT = {
+    'posts_per_day': 50,      # Nombre maximum de messages par jour par utilisateur
+    'topics_per_day': 10,     # Nombre maximum de sujets par jour par utilisateur
+    'posts_per_hour': 20,     # Nombre maximum de messages par heure par utilisateur
+    'consecutive_posts_wait': 30,  # Temps d'attente entre deux messages consécutifs (secondes)
+}
+
+# Configuration pour le support Markdown
+INSTALLED_APPS += [
+    'markdown',
+]
+
+# Configuration pour bleach (sécurisation HTML)
+BLEACH_ALLOWED_TAGS = [
+    'a', 'abbr', 'acronym', 'b', 'blockquote', 'code', 'em', 'i', 'li',
+    'ol', 'ul', 'p', 'strong', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+    'pre', 'span', 'img', 'br', 'hr'
+]
+
+BLEACH_ALLOWED_ATTRIBUTES = {
+    'a': ['href', 'title', 'rel'],
+    'img': ['src', 'alt', 'title', 'width', 'height']
+}
