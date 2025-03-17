@@ -1,0 +1,869 @@
+ERROR 2025-03-16 16:14:56,270 log 71067 139722605920320 Internal Server Error: /vods/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 55, in vods_view
+    fetch_and_update_videos('VOD', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 172, in _cache
+    return self._class(self._servers, **self._options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 39, in __init__
+    import redis
+ModuleNotFoundError: No module named 'redis'
+ERROR 2025-03-16 16:15:11,204 log 71067 139722605920320 Internal Server Error: /vods/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 55, in vods_view
+    fetch_and_update_videos('VOD', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 172, in _cache
+    return self._class(self._servers, **self._options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 39, in __init__
+    import redis
+ModuleNotFoundError: No module named 'redis'
+ERROR 2025-03-16 16:15:24,401 log 71065 139722605920320 Internal Server Error: /vods/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 55, in vods_view
+    fetch_and_update_videos('VOD', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 172, in _cache
+    return self._class(self._servers, **self._options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 39, in __init__
+    import redis
+ModuleNotFoundError: No module named 'redis'
+ERROR 2025-03-16 16:15:27,835 log 71067 139722605920320 Internal Server Error: /live/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 30, in live_view
+    is_live, stream_info = get_stream_status(TWITCH_USER_LOGIN)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 163, in get_stream_status
+    stream_data = make_twitch_api_request('streams', {'user_login': username})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 172, in _cache
+    return self._class(self._servers, **self._options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 39, in __init__
+    import redis
+ModuleNotFoundError: No module named 'redis'
+ERROR 2025-03-16 16:15:30,394 log 71065 139722605920320 Internal Server Error: /clips/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 75, in clips_view
+    fetch_and_update_videos('Clip', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 172, in _cache
+    return self._class(self._servers, **self._options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 39, in __init__
+    import redis
+ModuleNotFoundError: No module named 'redis'
+ERROR 2025-03-16 16:22:00,008 exception 71065 139722605920320 Invalid HTTP_HOST header: 'funny-engelbart.62-4-21-212.plesk.page'. You may need to add 'funny-engelbart.62-4-21-212.plesk.page' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'funny-engelbart.62-4-21-212.plesk.page'. You may need to add 'funny-engelbart.62-4-21-212.plesk.page' to ALLOWED_HOSTS.
+ERROR 2025-03-16 17:59:19,142 log 71067 139722605920320 Internal Server Error: /clips/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 75, in clips_view
+    fetch_and_update_videos('Clip', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 172, in _cache
+    return self._class(self._servers, **self._options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 39, in __init__
+    import redis
+ModuleNotFoundError: No module named 'redis'
+ERROR 2025-03-16 18:08:23,565 log 79927 140231761186880 Internal Server Error: /clips/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 75, in clips_view
+    fetch_and_update_videos('Clip', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 172, in _cache
+    return self._class(self._servers, **self._options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 39, in __init__
+    import redis
+ModuleNotFoundError: No module named 'redis'
+ERROR 2025-03-16 18:12:03,328 log 80218 140537552126016 Internal Server Error: /clips/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1415, in get_connection
+    connection = self._available_connections.pop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+IndexError: pop from empty list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 75, in clips_view
+    fetch_and_update_videos('Clip', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 99, in get
+    value = client.get(key)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1417, in get_connection
+    connection = self.make_connection()
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1463, in make_connection
+    return self.connection_class(**self.connection_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 684, in __init__
+    super().__init__(**kwargs)
+TypeError: AbstractConnection.__init__() got an unexpected keyword argument 'CLIENT_CLASS'
+ERROR 2025-03-16 18:16:41,050 log 80588 140595067879488 Internal Server Error: /clips/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 357, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 358, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 730, in _connect
+    raise err
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 718, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 75, in clips_view
+    fetch_and_update_videos('Clip', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 99, in get
+    value = client.get(key)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 363, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connection refused.
+ERROR 2025-03-16 18:18:00,652 log 80684 140007341015104 Internal Server Error: /clips/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 357, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 358, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 730, in _connect
+    raise err
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 718, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 75, in clips_view
+    fetch_and_update_videos('Clip', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 99, in get
+    value = client.get(key)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 363, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connection refused.
+ERROR 2025-03-17 09:06:03,895 log 99849 140215884132416 Internal Server Error: /clips/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 357, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 358, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 730, in _connect
+    raise err
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 718, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 75, in clips_view
+    fetch_and_update_videos('Clip', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 99, in get
+    value = client.get(key)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 363, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connection refused.
+ERROR 2025-03-17 09:19:54,406 log 99848 140215884132416 Internal Server Error: /live/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 357, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 358, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 730, in _connect
+    raise err
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 718, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 30, in live_view
+    is_live, stream_info = get_stream_status(TWITCH_USER_LOGIN)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 163, in get_stream_status
+    stream_data = make_twitch_api_request('streams', {'user_login': username})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 99, in get
+    value = client.get(key)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 363, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connection refused.
+ERROR 2025-03-17 09:20:12,159 log 99848 140215884132416 Internal Server Error: /live/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 357, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 358, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 730, in _connect
+    raise err
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 718, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 30, in live_view
+    is_live, stream_info = get_stream_status(TWITCH_USER_LOGIN)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 163, in get_stream_status
+    stream_data = make_twitch_api_request('streams', {'user_login': username})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 99, in get
+    value = client.get(key)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 363, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connection refused.
+ERROR 2025-03-17 10:35:29,887 log 99848 140215884132416 Internal Server Error: /live/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 357, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 358, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 730, in _connect
+    raise err
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 718, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 30, in live_view
+    is_live, stream_info = get_stream_status(TWITCH_USER_LOGIN)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 163, in get_stream_status
+    stream_data = make_twitch_api_request('streams', {'user_login': username})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 99, in get
+    value = client.get(key)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 363, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connection refused.
+ERROR 2025-03-17 10:35:32,195 log 99847 140215884132416 Internal Server Error: /vods/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 357, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 358, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 730, in _connect
+    raise err
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 718, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 55, in vods_view
+    fetch_and_update_videos('VOD', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 99, in get
+    value = client.get(key)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 363, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connection refused.
+ERROR 2025-03-17 10:55:25,337 log 99849 140215884132416 Internal Server Error: /live/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 357, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 358, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 730, in _connect
+    raise err
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 718, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 30, in live_view
+    is_live, stream_info = get_stream_status(TWITCH_USER_LOGIN)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 163, in get_stream_status
+    stream_data = make_twitch_api_request('streams', {'user_login': username})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 99, in get
+    value = client.get(key)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 363, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connection refused.
+ERROR 2025-03-17 10:55:25,497 log 99848 140215884132416 Internal Server Error: /vods/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 357, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 358, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 730, in _connect
+    raise err
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 718, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 55, in vods_view
+    fetch_and_update_videos('VOD', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 99, in get
+    value = client.get(key)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 363, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connection refused.
+ERROR 2025-03-17 10:55:25,668 log 99849 140215884132416 Internal Server Error: /clips/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 357, in connect
+    sock = self.retry.call_with_retry(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/retry.py", line 62, in call_with_retry
+    return do()
+           ^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 358, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 730, in _connect
+    raise err
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 718, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/video_views.py", line 75, in clips_view
+    fetch_and_update_videos('Clip', user_id=TWITCH_USER_ID)
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 124, in fetch_and_update_videos
+    videos_data = make_twitch_api_request(endpoint, params)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 57, in make_twitch_api_request
+    access_token = get_twitch_access_token()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/twitch_utils.py", line 14, in get_twitch_access_token
+    cached_token = cache.get('twitch_access_token')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 187, in get
+    return self._cache.get(key, default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/cache/backends/redis.py", line 99, in get
+    value = client.get(key)
+            ^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/commands/core.py", line 1822, in get
+    return self.execute_command("GET", name, keys=[name])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 559, in execute_command
+    return self._execute_command(*args, **options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/client.py", line 565, in _execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 1422, in get_connection
+    connection.connect()
+  File "/var/www/html/myenv/lib/python3.11/site-packages/redis/connection.py", line 363, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connection refused.
+ERROR 2025-03-17 11:19:49,013 log 99847 140215884132416 Internal Server Error: /forum/evenements/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/forum_views.py", line 66, in forum_category
+    topic.reply_count = topic.posts.count() - 1  # Exclut le post initial
+    ^^^^^^^^^^^^^^^^^
+AttributeError: property 'reply_count' of 'ForumTopic' object has no setter
