@@ -1,13 +1,12 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import (
-    # Vues vidéo
-    home, live_view, vods_view, clips_view, video_detail,
-    # Vues authentification
-    register, login_view, profile_view, edit_profile, change_password, twitch_login, twitch_callback,
-    # Vues forum
-    forum_home, forum_category, forum_topic, create_topic, edit_post, delete_post, search_forum,
-    react_to_post, preview_markdown
+
+# Import direct des vues sans utiliser les imports du fichier __init__.py
+from .views.video_views import home, live_view, vods_view, clips_view, video_detail
+from .views.auth_views import register, login_view, profile_view, edit_profile, change_password, twitch_login, twitch_callback
+from .views.forum_views import (
+    forum_home, forum_category, forum_topic, create_topic, 
+    edit_post, delete_post, search_forum, react_to_post, preview_markdown
 )
 
 # Définition du namespace pour l'application
@@ -31,7 +30,7 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='rastaaslan_app:home'), name='logout'),
     
-    # Gestion du profil - Ordre modifié pour éviter les conflits d'URL
+    # Gestion du profil
     path('profile/edit/', edit_profile, name='edit_profile'),
     path('profile/change-password/', change_password, name='change_password'),
     path('profile/<str:username>/', profile_view, name='profile_user'),
