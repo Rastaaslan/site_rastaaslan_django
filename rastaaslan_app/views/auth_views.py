@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib import messages
 from django.conf import settings
+from django.urls import reverse
 from ..models import UserProfile, ForumTopic, ForumPost
 from ..forms import (
     CustomUserCreationForm, CustomAuthenticationForm, 
@@ -73,11 +74,13 @@ def my_profile_view(request):
     
     return render(request, 'rastaaslan_app/auth/profile.html', context)
 
-@login_required
 def profile_view(request, username=None):
     """Vue pour afficher un profil utilisateur"""
-    # Si username est None, afficher le profil de l'utilisateur connecté
+    # Si username est None, vérifier que l'utilisateur est connecté
     if username is None:
+        if not request.user.is_authenticated:
+            # Rediriger vers la page de connexion avec next=profile
+            return redirect(f"{reverse('rastaaslan_app:login')}?next={reverse('rastaaslan_app:profile')}")
         return my_profile_view(request)
         
     # Profil d'un autre utilisateur
