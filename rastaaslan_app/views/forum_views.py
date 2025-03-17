@@ -11,7 +11,6 @@ from django.conf import settings
 from django.core.cache import cache
 from datetime import timedelta
 from ..models import ForumCategory, ForumTopic, ForumPost, UserProfile, UserTopicView, PostReaction
-from ..forms import ForumTopicForm, ForumPostForm
 
 
 def check_rate_limit(request, action_type):
@@ -163,6 +162,8 @@ def forum_category(request, category_slug):
         # Vérifier si le sujet a des messages non lus pour l'utilisateur connecté
         if request.user.is_authenticated:
             topic.has_unread = topic.has_unread_posts(request.user)
+        else:
+            topic.has_unread = False
     
     # Pagination
     paginator = Paginator(topics, 20)  # 20 sujets par page
@@ -230,6 +231,7 @@ def forum_topic(request, category_slug, topic_slug):
                     return redirect(f"{topic.get_absolute_url()}?page={last_page}#post-{post.id}")
                 return redirect(f"{topic.get_absolute_url()}#post-{post.id}")
         else:
+            from ..forms import ForumPostForm
             form = ForumPostForm()
     
     # Pagination
@@ -268,6 +270,7 @@ def create_topic(request, category_slug=None):
         initial_data['category'] = category
     
     if request.method == 'POST':
+        from ..forms import ForumTopicForm
         form = ForumTopicForm(request.POST)
         if form.is_valid():
             # Vérifier la limite de débit
@@ -302,6 +305,7 @@ def create_topic(request, category_slug=None):
             messages.success(request, "Votre sujet a été créé avec succès !")
             return redirect(topic.get_absolute_url())
     else:
+        from ..forms import ForumTopicForm
         form = ForumTopicForm(initial=initial_data)
     
     context = {
@@ -328,12 +332,14 @@ def edit_post(request, post_id):
         return redirect(post.topic.get_absolute_url())
     
     if request.method == 'POST':
+        from ..forms import ForumPostForm
         form = ForumPostForm(request.POST, instance=post)
         if form.is_valid():
             post = form.save()
             messages.success(request, "Votre message a été modifié avec succès.")
             return redirect(post.get_absolute_url())
     else:
+        from ..forms import ForumPostForm
         form = ForumPostForm(instance=post)
     
     context = {
