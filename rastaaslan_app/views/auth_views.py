@@ -74,8 +74,12 @@ def my_profile_view(request):
     return render(request, 'rastaaslan_app/auth/profile.html', context)
 
 @login_required
-def profile_view(request, username):
+def profile_view(request, username=None):
     """Vue pour afficher un profil utilisateur"""
+    # Si username est None, afficher le profil de l'utilisateur connecté
+    if username is None:
+        return my_profile_view(request)
+        
     # Profil d'un autre utilisateur
     user_profile = get_object_or_404(UserProfile, user__username=username)
     
@@ -104,7 +108,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Votre profil a été mis à jour avec succès !")
-            return redirect('rastaaslan_app:my_profile')
+            return redirect('rastaaslan_app:profile')
     else:
         form = UserProfileForm(instance=profile)
     
@@ -120,7 +124,7 @@ def change_password(request):
             # Maintenir la session active après le changement de mot de passe
             update_session_auth_hash(request, user)
             messages.success(request, "Votre mot de passe a été changé avec succès !")
-            return redirect('rastaaslan_app:my_profile')
+            return redirect('rastaaslan_app:profile')
     else:
         form = CustomPasswordChangeForm(request.user)
     
