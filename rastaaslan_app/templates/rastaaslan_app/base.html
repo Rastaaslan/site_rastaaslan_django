@@ -9,6 +9,9 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!-- Ajout d'un bloc pour les CSS spécifiques à chaque page -->
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     <!-- Élément d'arrière-plan pour garantir la transition -->
@@ -107,15 +110,25 @@
     <!-- Le chat sera inclus ici si nécessaire -->
     {% endblock %}
 
+    <!-- Ajouter à la fin du fichier, avant la fermeture body -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
     <!-- Scripts factorisés -->
     <script src="{% static 'js/theme.js' %}?v=1.0"></script>
     <script src="{% static 'js/carousel.js' %}?v=1.0"></script>
     <script src="{% static 'js/horizontal-scroll.js' %}?v=1.0"></script>
-    
+
+    <!-- Scripts pour le forum -->
+    {% if 'forum' in request.resolver_match.url_name %}
+    <script>
+    // Informations d'initialisation pour l'auto-complétion des mentions
+    window.FORUM_USERS = {% if forum_usernames %}{{ forum_usernames|safe }}{% else %}[]{% endif %};
+    </script>
+    <script src="{% static 'js/forum.js' %}?v=1.0"></script>
+    {% endif %}
+
     <!-- Scripts spécifiques à la page -->
     {% block extra_js %}{% endblock %}
 </body>

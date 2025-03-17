@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Video, UserProfile, ForumCategory, ForumTopic, ForumPost
+from .models import Video, UserProfile, ForumCategory, ForumTopic, ForumPost, UserTopicView, PostReaction
 
 class VideoAdmin(admin.ModelAdmin):
     list_display = ('title', 'video_type', 'video_id', 'created_at')
@@ -144,13 +144,16 @@ class ForumTopicAdmin(admin.ModelAdmin):
 admin.site.register(ForumTopic, ForumTopicAdmin)
 
 class ForumPostAdmin(admin.ModelAdmin):
-    list_display = ('topic', 'author', 'is_first_post', 'created_at', 'is_edited')
+    list_display = ('topic', 'author', 'is_first_post', 'created_at', 'is_edited', 'get_mentions_count')
     list_filter = ('is_edited', 'created_at')
     search_fields = ('content', 'author__username', 'topic__title')
     
     fieldsets = (
         ('Informations du message', {
             'fields': ('topic', 'author', 'content')
+        }),
+        ('Mentions et réactions', {
+            'fields': ('mentioned_users',),
         }),
         ('Métadonnées', {
             'fields': ('created_at', 'updated_at', 'is_edited'),
@@ -159,6 +162,7 @@ class ForumPostAdmin(admin.ModelAdmin):
     )
     
     readonly_fields = ('created_at', 'updated_at', 'is_edited')
+    filter_horizontal = ('mentioned_users',)
     
     def get_queryset(self, request):
         """Optimiser les requêtes"""
@@ -168,5 +172,33 @@ class ForumPostAdmin(admin.ModelAdmin):
         return obj.is_first_post
     is_first_post.short_description = "Post initial"
     is_first_post.boolean = True
+    
+    def get_mentions_count(self, obj):
+        return obj.mentioned_users.count()
+    get_mentions_count.short_description = "Mentions"
 
 admin.site.register(ForumPost, ForumPostAdmin)
+
+class UserTopicViewAdmin(admin.ModelAdmin):
+    list_display = ('user', 'topic', 'last_viewed')
+    list_filter = ('last_viewed',)
+    search_fields = ('user__username', 'topic__title')
+    readonly_fields = ('last_viewed',)
+    
+    def get_queryset(self, request):
+        """Optimiser les requêtes"""
+        return super().get_queryset(request).select_related('user', 'topic')
+
+admin.site.register(UserTopicView, UserTopicViewAdmin)
+
+class PostReactionAdmin(admin.ModelAdmin):
+    list_display = ('post', 'user', 'reaction_type', 'created_at')
+    list_filter = ('reaction_type', 'created_at')
+    search_fields = ('user__username', 'post__content')
+    readonly_fields = ('created_at',)
+    
+    def get_queryset(self, request):
+        """Optimiser les requêtes"""
+        return super().get_queryset(request).select_related('user', 'post__topic')
+
+admin.site.register(PostReaction, PostReactionAdmin)

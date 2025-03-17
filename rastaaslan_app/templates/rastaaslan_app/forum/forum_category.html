@@ -26,21 +26,32 @@
     </div>
 {% endif %}
 
-<!-- Barre de recherche pour les sujets de cette catégorie -->
+<!-- Barre de recherche et filtres pour les sujets de cette catégorie -->
 <div class="card mb-4">
     <div class="card-body">
         <form method="get" class="form-inline">
-            <div class="input-group w-100">
-                <input type="text" name="q" class="form-control" placeholder="Rechercher dans cette catégorie..." value="{{ search_query }}">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search"></i> Rechercher
-                    </button>
-                    {% if search_query %}
-                        <a href="{% url 'rastaaslan_app:forum_category' category.slug %}" class="btn btn-outline-secondary">
-                            <i class="fas fa-times"></i> Effacer
-                        </a>
-                    {% endif %}
+            <div class="form-row align-items-center w-100">
+                <div class="col-md-6 my-1">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Rechercher dans cette catégorie..." value="{{ search_query }}">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 my-1">
+                    <select name="sort" class="form-control">
+                        <option value="latest" {% if sort == 'latest' %}selected{% endif %}>Plus récents</option>
+                        <option value="activity" {% if sort == 'activity' %}selected{% endif %}>Activité récente</option>
+                        <option value="views" {% if sort == 'views' %}selected{% endif %}>Plus vus</option>
+                        <option value="replies" {% if sort == 'replies' %}selected{% endif %}>Plus de réponses</option>
+                    </select>
+                </div>
+                <div class="col-md-3 my-1">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="show_pinned" id="show_pinned" value="1" {% if show_pinned %}checked{% endif %}>
+                        <label class="form-check-label" for="show_pinned">Épinglés en premier</label>
+                    </div>
                 </div>
             </div>
         </form>
@@ -66,7 +77,7 @@
                 </thead>
                 <tbody>
                     {% for topic in topics %}
-                        <tr>
+                        <tr class="{% if topic.has_unread %}table-active{% endif %}">
                             <td>
                                 <div class="d-flex align-items-center">
                                     <!-- Icônes d'état du sujet -->
@@ -76,6 +87,9 @@
                                         {% endif %}
                                         {% if topic.is_locked %}
                                             <i class="fas fa-lock text-warning ml-1" title="Sujet verrouillé"></i>
+                                        {% endif %}
+                                        {% if topic.has_unread %}
+                                            <i class="fas fa-circle text-primary ml-1" title="Messages non lus" style="font-size: 0.7em;"></i>
                                         {% endif %}
                                     </div>
                                     
@@ -137,12 +151,12 @@
         <ul class="pagination justify-content-center">
             {% if topics.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}" aria-label="Première page">
+                    <a class="page-link" href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}{% if show_pinned %}&show_pinned=1{% endif %}" aria-label="Première page">
                         <span aria-hidden="true">&laquo;&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ topics.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" aria-label="Page précédente">
+                    <a class="page-link" href="?page={{ topics.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}{% if show_pinned %}&show_pinned=1{% endif %}" aria-label="Page précédente">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -165,19 +179,19 @@
                     </li>
                 {% elif i > topics.number|add:'-3' and i < topics.number|add:'3' %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ i }}{% if search_query %}&q={{ search_query }}{% endif %}">{{ i }}</a>
+                        <a class="page-link" href="?page={{ i }}{% if search_query %}&q={{ search_query }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}{% if show_pinned %}&show_pinned=1{% endif %}">{{ i }}</a>
                     </li>
                 {% endif %}
             {% endfor %}
             
             {% if topics.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ topics.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" aria-label="Page suivante">
+                    <a class="page-link" href="?page={{ topics.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}{% if show_pinned %}&show_pinned=1{% endif %}" aria-label="Page suivante">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ topics.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}" aria-label="Dernière page">
+                    <a class="page-link" href="?page={{ topics.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}{% if sort %}&sort={{ sort }}{% endif %}{% if show_pinned %}&show_pinned=1{% endif %}" aria-label="Dernière page">
                         <span aria-hidden="true">&raquo;&raquo;</span>
                     </a>
                 </li>
@@ -193,4 +207,26 @@
     </nav>
 {% endif %}
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Soumettre automatiquement le formulaire quand le tri ou le filtre épinglé change
+document.addEventListener('DOMContentLoaded', function() {
+    const sortSelect = document.querySelector('select[name="sort"]');
+    const pinnedCheckbox = document.querySelector('input[name="show_pinned"]');
+    
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+            this.form.submit();
+        });
+    }
+    
+    if (pinnedCheckbox) {
+        pinnedCheckbox.addEventListener('change', function() {
+            this.form.submit();
+        });
+    }
+});
+</script>
 {% endblock %}

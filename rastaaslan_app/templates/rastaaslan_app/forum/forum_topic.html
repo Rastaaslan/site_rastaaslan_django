@@ -2,6 +2,107 @@
 
 {% block title %}{{ topic.title }} - Forum{% endblock %}
 
+{% block extra_css %}
+<!-- Ajout de CSS pour le support Markdown et les réactions -->
+<style>
+    .markdown-content {
+        line-height: 1.6;
+    }
+    .markdown-content img {
+        max-width: 100%;
+    }
+    .markdown-content blockquote {
+        border-left: 3px solid var(--accent-color);
+        padding-left: 1rem;
+        color: var(--text-secondary);
+        font-style: italic;
+    }
+    .markdown-content code {
+        background-color: rgba(0, 0, 0, 0.05);
+        padding: 2px 4px;
+        border-radius: 3px;
+    }
+    .markdown-content pre {
+        background-color: rgba(0, 0, 0, 0.05);
+        padding: 1rem;
+        border-radius: 5px;
+        overflow-x: auto;
+    }
+    
+    /* Styles pour les réactions */
+    .post-reactions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+    }
+    
+    .reaction-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.5rem;
+        border-radius: 1rem;
+        background: var(--bg-secondary);
+        border: 1px solid var(--card-border);
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .reaction-btn:hover {
+        background: var(--accent-color);
+        color: white;
+    }
+    
+    .reaction-btn.active {
+        background: var(--accent-color);
+        color: white;
+    }
+    
+    .reaction-btn .count {
+        margin-left: 0.25rem;
+    }
+    
+    .reaction-btn .emoji {
+        margin-right: 0.25rem;
+    }
+    
+    .post-mention {
+        color: var(--accent-color);
+        font-weight: 500;
+    }
+    
+    .post-header {
+        position: relative;
+    }
+    
+    .post-unread-indicator {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent-color);
+    }
+    
+    /* Style pour la prévisualisation Markdown */
+    .preview-container {
+        border: 1px solid var(--card-border);
+        border-radius: 0.25rem;
+        padding: 1rem;
+        margin-top: 1rem;
+        background: var(--bg-secondary);
+    }
+    
+    .preview-toggle {
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        user-select: none;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <!-- Fil d'Ariane -->
 <nav aria-label="breadcrumb" class="mb-4">
@@ -59,13 +160,16 @@
 <!-- Messages -->
 {% for post in posts %}
     <div class="card mb-4" id="post-{{ post.id }}">
-        <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="card-header d-flex justify-content-between align-items-center post-header">
             <div>
                 <a href="{% url 'rastaaslan_app:profile_user' post.author.username %}">
                     <strong>{{ post.author.username }}</strong>
                 </a>
                 {% if post.author.is_staff %}
                     <span class="badge badge-danger ml-1">Admin</span>
+                {% endif %}
+                {% if post.author.profile.is_streamer %}
+                    <span class="badge badge-primary ml-1">Streamer</span>
                 {% endif %}
             </div>
             <div class="text-muted small">
@@ -76,7 +180,42 @@
             </div>
         </div>
         <div class="card-body">
-            {{ post.content|linebreaks }}
+            <!-- Utilisation du contenu formaté en Markdown -->
+            <div class="markdown-content">
+                {{ post.content_html|safe }}
+            </div>
+            
+            <!-- Réactions aux messages -->
+            <div class="post-reactions" data-post-id="{{ post.id }}">
+                {% for reaction in post.reaction_counts %}
+                    {% with reaction_type=reaction.reaction_type count=reaction.count %}
+                        <button type="button" class="reaction-btn{% if reaction_type in post.user_reactions %} active{% endif %}" 
+                                data-reaction="{{ reaction_type }}" data-post-id="{{ post.id }}">
+                            <span class="emoji">
+                                {% if reaction_type == 'like' %}👍{% endif %}
+                                {% if reaction_type == 'thanks' %}🙏{% endif %}
+                                {% if reaction_type == 'funny' %}😂{% endif %}
+                                {% if reaction_type == 'insightful' %}💡{% endif %}
+                            </span>
+                            <span class="count">{{ count }}</span>
+                        </button>
+                    {% endwith %}
+                {% endfor %}
+                
+                <!-- Bouton pour ajouter une nouvelle réaction -->
+                <div class="dropdown d-inline-block">
+                    <button class="reaction-btn dropdown-toggle" type="button" id="addReactionDropdown{{ post.id }}" 
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="addReactionDropdown{{ post.id }}">
+                        <button class="dropdown-item" data-reaction="like" data-post-id="{{ post.id }}">👍 Like</button>
+                        <button class="dropdown-item" data-reaction="thanks" data-post-id="{{ post.id }}">🙏 Merci</button>
+                        <button class="dropdown-item" data-reaction="funny" data-post-id="{{ post.id }}">😂 Drôle</button>
+                        <button class="dropdown-item" data-reaction="insightful" data-post-id="{{ post.id }}">💡 Pertinent</button>
+                    </div>
+                </div>
+            </div>
         </div>
         {% if user.is_authenticated and not topic.is_locked or user.is_staff %}
             <div class="card-footer text-right">
@@ -90,8 +229,8 @@
                         <i class="fas fa-trash"></i> Supprimer
                     </a>
                 {% endif %}
-                <a href="#reply-form" class="btn btn-sm btn-outline-secondary" 
-                   onclick="document.getElementById('id_content').value += '@{{ post.author.username }}: ';">
+                <a href="#reply-form" class="btn btn-sm btn-outline-secondary quote-post" 
+                   data-username="{{ post.author.username }}" data-content="{{ post.content|escapejs }}">
                     <i class="fas fa-reply"></i> Citer
                 </a>
             </div>
@@ -161,14 +300,14 @@
     </nav>
 {% endif %}
 
-<!-- Formulaire de réponse -->
+<!-- Formulaire de réponse avec support Markdown -->
 {% if user.is_authenticated and not topic.is_locked or user.is_staff %}
     <div class="card mb-4" id="reply-form">
         <div class="card-header">
             <h5 class="mb-0">Répondre au sujet</h5>
         </div>
         <div class="card-body">
-            <form method="post">
+            <form method="post" id="post-form">
                 {% csrf_token %}
                 {% if form.non_field_errors %}
                     <div class="alert alert-danger">
@@ -183,6 +322,35 @@
                             {{ form.content.errors }}
                         </div>
                     {% endif %}
+                    <small class="form-text text-muted">
+                        Supporte la syntaxe <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">Markdown</a>. 
+                        Utilisez @username pour mentionner un utilisateur.
+                    </small>
+                    
+                    <!-- Barre d'outils Markdown -->
+                    <div class="btn-group btn-group-sm mt-2" role="group" aria-label="Markdown formatting">
+                        <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="bold"><i class="fas fa-bold"></i></button>
+                        <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="italic"><i class="fas fa-italic"></i></button>
+                        <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="heading"><i class="fas fa-heading"></i></button>
+                        <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="link"><i class="fas fa-link"></i></button>
+                        <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="image"><i class="fas fa-image"></i></button>
+                        <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="code"><i class="fas fa-code"></i></button>
+                        <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="quote"><i class="fas fa-quote-right"></i></button>
+                        <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="list-ul"><i class="fas fa-list-ul"></i></button>
+                        <button type="button" class="btn btn-outline-secondary markdown-btn" data-format="list-ol"><i class="fas fa-list-ol"></i></button>
+                    </div>
+                    
+                    <!-- Toggle de prévisualisation -->
+                    <div class="form-check mt-3">
+                        <input type="checkbox" class="form-check-input" id="preview-toggle">
+                        <label class="form-check-label preview-toggle" for="preview-toggle">Afficher la prévisualisation</label>
+                    </div>
+                    
+                    <!-- Conteneur de prévisualisation -->
+                    <div class="preview-container mt-3 d-none">
+                        <h6>Prévisualisation</h6>
+                        <div class="markdown-content" id="preview-content"></div>
+                    </div>
                 </div>
                 
                 <button type="submit" class="btn btn-primary">
@@ -196,5 +364,240 @@
         <i class="fas fa-lock"></i> Ce sujet est verrouillé et n'accepte plus de nouvelles réponses.
     </div>
 {% endif %}
+{% endblock %}
 
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Fonction pour les réactions aux messages
+    function setupReactions() {
+        // Récupérer tous les boutons de réaction
+        const reactionButtons = document.querySelectorAll('.reaction-btn, .dropdown-item[data-reaction]');
+        
+        reactionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                if (!this.dataset.reaction || !this.dataset.postId) return;
+                
+                const reactionType = this.dataset.reaction;
+                const postId = this.dataset.postId;
+                
+                // Envoyer la requête AJAX
+                const formData = new FormData();
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                formData.append('reaction_type', reactionType);
+                
+                fetch(`/forum/post/${postId}/react/`, {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Mettre à jour l'interface
+                    updateReactions(postId, data.reactions, data.reaction_emojis);
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    }
+    
+    // Mettre à jour l'affichage des réactions
+    function updateReactions(postId, reactions, emojis) {
+        const reactionsContainer = document.querySelector(`.post-reactions[data-post-id="${postId}"]`);
+        if (!reactionsContainer) return;
+        
+        // Nettoyer le conteneur (en conservant le bouton d'ajout)
+        const addButton = reactionsContainer.querySelector('.dropdown');
+        reactionsContainer.innerHTML = '';
+        
+        // Ajouter les nouvelles réactions
+        for (const [type, count] of Object.entries(reactions)) {
+            const button = document.createElement('button');
+            button.className = 'reaction-btn';
+            button.dataset.reaction = type;
+            button.dataset.postId = postId;
+            
+            // Vérifier si l'utilisateur a réagi
+            if (document.querySelector(`.reaction-btn.active[data-reaction="${type}"][data-post-id="${postId}"]`)) {
+                button.classList.add('active');
+            }
+            
+            // Emoji
+            const emoji = document.createElement('span');
+            emoji.className = 'emoji';
+            emoji.textContent = getEmoji(type);
+            
+            // Compteur
+            const countSpan = document.createElement('span');
+            countSpan.className = 'count';
+            countSpan.textContent = count;
+            
+            button.appendChild(emoji);
+            button.appendChild(countSpan);
+            reactionsContainer.appendChild(button);
+        }
+        
+        // Remettre le bouton d'ajout
+        if (addButton) {
+            reactionsContainer.appendChild(addButton);
+        }
+        
+        // Réattacher les événements
+        setupReactions();
+    }
+    
+    // Helper pour obtenir l'emoji correspondant au type de réaction
+    function getEmoji(type) {
+        const emojis = {
+            'like': '👍',
+            'thanks': '🙏',
+            'funny': '😂',
+            'insightful': '💡'
+        };
+        return emojis[type] || '👍';
+    }
+    
+    // Fonction pour citer un message
+    const quoteButtons = document.querySelectorAll('.quote-post');
+    quoteButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const username = this.dataset.username;
+            const content = this.dataset.content;
+            
+            const textarea = document.querySelector('#id_content');
+            const quotedText = `> **@${username} a écrit :**\n> ${content.split('\n').join('\n> ')}\n\n`;
+            
+            textarea.value += quotedText;
+            textarea.focus();
+        });
+    });
+    
+    // Mise en évidence des mentions
+    document.querySelectorAll('.markdown-content').forEach(container => {
+        const html = container.innerHTML;
+        const updatedHtml = html.replace(/@(\w+)/g, '<span class="post-mention">@$1</span>');
+        container.innerHTML = updatedHtml;
+    });
+    
+    // Fonction pour la prévisualisation Markdown
+    const previewToggle = document.getElementById('preview-toggle');
+    const previewContainer = document.querySelector('.preview-container');
+    const previewContent = document.getElementById('preview-content');
+    const contentTextarea = document.getElementById('id_content');
+    
+    if (previewToggle && previewContainer && previewContent && contentTextarea) {
+        previewToggle.addEventListener('change', function() {
+            if (this.checked) {
+                // Afficher la prévisualisation
+                previewContainer.classList.remove('d-none');
+                
+                // Générer la prévisualisation
+                const formData = new FormData();
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                formData.append('content', contentTextarea.value);
+                
+                fetch('/forum/markdown/preview/', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    previewContent.innerHTML = data.html;
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                // Masquer la prévisualisation
+                previewContainer.classList.add('d-none');
+            }
+        });
+        
+        // Mettre à jour la prévisualisation lors de la saisie (avec debounce)
+        let previewTimeout;
+        contentTextarea.addEventListener('input', function() {
+            if (previewToggle.checked) {
+                clearTimeout(previewTimeout);
+                previewTimeout = setTimeout(function() {
+                    const formData = new FormData();
+                    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                    formData.append('content', contentTextarea.value);
+                    
+                    fetch('/forum/markdown/preview/', {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'same-origin'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        previewContent.innerHTML = data.html;
+                    })
+                    .catch(error => console.error('Error:', error));
+                }, 500);
+            }
+        });
+    }
+    
+    // Boutons de formatage Markdown
+    const markdownButtons = document.querySelectorAll('.markdown-btn');
+    markdownButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const format = this.dataset.format;
+            const textarea = document.querySelector('#id_content');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            
+            let formattedText = '';
+            
+            switch (format) {
+                case 'bold':
+                    formattedText = `**${selectedText}**`;
+                    break;
+                case 'italic':
+                    formattedText = `*${selectedText}*`;
+                    break;
+                case 'heading':
+                    formattedText = `## ${selectedText}`;
+                    break;
+                case 'link':
+                    formattedText = selectedText ? `[${selectedText}](url)` : '[texte du lien](url)';
+                    break;
+                case 'image':
+                    formattedText = `![${selectedText || 'alt text'}](url)`;
+                    break;
+                case 'code':
+                    formattedText = selectedText.includes('\n') ? 
+                        '```\n' + selectedText + '\n```' : 
+                        '`' + selectedText + '`';
+                    break;
+                case 'quote':
+                    formattedText = selectedText.split('\n').map(line => `> ${line}`).join('\n');
+                    break;
+                case 'list-ul':
+                    formattedText = selectedText ? 
+                        selectedText.split('\n').map(line => `- ${line}`).join('\n') : 
+                        '- élément de liste\n- élément de liste\n- élément de liste';
+                    break;
+                case 'list-ol':
+                    formattedText = selectedText ? 
+                        selectedText.split('\n').map((line, i) => `${i+1}. ${line}`).join('\n') : 
+                        '1. premier élément\n2. deuxième élément\n3. troisième élément';
+                    break;
+            }
+            
+            textarea.focus();
+            document.execCommand('insertText', false, formattedText);
+            
+            // Mettre à jour la prévisualisation si elle est visible
+            if (previewToggle && previewToggle.checked) {
+                const event = new Event('input');
+                textarea.dispatchEvent(event);
+            }
+        });
+    });
+    
+    // Initialiser les réactions
+    setupReactions();
+});
+</script>
 {% endblock %}

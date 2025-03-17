@@ -6,7 +6,8 @@ from .views import (
     # Vues authentification
     register, login_view, profile_view, edit_profile, change_password, twitch_login, twitch_callback,
     # Vues forum
-    forum_home, forum_category, forum_topic, create_topic, edit_post, delete_post, search_forum
+    forum_home, forum_category, forum_topic, create_topic, edit_post, delete_post, search_forum,
+    react_to_post, preview_markdown
 )
 
 # Définition du namespace pour l'application
@@ -45,4 +46,8 @@ urlpatterns = [
     path('forum/<slug:category_slug>/<slug:topic_slug>/', forum_topic, name='forum_topic'),
     path('forum/post/<int:post_id>/edit/', edit_post, name='edit_post'),
     path('forum/post/<int:post_id>/delete/', delete_post, name='delete_post'),
+    
+    # Nouvelles URLs pour les fonctionnalités améliorées du forum
+    path('forum/post/<int:post_id>/react/', react_to_post, name='react_to_post'),
+    path('forum/markdown/preview/', preview_markdown, name='preview_markdown'),
 ]

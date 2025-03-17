@@ -125,7 +125,14 @@ class ForumTopicForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titre du sujet'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 8, 'placeholder': 'Contenu de votre sujet'})
+            'content': forms.Textarea(attrs={
+                'class': 'form-control markdown-editor', 
+                'rows': 8, 
+                'placeholder': 'Contenu de votre sujet - Supporte la syntaxe Markdown'
+            })
+        }
+        help_texts = {
+            'content': 'Ce champ prend en charge la syntaxe Markdown pour le formatage du texte.'
         }
     
     def clean_title(self):
@@ -149,7 +156,14 @@ class ForumPostForm(forms.ModelForm):
         model = ForumPost
         fields = ('content',)
         widgets = {
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 6, 'placeholder': 'Votre message'})
+            'content': forms.Textarea(attrs={
+                'class': 'form-control markdown-editor', 
+                'rows': 6, 
+                'placeholder': 'Votre message - Supporte la syntaxe Markdown'
+            })
+        }
+        help_texts = {
+            'content': 'Ce champ prend en charge la syntaxe Markdown pour le formatage du texte. Utilisez @username pour mentionner un utilisateur.'
         }
     
     def clean_content(self):
