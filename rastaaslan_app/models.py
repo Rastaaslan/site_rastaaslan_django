@@ -146,6 +146,26 @@ class UserProfile(models.Model):
             'topics_count': self.user.forum_topics.count(),
             'posts_count': self.user.forum_posts.count()
         }
+        
+    # Ajoutez ce code dans rastaaslan_app/models.py, juste après la classe UserProfile
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    """Crée automatiquement un profil utilisateur pour chaque nouvel utilisateur"""
+    if created:
+        UserProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    """Sauvegarde le profil utilisateur lorsque l'utilisateur est modifié"""
+    try:
+        instance.profile.save()
+    except UserProfile.DoesNotExist:
+        # Si le profil n'existe pas pour une raison quelconque, le créer
+        UserProfile.objects.create(user=instance)
 
 class ForumCategory(models.Model):
     """

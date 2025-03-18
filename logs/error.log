@@ -867,3 +867,506 @@ Traceback (most recent call last):
     topic.reply_count = topic.posts.count() - 1  # Exclut le post initial
     ^^^^^^^^^^^^^^^^^
 AttributeError: property 'reply_count' of 'ForumTopic' object has no setter
+ERROR 2025-03-17 17:41:10,939 log 117749 140404137689152 Internal Server Error: /forum/evenements/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/forum_views.py", line 66, in forum_category
+    topic.reply_count = topic.posts.count() - 1  # Exclut le post initial
+    ^^^^^^^^^^^^^^^^^
+AttributeError: property 'reply_count' of 'ForumTopic' object has no setter
+ERROR 2025-03-17 18:12:32,648 log 117748 140404137689152 Internal Server Error: /forum/evenements/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/forum_views.py", line 66, in forum_category
+    # Mettre à jour le cache
+    ^^^^^^^^^^^^^^^^
+AttributeError: property 'reply_count' of 'ForumTopic' object has no setter
+ERROR 2025-03-17 18:24:15,374 log 118769 139802418782272 Internal Server Error: /forum/evenements/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/forum_views.py", line 160, in forum_category
+    topic.reply_count = topic.posts.count() - 1  # Exclut le post initial
+    ^^^^^^^^^^^^^^^^^
+AttributeError: property 'reply_count' of 'ForumTopic' object has no setter
+ERROR 2025-03-17 18:28:25,290 log 118884 140154907955264 Internal Server Error: /forum/evenements/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/forum_views.py", line 160, in forum_category
+    topic.reply_count = topic.posts.count() - 1  # Exclut le post initial
+    ^^^^^^^^^^^^^^^^^
+AttributeError: property 'reply_count' of 'ForumTopic' object has no setter
+ERROR 2025-03-17 18:28:26,723 log 118884 140154907955264 Internal Server Error: /forum/evenements/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/forum_views.py", line 160, in forum_category
+    topic.reply_count = topic.posts.count() - 1  # Exclut le post initial
+    ^^^^^^^^^^^^^^^^^
+AttributeError: property 'reply_count' of 'ForumTopic' object has no setter
+ERROR 2025-03-17 18:33:18,973 log 119005 140409308680256 Internal Server Error: /forum/evenements/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/forum_views.py", line 159, in forum_category
+    topic.reply_count = topic.posts.count() - 1  # Exclut le post initial
+    ^^^^^^^^^^^^^^^^^
+AttributeError: property 'reply_count' of 'ForumTopic' object has no setter
+ERROR 2025-03-17 18:33:22,231 log 119003 140409308680256 Internal Server Error: /forum/evenements/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/forum_views.py", line 159, in forum_category
+    topic.reply_count = topic.posts.count() - 1  # Exclut le post initial
+    ^^^^^^^^^^^^^^^^^
+AttributeError: property 'reply_count' of 'ForumTopic' object has no setter
+ERROR 2025-03-17 18:38:09,825 log 119132 139717770027072 Internal Server Error: /forum/evenements/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: ERREUR:  la relation « rastaaslan_app_usertopicview » n'existe pas
+LINE 1: ..."rastaaslan_app_usertopicview"."last_viewed" FROM "rastaasla...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/forum_views.py", line 166, in forum_category
+    topic.has_unread = topic.has_unread_posts(request.user)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/models.py", line 236, in has_unread_posts
+    topic_view = UserTopicView.objects.filter(user=user, topic=self).first()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/db/models/query.py", line 1097, in first
+    for obj in queryset[:1]:
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/db/models/query.py", line 400, in __iter__
+    self._fetch_all()
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/db/models/query.py", line 1928, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1574, in execute_sql
+    cursor.execute(sql, params)
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: ERREUR:  la relation « rastaaslan_app_usertopicview » n'existe pas
+LINE 1: ..."rastaaslan_app_usertopicview"."last_viewed" FROM "rastaasla...
+                                                             ^
+
+ERROR 2025-03-17 18:40:59,930 log 119131 139717770027072 Internal Server Error: /forum/create-topic/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/rastaaslan_app/views/forum_views.py", line 319, in create_topic
+    return render(request, 'rastaaslan_app/forum/create_topic.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/template/base.py", line 563, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 153: 'static', expected 'endblock'. Did you forget to register or load this tag?
+ERROR 2025-03-17 19:01:46,946 log 119689 139645409763392 Internal Server Error: /profile/
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: profile_view() missing 1 required positional argument: 'username'
+ERROR 2025-03-17 20:09:44,074 exception 120112 139639782654016 Invalid HTTP_HOST header: 'marereeu.myiphost.com'. You may need to add 'marereeu.myiphost.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'marereeu.myiphost.com'. You may need to add 'marereeu.myiphost.com' to ALLOWED_HOSTS.
+ERROR 2025-03-17 20:26:46,713 exception 120113 139639782654016 Invalid HTTP_HOST header: 'boring-gates.62-4-21-212.plesk.page'. You may need to add 'boring-gates.62-4-21-212.plesk.page' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'boring-gates.62-4-21-212.plesk.page'. You may need to add 'boring-gates.62-4-21-212.plesk.page' to ALLOWED_HOSTS.
+ERROR 2025-03-17 20:27:02,232 exception 120112 139639782654016 Invalid HTTP_HOST header: 'oliver.efyne.fr'. You may need to add 'oliver.efyne.fr' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'oliver.efyne.fr'. You may need to add 'oliver.efyne.fr' to ALLOWED_HOSTS.
+ERROR 2025-03-17 20:55:03,381 exception 120112 139639782654016 Invalid HTTP_HOST header: 'agrconseilsecu.ntdll.top'. You may need to add 'agrconseilsecu.ntdll.top' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'agrconseilsecu.ntdll.top'. You may need to add 'agrconseilsecu.ntdll.top' to ALLOWED_HOSTS.
+ERROR 2025-03-17 20:55:32,799 exception 120113 139639782654016 Invalid HTTP_HOST header: 'detail-account.com'. You may need to add 'detail-account.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'detail-account.com'. You may need to add 'detail-account.com' to ALLOWED_HOSTS.
+ERROR 2025-03-17 21:22:35,577 exception 120113 139639782654016 Invalid HTTP_HOST header: 'relaxed-borg.62-4-21-212.plesk.page'. You may need to add 'relaxed-borg.62-4-21-212.plesk.page' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'relaxed-borg.62-4-21-212.plesk.page'. You may need to add 'relaxed-borg.62-4-21-212.plesk.page' to ALLOWED_HOSTS.
+ERROR 2025-03-17 22:45:46,983 exception 120111 139639782654016 Invalid HTTP_HOST header: 'funny-engelbart.62-4-21-212.plesk.page'. You may need to add 'funny-engelbart.62-4-21-212.plesk.page' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'funny-engelbart.62-4-21-212.plesk.page'. You may need to add 'funny-engelbart.62-4-21-212.plesk.page' to ALLOWED_HOSTS.
+ERROR 2025-03-17 22:47:26,264 exception 120113 139639782654016 Invalid HTTP_HOST header: 'agriconsei.ntdll.top'. You may need to add 'agriconsei.ntdll.top' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'agriconsei.ntdll.top'. You may need to add 'agriconsei.ntdll.top' to ALLOWED_HOSTS.
+ERROR 2025-03-17 22:51:14,801 exception 120111 139639782654016 Invalid HTTP_HOST header: 'mail.efyne.fr'. You may need to add 'mail.efyne.fr' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'mail.efyne.fr'. You may need to add 'mail.efyne.fr' to ALLOWED_HOSTS.
+ERROR 2025-03-17 23:58:36,649 exception 120112 139639782654016 Invalid HTTP_HOST header: 'detail-account.com'. You may need to add 'detail-account.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'detail-account.com'. You may need to add 'detail-account.com' to ALLOWED_HOSTS.
+ERROR 2025-03-18 01:56:23,254 exception 120113 139639782654016 Invalid HTTP_HOST header: 'cnsagrisecur.dnsdyn.net'. You may need to add 'cnsagrisecur.dnsdyn.net' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'cnsagrisecur.dnsdyn.net'. You may need to add 'cnsagrisecur.dnsdyn.net' to ALLOWED_HOSTS.
+ERROR 2025-03-18 03:53:05,984 exception 120112 139639782654016 Invalid HTTP_HOST header: '0.0.0.0'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '0.0.0.0'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+ERROR 2025-03-18 04:02:56,177 exception 120112 139639782654016 Invalid HTTP_HOST header: 'cnsagrisecur.dnsdyn.net'. You may need to add 'cnsagrisecur.dnsdyn.net' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'cnsagrisecur.dnsdyn.net'. You may need to add 'cnsagrisecur.dnsdyn.net' to ALLOWED_HOSTS.
+ERROR 2025-03-18 04:14:57,215 exception 120111 139639782654016 Invalid HTTP_HOST header: 'marereeuir.dtdns.org'. You may need to add 'marereeuir.dtdns.org' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'marereeuir.dtdns.org'. You may need to add 'marereeuir.dtdns.org' to ALLOWED_HOSTS.
+ERROR 2025-03-18 04:17:21,070 exception 120111 139639782654016 Invalid HTTP_HOST header: 'morofiacare.dnsget.org'. You may need to add 'morofiacare.dnsget.org' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'morofiacare.dnsget.org'. You may need to add 'morofiacare.dnsget.org' to ALLOWED_HOSTS.
+ERROR 2025-03-18 06:35:25,171 exception 120111 139639782654016 Invalid HTTP_HOST header: 'conseilsecu.dnslive.net'. You may need to add 'conseilsecu.dnslive.net' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'conseilsecu.dnslive.net'. You may need to add 'conseilsecu.dnslive.net' to ALLOWED_HOSTS.
+ERROR 2025-03-18 07:39:16,402 exception 120111 139639782654016 Invalid HTTP_HOST header: 'moroviara.dnsdyn.net'. You may need to add 'moroviara.dnsdyn.net' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'moroviara.dnsdyn.net'. You may need to add 'moroviara.dnsdyn.net' to ALLOWED_HOSTS.
+ERROR 2025-03-18 07:39:17,061 exception 120113 139639782654016 Invalid HTTP_HOST header: 'moroviara.dnsdyn.net'. You may need to add 'moroviara.dnsdyn.net' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'moroviara.dnsdyn.net'. You may need to add 'moroviara.dnsdyn.net' to ALLOWED_HOSTS.
+ERROR 2025-03-18 09:09:49,400 exception 120111 139639782654016 Invalid HTTP_HOST header: 'oliver.efyne.fr'. You may need to add 'oliver.efyne.fr' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'oliver.efyne.fr'. You may need to add 'oliver.efyne.fr' to ALLOWED_HOSTS.
+ERROR 2025-03-18 09:23:16,297 exception 120112 139639782654016 Invalid HTTP_HOST header: 'detail-account.com'. You may need to add 'detail-account.com' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/var/www/html/myenv/lib/python3.11/site-packages/django/http/request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'detail-account.com'. You may need to add 'detail-account.com' to ALLOWED_HOSTS.
