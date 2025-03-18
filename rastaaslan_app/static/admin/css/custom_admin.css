@@ -1026,3 +1026,441 @@ fieldset.module h2 {
 .delete-confirmation form .cancel-link:hover {
     background: var(--primary);
 }
+
+
+/* Reset complet du header */
+#header {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+    height: 50px !important;  /* Hauteur fixe réduite */
+    padding: 0 20px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1100;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: none;
+    flex-wrap: nowrap;
+}
+
+/* Partie gauche du header (branding) */
+#branding {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+#branding h1 {
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 0;
+    line-height: 50px;
+    height: 50px;
+}
+
+#branding h1 a {
+    display: flex;
+    align-items: center;
+    color: white !important;
+    text-decoration: none;
+    height: 50px;
+}
+
+.site-logo {
+    font-size: 1.4rem;
+    margin-right: 10px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+}
+
+/* Partie droite du header (user tools) */
+#user-tools {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    font-size: 0.85rem !important;
+    margin: 0;
+    padding: 0;
+    height: 50px;
+    flex-shrink: 0;
+}
+
+#user-tools a {
+    border-bottom: none;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 0 8px;
+    line-height: 50px;
+    height: 50px;
+    display: inline-block;
+    transition: background-color 0.2s ease;
+}
+
+#user-tools a:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Bouton pour la barre latérale */
+.shortcuts-toggle {
+    position: fixed !important;
+    top: 55px;
+    left: 5px;
+    width: 36px;
+    height: 36px;
+    background: var(--card-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    z-index: 1001;
+    transition: background-color 0.3s, color 0.3s;
+    border: 1px solid var(--border);
+}
+
+.shortcuts-toggle:hover {
+    background-color: var(--accent);
+    color: white;
+}
+
+/* Menu de raccourcis */
+.shortcuts-menu {
+    position: fixed;
+    top: 50px !important;
+    left: 0;
+    width: 240px;
+    background: var(--card-bg);
+    border-right: 1px solid var(--border);
+    height: calc(100vh - 50px);
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Bouton thème */
+.theme-toggle {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin-left: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Ajustements responsive */
+@media (max-width: 768px) {
+    #header {
+        padding: 0 10px !important;
+    }
+    
+    #branding h1 {
+        font-size: 1rem;
+    }
+    
+    .site-logo {
+        font-size: 1.2rem;
+        margin-right: 5px;
+    }
+    
+    #user-tools {
+        font-size: 0.75rem !important;
+    }
+    
+    #user-tools a {
+        padding: 0 5px;
+    }
+}
+
+/* Correction pour le mode responsive quand le header doit s'adapter */
+@media (max-width: 576px) {
+    #header {
+        height: auto !important;
+        min-height: 50px;
+        flex-wrap: wrap;
+    }
+    
+    #branding {
+        width: auto;
+        flex-grow: 1;
+    }
+    
+    #user-tools {
+        width: auto;
+        height: auto;
+        padding: 5px 0;
+    }
+    
+    #user-tools a {
+        height: 36px;
+        line-height: 36px;
+        padding: 0 6px;
+    }
+}
+
+/* Correction des titres de section d'authentification */
+div.login .form-row {
+    padding: 4px 0;
+}
+
+/* Correction des breadcrumbs quand ils apparaissent sous le header */
+div.breadcrumbs {
+    margin-top: 10px;
+}
+
+#container {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    min-width: auto;
+    width: 100%;
+    padding: 0 15px 20px 15px;
+    margin: 0 auto;
+    max-width: 1800px;
+    box-sizing: border-box;
+    overflow: visible;
+    transition: margin-left 0.3s ease;
+}
+
+/* Ajuster le contenu en fonction du menu latéral */
+.content-shifted {
+    margin-left: 240px !important;
+    transition: margin-left 0.3s ease;
+}
+
+/* Optimisation du contenu principal */
+#content {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--shadow);
+    margin: 15px 0;
+    overflow: visible;
+    position: relative;
+    min-height: calc(100vh - 130px);
+}
+
+/* Breadcrumbs améliorés */
+div.breadcrumbs {
+    background: var(--secondary);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 5px var(--shadow);
+}
+
+/* Améliorer la lisibilité des breadcrumbs */
+div.breadcrumbs a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+div.breadcrumbs a:hover {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: underline;
+}
+
+/* Espace pour les titres principales */
+#content h1 {
+    font-size: 1.5rem;
+    margin: 0 0 20px 0;
+    padding: 0;
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* Améliorer l'affichage des notifications */
+.messagelist {
+    margin: 15px 0;
+    padding: 0;
+}
+
+.messagelist li {
+    font-size: 0.9rem;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+}
+
+.messagelist li::before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-right: 10px;
+}
+
+.messagelist li.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.messagelist li.success::before {
+    content: '\f058'; /* check-circle */
+    color: #28a745;
+}
+
+.messagelist li.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-left: 4px solid #ffc107;
+}
+
+.messagelist li.warning::before {
+    content: '\f071'; /* exclamation-triangle */
+    color: #ffc107;
+}
+
+.messagelist li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.messagelist li.error::before {
+    content: '\f057'; /* times-circle */
+    color: #dc3545;
+}
+
+.messagelist li.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+.messagelist li.info::before {
+    content: '\f05a'; /* info-circle */
+    color: #17a2b8;
+}
+
+/* Changement de list pour les modules d'admin */
+#content-main .app-rastaaslan_app .module,
+#content-main .app-auth .module {
+    margin-bottom: 25px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Ajuster les object-tools (boutons d'actions dans les listes) */
+.object-tools {
+    float: right;
+    margin-top: -45px;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.object-tools li {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.object-tools a {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--accent);
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.object-tools a:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+}
+
+.object-tools a::before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-right: 6px;
+}
+
+.object-tools a.addlink::before {
+    content: '\f067'; /* plus */
+}
+
+/* Optimiser le responsive */
+@media (max-width: 1024px) {
+    .content-shifted {
+        margin-left: 0 !important;
+    }
+    
+    #container {
+        padding: 0 10px 15px 10px;
+    }
+    
+    .object-tools {
+        margin-top: 0;
+        float: none;
+        margin-bottom: 15px;
+        text-align: right;
+    }
+}
+
+@media (max-width: 767px) {
+    #content {
+        padding: 15px;
+    }
+    
+    .object-tools {
+        text-align: center;
+    }
+    
+    .object-tools li {
+        margin: 0 2px 5px 2px;
+    }
+    
+    /* Améliorer le responsive des tableaux */
+    .change-list .results table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* Mode impression amélioré */
+@media print {
+    #header, #shortcuts-menu, .shortcuts-toggle, #footer, .object-tools, .submit-row {
+        display: none !important;
+    }
+    
+    #container {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    #content {
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+}
