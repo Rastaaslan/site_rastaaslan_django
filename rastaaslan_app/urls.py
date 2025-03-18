@@ -1,6 +1,9 @@
-from django.urls import path
+from django.contrib import admin
+from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-
+from rastaaslan_app.admin_views import admin_dashboard
 # Import direct des vues sans utiliser les imports du fichier __init__.py
 from .views.video_views import home, live_view, vods_view, clips_view, video_detail
 from .views.auth_views import register, login_view, profile_view, edit_profile, change_password, twitch_login, twitch_callback
@@ -11,7 +14,8 @@ from .views.forum_views import (
 
 # Définition du namespace pour l'application
 app_name = 'rastaaslan_app'
-
+admin.site.index_template = 'admin/dashboard.html'  # Optionnel: utilise le template sans changer la vue
+admin.site.index = admin_dashboard
 # Regroupement des URL par type
 urlpatterns = [
     # Pages principales
@@ -50,4 +54,9 @@ urlpatterns = [
     path('forum/<slug:category_slug>/create-topic/', create_topic, name='create_topic_category'),
     path('forum/<slug:category_slug>/<slug:topic_slug>/', forum_topic, name='forum_topic'),
     path('forum/<slug:category_slug>/', forum_category, name='forum_category'),
+    
+    path('admin/', admin.site.urls),
+    path('', include('rastaaslan_app.urls', namespace='rastaaslan_app')),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

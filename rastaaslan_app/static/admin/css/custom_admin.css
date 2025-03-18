@@ -1,0 +1,1028 @@
+/* 
+ * custom_admin.css - Styles personnalisés pour l'interface d'administration Rastaaslan
+ */
+
+/* Variables de couleur */
+:root {
+    /* Palette principale (identique au site) */
+    --terracotta: #E07A5F;
+    --vert-sauge: #81B29A;
+    --bleu-indigo: #3D405B;
+    --creme-vintage: #F2CC8F;
+    --peche-pastel: #F4A261;
+    --gris-bleute: #B8C1EC;
+    --beige-papier: #F8F3E6;
+    --blanc-casse: #EDEAE1;
+    --gris-fonce: #4F4F4F;
+    --vert-pastel: #c6d8bb;
+    
+    /* Thème clair */
+    --primary: var(--bleu-indigo);
+    --secondary: var(--terracotta); 
+    --accent: var(--vert-sauge);
+    --background: var(--beige-papier);
+    --card-bg: white;
+    --text: var(--gris-fonce);
+    --text-light: #666;
+    --border: rgba(0, 0, 0, 0.1);
+    --shadow: rgba(0, 0, 0, 0.05);
+    
+    /* États */
+    --success: #52cc99;
+    --info: #3291c8;
+    --warning: #f0c674;
+    --error: #e76a6e;
+}
+
+/* Thème sombre */
+[data-theme="dark"] {
+    --primary: #1a1a2e;
+    --secondary: var(--vert-sauge);
+    --accent: var(--terracotta);
+    --background: #0f3460;
+    --card-bg: #16213e;
+    --text: #e6e6e6;
+    --text-light: #b8c1ec;
+    --border: rgba(255, 255, 255, 0.1);
+    --shadow: rgba(0, 0, 0, 0.2);
+}
+
+/* ------- Styles de base ------- */
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ------- En-tête ------- */
+#header {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 2px 10px var(--shadow);
+    padding: 15px 20px;
+    height: auto;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+#branding h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+#branding h1 a {
+    display: flex;
+    align-items: center;
+    color: white !important;
+    text-decoration: none;
+}
+
+.site-logo {
+    font-size: 1.8rem;
+    margin-right: 12px;
+    color: var(--accent);
+    transition: color 0.3s;
+}
+
+/* ------- Structure ------- */
+#container {
+    background: var(--background);
+    box-shadow: none;
+    border: none;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+#content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px var(--shadow);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* ------- Fil d'Ariane ------- */
+div.breadcrumbs {
+    background: var(--secondary);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+div.breadcrumbs a {
+    color: white;
+}
+
+div.breadcrumbs a:hover {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: underline;
+}
+
+/* ------- Boutons ------- */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: var(--secondary);
+    color: white;
+    border-radius: 6px;
+    padding: 10px 15px;
+    border: none;
+    font-weight: 500;
+    box-shadow: 0 2px 5px var(--shadow);
+    transition: all 0.2s ease;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover {
+    background: var(--accent);
+    box-shadow: 0 4px 8px var(--shadow);
+    transform: translateY(-1px);
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    background: var(--accent);
+    font-weight: 600;
+}
+
+/* ------- Modules ------- */
+.module {
+    margin-bottom: 25px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px var(--shadow);
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    background: var(--secondary);
+    color: white;
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.module table {
+    width: 100%;
+}
+
+/* ------- Tableaux ------- */
+table {
+    border-radius: 8px;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 1rem;
+}
+
+thead th {
+    background: var(--background);
+    color: var(--text);
+    padding: 12px 10px;
+    font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+td, th {
+    padding: 12px 10px;
+    vertical-align: middle;
+}
+
+/* ------- Sidebar ------- */
+#content-related {
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px var(--shadow);
+    transition: background-color 0.3s;
+}
+
+#content-related .module h2 {
+    background: var(--accent);
+    color: white;
+    border-radius: 6px 6px 0 0;
+}
+
+/* ------- Tableau de bord ------- */
+.dashboard .module table th {
+    width: 100%;
+}
+
+.dashboard .module table td {
+    white-space: nowrap;
+}
+
+.dashboard .module table th a {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ------- Statcards ------- */
+.stat-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px var(--shadow);
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    border-radius: 12px;
+    margin-right: 20px;
+    transition: background-color 0.3s;
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.stat-label {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* ------- Formulaires ------- */
+.form-row {
+    padding: 15px;
+    border-bottom: 1px solid var(--border);
+}
+
+.aligned label {
+    color: var(--text);
+    font-weight: 500;
+}
+
+select, textarea, input[type="text"], input[type="password"], 
+input[type="email"], input[type="url"], input[type="number"] {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    background-color: var(--card-bg);
+    color: var(--text);
+    transition: all 0.2s ease;
+}
+
+[data-theme="dark"] select, 
+[data-theme="dark"] textarea, 
+[data-theme="dark"] input[type="text"], 
+[data-theme="dark"] input[type="password"], 
+[data-theme="dark"] input[type="email"], 
+[data-theme="dark"] input[type="url"], 
+[data-theme="dark"] input[type="number"] {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+select:focus, textarea:focus, input:focus {
+    border-color: var(--secondary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(224, 122, 95, 0.25);
+}
+
+/* ------- Objets tools ------- */
+.object-tools {
+    margin-top: 0;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.object-tools a:link, .object-tools a:visited {
+    background: var(--accent);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 5px var(--shadow);
+}
+
+.object-tools a:hover, .object-tools a:focus {
+    background: var(--secondary);
+}
+
+/* ------- User Tools ------- */
+#user-tools {
+    font-size: 0.9rem;
+    padding: 0;
+    margin: 0;
+}
+
+#user-tools a {
+    border-bottom: none;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.2s ease;
+    padding: 5px 8px;
+    border-radius: 4px;
+}
+
+#user-tools a:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ------- Messages ------- */
+ul.messagelist {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+ul.messagelist li {
+    border-radius: 6px;
+    margin: 0 0 10px 0;
+    padding: 15px;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 5px var(--shadow);
+}
+
+ul.messagelist li.success {
+    background: var(--success);
+    color: white;
+}
+
+ul.messagelist li.error {
+    background: var(--error);
+    color: white;
+}
+
+ul.messagelist li.warning {
+    background: var(--warning);
+    color: var(--gris-fonce);
+}
+
+ul.messagelist li.info {
+    background: var(--info);
+    color: white;
+}
+
+/* ------- Pagination ------- */
+.paginator {
+    margin-top: 20px;
+    padding: 15px;
+    background: var(--background);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.paginator .this-page {
+    padding: 5px 10px;
+    background: var(--accent);
+    color: white;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.paginator a:link, .paginator a:visited {
+    padding: 5px 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.paginator a:hover, .paginator a:focus {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+/* ------- Bouton de thème ------- */
+.theme-toggle {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-left: 12px;
+    opacity: 0.9;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(15deg);
+}
+
+/* ------- Menu de raccourcis ------- */
+.shortcuts-menu {
+    position: fixed;
+    top: 65px;
+    left: 0;
+    width: 260px;
+    background: var(--card-bg);
+    border-right: 1px solid var(--border);
+    height: calc(100vh - 65px);
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 2px 0 10px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.shortcuts-menu.collapsed {
+    transform: translateX(-260px);
+}
+
+.shortcuts-toggle {
+    position: absolute;
+    top: 15px;
+    right: -40px;
+    width: 40px;
+    height: 40px;
+    background: var(--card-bg);
+    border-radius: 0 8px 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text);
+    box-shadow: 2px 0 5px var(--shadow);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.shortcuts-section {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.shortcuts-section h3 {
+    margin-top: 0;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.shortcut-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+}
+
+.shortcut-link:hover {
+    background: var(--background);
+    transform: translateX(3px);
+}
+
+.shortcut-link i {
+    width: 24px;
+    margin-right: 12px;
+    color: var(--accent);
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.content-shifted {
+    margin-left: 260px;
+    transition: margin-left 0.3s ease;
+}
+
+/* ------- Recent Activity ------- */
+.recent-activity {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px var(--shadow);
+    border: 1px solid var(--border);
+    transition: background-color 0.3s;
+}
+
+.recent-activity h3 {
+    margin-top: 0;
+    color: var(--text);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.recent-activity h3 i {
+    margin-right: 10px;
+    color: var(--accent);
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--background);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: var(--accent);
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    margin: 0 0 5px 0;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.activity-meta {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin: 0;
+}
+
+/* ------- Badges ------- */
+.model-count-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-left: 8px;
+    transition: background-color 0.3s;
+}
+
+/* ------- Système info ------- */
+.system-info {
+    background: var(--card-bg);
+    border-radius: 10px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px var(--shadow);
+    border: 1px solid var(--border);
+    transition: background-color 0.3s;
+}
+
+.system-info .card-header {
+    background: var(--accent);
+    color: white;
+    padding: 15px 20px;
+}
+
+.system-info .card-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.system-info .card-header h3 i {
+    margin-right: 10px;
+}
+
+.system-info .card-body {
+    padding: 20px;
+}
+
+.system-info .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+}
+
+.system-info .col {
+    flex: 1;
+    padding: 10px;
+    min-width: 200px;
+}
+
+.system-info h4 {
+    color: var(--text);
+    margin-top: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.system-info p {
+    color: var(--text-light);
+    margin-bottom: 0;
+}
+
+/* ------- Admin modules ------- */
+.admin-modules {
+    margin-top: 30px;
+}
+
+.admin-modules h3 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: var(--text);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.admin-modules h3 i {
+    margin-right: 10px;
+    color: var(--accent);
+}
+
+.admin-modules .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+}
+
+.admin-modules .col-lg-6 {
+    width: calc(50% - 20px);
+    padding: 10px;
+}
+
+@media (max-width: 992px) {
+    .admin-modules .col-lg-6 {
+        width: 100%;
+    }
+}
+
+.admin-modules .card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px var(--shadow);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.admin-modules .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow);
+}
+
+.admin-modules .card-header {
+    background: var(--secondary);
+    color: white;
+    padding: 15px 20px;
+}
+
+.admin-modules .card-header h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.admin-modules .card-header h4 i {
+    margin-right: 10px;
+}
+
+.admin-modules .card-body {
+    padding: 0;
+}
+
+.admin-modules .table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.admin-modules .table-sm th,
+.admin-modules .table-sm td {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+}
+
+.admin-modules .table-sm tr:first-child th,
+.admin-modules .table-sm tr:first-child td {
+    border-top: none;
+}
+
+.admin-modules .text-right {
+    text-align: right;
+}
+
+.admin-modules .btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 5px 10px;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 4px;
+    transition: all 0.15s ease-in-out;
+    margin-left: 5px;
+}
+
+.admin-modules .btn-sm {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+}
+
+.admin-modules .btn-outline-success {
+    color: var(--success);
+    border-color: var(--success);
+}
+
+.admin-modules .btn-outline-success:hover {
+    color: white;
+    background-color: var(--success);
+}
+
+.admin-modules .btn-outline-primary {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.admin-modules .btn-outline-primary:hover {
+    color: white;
+    background-color: var(--accent);
+}
+
+/* ------- Responsive ------- */
+@media (max-width: 1024px) {
+    .shortcuts-menu {
+        transform: translateX(-260px);
+    }
+    
+    .shortcuts-menu.expanded {
+        transform: translateX(0);
+    }
+    
+    .content-shifted {
+        margin-left: 0;
+    }
+    
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+    }
+}
+
+@media (max-width: 767px) {
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+    
+    #header {
+        padding: 10px;
+    }
+    
+    #branding h1 {
+        font-size: 1.2rem;
+    }
+    
+    .site-logo {
+        font-size: 1.5rem;
+    }
+    
+    #content {
+        padding: 15px;
+    }
+    
+    .object-tools {
+        position: static;
+        margin-bottom: 15px;
+    }
+}
+
+/* ------- Animations ------- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.admin-dashboard {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.stat-card {
+    animation: fadeIn 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* ------- Améliorations visuelles pour les filtres ------- */
+.change-list #changelist-filter {
+    background: var(--card-bg);
+    border-radius: 8px;
+    margin-left: 20px;
+    width: 240px;
+    box-shadow: 0 4px 15px var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.change-list #changelist-filter h2 {
+    background: var(--accent);
+    color: white;
+    border-radius: 8px 8px 0 0;
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.change-list #changelist-filter h3 {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin: 15px 0 10px 0;
+    font-weight: 600;
+    padding: 0 15px;
+}
+
+.change-list #changelist-filter ul {
+    padding: 0 15px 15px 15px;
+}
+
+.change-list #changelist-filter li {
+    margin-bottom: 7px;
+}
+
+.change-list #changelist-filter li a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.change-list #changelist-filter li.selected a {
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+.change-list #changelist-filter li a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+/* ------- Améliorations pour les champs de formulaire ------- */
+fieldset.module {
+    margin-bottom: 25px !important;
+}
+
+fieldset.module h2 {
+    background: var(--accent) !important;
+}
+
+.field-box {
+    margin-right: 20px;
+}
+
+.help {
+    color: var(--text-light);
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.required label, label.required {
+    font-weight: 600;
+}
+
+/* ------- Inlines améliorés ------- */
+.inline-group {
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.inline-group .tabular tr.add-row td {
+    padding: 15px;
+    background: var(--background);
+}
+
+.inline-group .tabular tr.add-row td a {
+    color: var(--secondary);
+    font-weight: 500;
+}
+
+/* ------- Groupes d'administration ------- */
+.app-rastaaslan_app .module h2,
+.app-rastaaslan_app .module caption,
+.app-rastaaslan_app .inline-group h2 {
+    background: var(--bleu-indigo);
+}
+
+.app-auth .module h2,
+.app-auth .module caption,
+.app-auth .inline-group h2 {
+    background: var(--terracotta);
+}
+
+/* ------- Widget de date amélioré ------- */
+.calendarbox, .clockbox {
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.calendarbox h2,
+.clockbox h2 {
+    background: var(--accent) !important;
+    border-radius: 8px 8px 0 0;
+}
+
+.calendarbox .calendarnav-previous,
+.calendarbox .calendarnav-next {
+    color: white;
+    text-decoration: none;
+}
+
+.calendar td a {
+    border-radius: 4px;
+}
+
+.calendar td a:hover {
+    background: var(--secondary);
+}
+
+.calendar td.selected a {
+    background: var(--accent);
+}
+
+/* ------- Boutons d'action ------- */
+.submit-row {
+    background: var(--background);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.delete-confirmation form .cancel-link {
+    display: inline-block;
+    padding: 10px 15px;
+    background: var(--gris-fonce);
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.delete-confirmation form .cancel-link:hover {
+    background: var(--primary);
+}

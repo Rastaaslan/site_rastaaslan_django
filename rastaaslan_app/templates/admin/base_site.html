@@ -1,160 +1,620 @@
 {% extends "admin/base_site.html" %}
 {% load static %}
 
-{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
-
-{% block extrastyle %}
-  {{ block.super }}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}?v=1.5">
-  <style>
-    /* Ajustements spécifiques pour l'interface d'administration */
-    :root {
-      --primary: var(--accent-color) !important;
-      --secondary: var(--text-secondary) !important;
-      --link-fg: var(--accent-color) !important;
-      --link-hover-color: var(--accent-hover) !important;
-      --button-hover-bg: var(--accent-hover) !important;
-    }
-    
-    /* Assurer la lisibilité des formulaires dans le thème sombre */
-    [data-theme="dark"] input, 
-    [data-theme="dark"] select, 
-    [data-theme="dark"] textarea {
-      background-color: rgba(255, 255, 255, 0.1) !important;
-      color: var(--text-primary) !important;
-    }
-    
-    /* Conserver les styles spécifiques d'admin */
-    #header {
-      background: var(--nav-bg) !important;
-      color: var(--nav-text) !important;
-    }
-    
-    .module h2, .module caption, .inline-group h2 {
-      background: var(--accent-color) !important;
-      color: white !important;
-    }
-    
-    /* Style pour les liens d'action */
-    .object-tools a:link, .object-tools a:visited {
-      background: var(--accent-color) !important;
-    }
-    
-    .object-tools a:hover, .object-tools a:focus {
-      background: var(--accent-hover) !important;
-    }
-    
-    /* Style pour les boutons de soumission */
-    input[type=submit], button[type=submit] {
-      background: var(--accent-color) !important;
-      color: white !important;
-    }
-    
-    input[type=submit]:hover, button[type=submit]:hover {
-      background: var(--accent-hover) !important;
-    }
-    
-    /* Assurer que le thème s'applique correctement à l'ensemble de la page */
-    body {
-      background-color: var(--bg-primary) !important;
-      color: var(--text-primary) !important;
-    }
-    
-    /* Style pour le tableau de bord */
-    #content h1 {
-      color: var(--accent-color) !important;
-    }
-    
-    .dashboard .module table th {
-      background: var(--bg-secondary) !important;
-    }
-  </style>
-  
-  <!-- Ajouter Font Awesome pour les icônes -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-{% endblock %}
+{% block title %}{{ title }} | {{ site_title|default:_('Rastaaslan Admin') }}{% endblock %}
 
 {% block branding %}
 <h1 id="site-name">
-  <a href="{% url 'admin:index' %}">
-    <i class="fas fa-cog"></i> Administration Rastaaslan
-  </a>
+    <a href="{% url 'admin:index' %}">
+        <span class="site-logo"><i class="fas fa-dragon"></i></span>
+        <span class="site-title">Rastaaslan Administration</span>
+    </a>
 </h1>
 {% endblock %}
 
-{% block nav-global %}
-<div class="sidebar-shortcuts">
-  <a href="{% url 'rastaaslan_app:home' %}" class="sidebar-shortcut" target="_blank">
-    <i class="fas fa-home"></i> Voir le site
-  </a>
-  <a href="{% url 'rastaaslan_app:forum_home' %}" class="sidebar-shortcut" target="_blank">
-    <i class="fas fa-comments"></i> Forum
-  </a>
-  <a href="{% url 'rastaaslan_app:live' %}" class="sidebar-shortcut" target="_blank">
-    <i class="fas fa-video"></i> Page Live
-  </a>
-</div>
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="{% static 'admin/css/custom_admin.css' %}">
 <style>
-  .sidebar-shortcuts {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-  .sidebar-shortcut {
-    padding: 8px 15px;
-    margin-bottom: 5px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-    color: var(--nav-text) !important;
-    text-decoration: none;
-    transition: background 0.3s;
-  }
-  .sidebar-shortcut:hover {
-    background: rgba(255, 255, 255, 0.2);
-    text-decoration: none;
-  }
-  .sidebar-shortcut i {
-    margin-right: 8px;
-    width: 16px;
-    text-align: center;
-  }
+    :root {
+        /* Couleurs principales (reprises du thème du site) */
+        --terracotta: #E07A5F;
+        --vert-sauge: #81B29A;
+        --bleu-indigo: #3D405B;
+        --creme-vintage: #F2CC8F;
+        --peche-pastel: #F4A261;
+        --gris-bleute: #B8C1EC;
+        --beige-papier: #F8F3E6;
+        --blanc-casse: #EDEAE1;
+        --gris-fonce: #4F4F4F;
+        --vert-pastel: #c6d8bb;
+        
+        /* Variables pour le thème clair */
+        --primary: var(--bleu-indigo);
+        --secondary: var(--terracotta);
+        --accent: var(--vert-sauge);
+        --background: var(--beige-papier);
+        --text: var(--gris-fonce);
+        --border: rgba(0, 0, 0, 0.1);
+        --success: #52cc99;
+        --info: #3291c8;
+        --warning: #f0c674;
+        --error: #e76a6e;
+    }
+    
+    [data-theme="dark"] {
+        /* Variables pour le thème sombre */
+        --primary: #1a1a2e;
+        --secondary: var(--vert-sauge);
+        --accent: var(--terracotta);
+        --background: #0f3460;
+        --text: #e6e6e6;
+        --border: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Styles de base */
+    body {
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        background-color: var(--background);
+        color: var(--text);
+        line-height: 1.5;
+    }
+    
+    /* Header */
+    #header {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        height: auto;
+        min-height: 60px;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+    }
+    
+    #branding h1 {
+        font-size: 1.5rem;
+        margin: 0;
+        padding: 0;
+    }
+    
+    #branding h1 a {
+        display: flex;
+        align-items: center;
+        color: white !important;
+        text-decoration: none;
+    }
+    
+    .site-logo {
+        font-size: 1.8rem;
+        margin-right: 10px;
+        color: var(--vert-sauge);
+    }
+    
+    /* Container */
+    #container {
+        background: var(--background);
+        border: none;
+        box-shadow: none;
+        margin-top: 20px;
+    }
+    
+    /* Content */
+    #content {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Breadcrumbs */
+    div.breadcrumbs {
+        background: var(--secondary);
+        color: white;
+        padding: 15px 20px;
+        font-size: 14px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+    }
+    
+    div.breadcrumbs a {
+        color: white;
+    }
+    
+    /* Boutons */
+    .button, input[type=submit], input[type=button], .submit-row input, a.button {
+        background: var(--secondary);
+        color: white;
+        border-radius: 4px;
+        padding: 8px 15px;
+        border: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+    
+    .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover {
+        background: var(--accent);
+    }
+    
+    .button.default, input[type=submit].default, .submit-row input.default {
+        background: var(--accent);
+    }
+    
+    /* Modules */
+    .module {
+        border-radius: 6px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    
+    .module h2, .module caption, .inline-group h2 {
+        background: var(--secondary);
+        color: white;
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    /* Tableaux */
+    table {
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    
+    thead th {
+        background: #f5f5f5;
+        padding: 12px 5px;
+    }
+    
+    tr:nth-child(even) {
+        background: #fafafa;
+    }
+    
+    /* Sidebar */
+    #content-related {
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 15px;
+    }
+    
+    /* Dashboard */
+    .dashboard .module table th {
+        width: 100%;
+    }
+    
+    .dashboard .module table td {
+        white-space: nowrap;
+    }
+    
+    .dashboard .module table th a {
+        color: var(--accent);
+        font-weight: 600;
+    }
+    
+    /* Cards for dashboard widgets */
+    .stat-card {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--accent);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        border-radius: 8px;
+        margin-right: 15px;
+    }
+    
+    .stat-content {
+        flex: 1;
+    }
+    
+    .stat-value {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--primary);
+        margin: 0;
+    }
+    
+    .stat-label {
+        color: #888;
+        margin: 0;
+    }
+    
+    /* Better form inputs */
+    select, textarea, input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="number"] {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 8px 10px;
+        margin: 2px 0;
+    }
+    
+    select:focus, textarea:focus, input:focus {
+        border-color: var(--secondary);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(224, 122, 95, 0.2);
+    }
+    
+    /* Action nav links */
+    .object-tools {
+        margin-top: -10px;
+    }
+    
+    .object-tools a:link, .object-tools a:visited {
+        background: var(--accent);
+        border-radius: 4px;
+    }
+    
+    .object-tools a:hover, .object-tools a:focus {
+        background: var(--secondary);
+    }
+    
+    /* User tools */
+    #user-tools {
+        font-size: 0.9rem;
+    }
+    
+    #user-tools a {
+        border-bottom: none;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.8);
+        transition: color 0.2s ease;
+    }
+    
+    #user-tools a:hover {
+        color: white;
+        text-decoration: underline;
+    }
+    
+    /* Messages */
+    ul.messagelist li {
+        border-radius: 4px;
+        margin: 0 0 10px 0;
+        padding: 12px 15px;
+    }
+    
+    ul.messagelist li.success {
+        background: var(--success);
+        color: white;
+    }
+    
+    ul.messagelist li.error {
+        background: var(--error);
+        color: white;
+    }
+    
+    ul.messagelist li.warning {
+        background: var(--warning);
+        color: #664d03;
+    }
+    
+    /* Pagination */
+    .paginator {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f9f9f9;
+        border-radius: 4px;
+    }
+    
+    .paginator a:link, .paginator a:visited {
+        padding: 5px 10px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        color: var(--primary);
+    }
+    
+    .paginator a:hover, .paginator a:focus {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+    }
+    
+    /* Dark mode toggle */
+    .theme-toggle {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 1.2rem;
+        margin-left: 10px;
+        opacity: 0.8;
+        transition: opacity 0.2s ease;
+        padding: 5px;
+    }
+    
+    .theme-toggle:hover {
+        opacity: 1;
+    }
+    
+    /* Shortcuts menu */
+    .shortcuts-menu {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 250px;
+        background: white;
+        border-right: 1px solid #eee;
+        height: calc(100% - 60px);
+        overflow-y: auto;
+        z-index: 1000;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease;
+    }
+    
+    .shortcuts-menu.collapsed {
+        transform: translateX(-250px);
+    }
+    
+    .shortcuts-toggle {
+        position: absolute;
+        top: 10px;
+        right: -40px;
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 0 4px 4px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    }
+    
+    .shortcuts-section {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .shortcuts-section h3 {
+        margin-top: 0;
+        font-size: 1rem;
+        color: #888;
+        font-weight: normal;
+        margin-bottom: 10px;
+    }
+    
+    .shortcut-link {
+        display: flex;
+        align-items: center;
+        padding: 8px 10px;
+        color: var(--text);
+        text-decoration: none;
+        border-radius: 4px;
+        margin-bottom: 5px;
+        transition: all 0.2s ease;
+    }
+    
+    .shortcut-link:hover {
+        background: #f5f5f5;
+    }
+    
+    .shortcut-link i {
+        width: 20px;
+        margin-right: 10px;
+        color: var(--accent);
+    }
+    
+    .content-shifted {
+        margin-left: 250px;
+        transition: margin-left 0.3s ease;
+    }
+    
+    .content-full {
+        margin-left: 0;
+    }
+    
+    /* Stats dashboard customization */
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    /* Recent activity section */
+    .recent-activity {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .recent-activity h3 {
+        margin-top: 0;
+        color: var(--primary);
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    
+    .activity-item {
+        display: flex;
+        align-items: flex-start;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .activity-icon {
+        width: 30px;
+        height: 30px;
+        background: #f5f5f5;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        color: var(--accent);
+    }
+    
+    .activity-content {
+        flex: 1;
+    }
+    
+    .activity-title {
+        margin: 0 0 5px 0;
+        font-weight: 500;
+    }
+    
+    .activity-meta {
+        font-size: 0.85rem;
+        color: #888;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+        .shortcuts-menu {
+            transform: translateX(-250px);
+        }
+        
+        .shortcuts-menu.expanded {
+            transform: translateX(0);
+        }
+        
+        .content-shifted {
+            margin-left: 0;
+        }
+        
+        .stats-container {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    /* Custom badges for important information */
+    .model-count-badge {
+        display: inline-block;
+        background: var(--accent);
+        color: white;
+        border-radius: 20px;
+        padding: 2px 8px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        margin-left: 5px;
+    }
 </style>
 {% endblock %}
 
-{% block footer %}
-<div id="footer">
-  <script>
-    // Détection du thème actuel dans localStorage
+{% block nav-global %}
+<div id="shortcuts-menu" class="shortcuts-menu collapsed">
+    <div class="shortcuts-toggle" id="shortcuts-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <div class="shortcuts-section">
+        <h3>Navigation rapide</h3>
+        <a href="{% url 'admin:index' %}" class="shortcut-link">
+            <i class="fas fa-tachometer-alt"></i> Tableau de bord
+        </a>
+        <a href="{% url 'rastaaslan_app:home' %}" class="shortcut-link" target="_blank">
+            <i class="fas fa-home"></i> Site public
+        </a>
+        <a href="{% url 'admin:auth_user_changelist' %}" class="shortcut-link">
+            <i class="fas fa-users"></i> Utilisateurs
+        </a>
+    </div>
+    
+    <div class="shortcuts-section">
+        <h3>Vidéos</h3>
+        <a href="{% url 'admin:rastaaslan_app_video_changelist' %}" class="shortcut-link">
+            <i class="fas fa-video"></i> Toutes les vidéos
+        </a>
+        <a href="{% url 'admin:rastaaslan_app_video_add' %}" class="shortcut-link">
+            <i class="fas fa-plus"></i> Ajouter une vidéo
+        </a>
+    </div>
+    
+    <div class="shortcuts-section">
+        <h3>Forum</h3>
+        <a href="{% url 'admin:rastaaslan_app_forumcategory_changelist' %}" class="shortcut-link">
+            <i class="fas fa-folder"></i> Catégories
+        </a>
+        <a href="{% url 'admin:rastaaslan_app_forumtopic_changelist' %}" class="shortcut-link">
+            <i class="fas fa-comments"></i> Sujets
+        </a>
+        <a href="{% url 'admin:rastaaslan_app_forumpost_changelist' %}" class="shortcut-link">
+            <i class="fas fa-comment"></i> Messages
+        </a>
+    </div>
+    
+    <div class="shortcuts-section">
+        <h3>Utilisateurs</h3>
+        <a href="{% url 'admin:rastaaslan_app_userprofile_changelist' %}" class="shortcut-link">
+            <i class="fas fa-id-card"></i> Profils
+        </a>
+        <a href="{% url 'admin:auth_user_changelist' %}" class="shortcut-link">
+            <i class="fas fa-user"></i> Comptes
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block usertools %}
+{{ block.super }}
+<button id="theme-toggle" class="theme-toggle" title="Changer de thème">
+    <i class="fas fa-moon"></i>
+</button>
+{% endblock %}
+
+{% block footer %}{{ block.super }}
+<script>
+    // Gestion du menu des raccourcis
     document.addEventListener('DOMContentLoaded', function() {
-      const currentTheme = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', currentTheme);
-      
-      // Ajouter un bouton de changement de thème dans l'interface d'administration
-      const userTools = document.querySelector('#user-tools');
-      if (userTools) {
-        const themeToggle = document.createElement('a');
-        themeToggle.href = '#';
-        themeToggle.id = 'admin-theme-toggle';
-        themeToggle.innerHTML = currentTheme === 'dark' 
-          ? '<i class="fas fa-sun"></i> Mode clair' 
-          : '<i class="fas fa-moon"></i> Mode sombre';
-        themeToggle.style.marginLeft = '15px';
+        const container = document.getElementById('container');
+        const shortcutsMenu = document.getElementById('shortcuts-menu');
+        const shortcutsToggle = document.getElementById('shortcuts-toggle');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
         
-        themeToggle.addEventListener('click', function(e) {
-          e.preventDefault();
-          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', newTheme);
-          localStorage.setItem('theme', newTheme);
-          
-          // Mettre à jour l'icône et le texte
-          this.innerHTML = newTheme === 'dark' 
-            ? '<i class="fas fa-sun"></i> Mode clair' 
-            : '<i class="fas fa-moon"></i> Mode sombre';
+        // Initialiser selon le localStorage
+        const menuCollapsed = localStorage.getItem('adminMenuCollapsed') === 'true';
+        const darkMode = localStorage.getItem('adminDarkMode') === 'true';
+        
+        if (!menuCollapsed) {
+            shortcutsMenu.classList.remove('collapsed');
+            container.classList.add('content-shifted');
+        }
+        
+        if (darkMode) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        // Toggle menu
+        shortcutsToggle.addEventListener('click', function() {
+            shortcutsMenu.classList.toggle('collapsed');
+            container.classList.toggle('content-shifted');
+            
+            localStorage.setItem('adminMenuCollapsed', shortcutsMenu.classList.contains('collapsed'));
         });
         
-        userTools.appendChild(themeToggle);
-      }
+        // Toggle theme
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? null : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('adminDarkMode', newTheme === 'dark');
+            
+            if (newTheme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
     });
-  </script>
-</div>
+</script>
 {% endblock %}

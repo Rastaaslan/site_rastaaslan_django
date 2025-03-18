@@ -1,0 +1,167 @@
+{% extends "admin/index.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div class="admin-dashboard">
+    <h1>Tableau de bord d'administration</h1>
+    
+    <!-- Résumé des statistiques -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-video"></i>
+            </div>
+            <div class="stat-content">
+                <p class="stat-value">{{ video_count }}</p>
+                <p class="stat-label">Vidéos</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon" style="background: var(--terracotta);">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-content">
+                <p class="stat-value">{{ user_count }}</p>
+                <p class="stat-label">Utilisateurs</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon" style="background: var(--bleu-indigo);">
+                <i class="fas fa-comments"></i>
+            </div>
+            <div class="stat-content">
+                <p class="stat-value">{{ topic_count }}</p>
+                <p class="stat-label">Sujets du forum</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon" style="background: var(--peche-pastel);">
+                <i class="fas fa-comment-dots"></i>
+            </div>
+            <div class="stat-content">
+                <p class="stat-value">{{ post_count }}</p>
+                <p class="stat-label">Messages</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Activité récente -->
+    <div class="recent-activity">
+        <h3><i class="fas fa-history"></i> Activité récente</h3>
+        
+        {% if recent_activities %}
+            {% for activity in recent_activities %}
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        {% if activity.type == 'post' %}
+                            <i class="fas fa-comment"></i>
+                        {% elif activity.type == 'topic' %}
+                            <i class="fas fa-comments"></i>
+                        {% elif activity.type == 'video' %}
+                            <i class="fas fa-video"></i>
+                        {% elif activity.type == 'user' %}
+                            <i class="fas fa-user-plus"></i>
+                        {% else %}
+                            <i class="fas fa-edit"></i>
+                        {% endif %}
+                    </div>
+                    <div class="activity-content">
+                        <p class="activity-title">{{ activity.title }}</p>
+                        <p class="activity-meta">
+                            {% if activity.user %}Par {{ activity.user }}{% endif %}
+                            {% if activity.timestamp %} • {{ activity.timestamp }}{% endif %}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Aucune activité récente à afficher.</p>
+        {% endif %}
+    </div>
+    
+    <!-- Informations système -->
+    <div class="system-info">
+        <div class="card-header">
+            <h3><i class="fas fa-server"></i> Informations système</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <h4>Django</h4>
+                    <p>Version: {{ django_version }}</p>
+                </div>
+                <div class="col">
+                    <h4>Python</h4>
+                    <p>Version: {{ python_version }}</p>
+                </div>
+                <div class="col">
+                    <h4>Base de données</h4>
+                    <p>{{ database_info }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modules d'administration standard -->
+    <div class="admin-modules mt-4">
+        <h3><i class="fas fa-th-large"></i> Modules d'administration</h3>
+        {% if app_list %}
+            <div class="row">
+                {% for app in app_list %}
+                    <div class="col-lg-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h4>
+                                    {% if app.app_icon %}
+                                        <i class="{{ app.app_icon }}"></i>
+                                    {% else %}
+                                        <i class="fas fa-folder"></i>
+                                    {% endif %}
+                                    {{ app.name }}
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm">
+                                    {% for model in app.models %}
+                                        <tr>
+                                            <th scope="row">
+                                                {% if model.admin_url %}
+                                                    <a href="{{ model.admin_url }}">{{ model.name }}</a>
+                                                {% else %}
+                                                    {{ model.name }}
+                                                {% endif %}
+                                                
+                                                {% if model.count %}
+                                                    <span class="model-count-badge">{{ model.count }}</span>
+                                                {% endif %}
+                                            </th>
+                                            <td class="text-right">
+                                                {% if model.add_url %}
+                                                    <a href="{{ model.add_url }}" class="btn btn-sm btn-outline-success">
+                                                        <i class="fas fa-plus"></i> Ajouter
+                                                    </a>
+                                                {% endif %}
+                                                
+                                                {% if model.admin_url %}
+                                                    <a href="{{ model.admin_url }}" class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-list"></i> Gérer
+                                                    </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>{% trans "You don't have permission to view or edit anything." %}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
