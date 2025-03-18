@@ -157,7 +157,8 @@ def forum_category(request, category_slug):
     topics = list(topics_queryset)
     for topic in topics:
         # Utiliser la propriété reply_count au lieu de l'assigner
-        # Ne plus faire : topic.reply_count = topic.posts.count() - 1
+        # NE PAS FAIRE: topic.reply_count = topic.posts.count() - 1  
+        # car reply_count est une propriété qui calcule déjà cela
         
         topic.last_post = topic.posts.order_by('-created_at').first()
         
