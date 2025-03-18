@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 
 # Import direct des vues sans utiliser les imports du fichier __init__.py
 from .views.video_views import home, live_view, vods_view, clips_view, video_detail
-from .views.auth_views import register, login_view, profile_view, my_profile_view, edit_profile, change_password, twitch_login, twitch_callback
+from .views.auth_views import register, login_view, profile_view, edit_profile, change_password, twitch_login, twitch_callback
 from .views.forum_views import (
     forum_home, forum_category, forum_topic, create_topic, 
     edit_post, delete_post, search_forum, react_to_post, preview_markdown
