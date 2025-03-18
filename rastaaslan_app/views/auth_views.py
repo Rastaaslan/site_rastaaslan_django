@@ -4,7 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib import messages
 from django.conf import settings
-from ..models import UserProfile, ForumTopic, ForumPost
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils import timezone
+from datetime import timedelta
+from django.db.models import Count, Q
+
+from ..models import UserProfile, ForumTopic, ForumPost, PostReaction
 from ..forms import (
     CustomUserCreationForm, CustomAuthenticationForm, 
     UserProfileForm, CustomPasswordChangeForm
@@ -53,43 +58,90 @@ def login_view(request):
     return render(request, 'rastaaslan_app/auth/login.html', {'form': form})
 
 @login_required
-def my_profile_view(request):
-    """Vue pour afficher le profil de l'utilisateur connecté"""
-    # Récupérer le profil de l'utilisateur connecté
-    user_profile = get_object_or_404(UserProfile, user=request.user)
+def profile_view(request, username=None):
+    """
+    Vue améliorée pour afficher un profil utilisateur avec :
+    - Statistiques détaillées sur l'activité du forum
+    - Pagination des messages et sujets récents
+    - Catégories les plus actives
+    """
+    if username is None:
+        # Profil de l'utilisateur connecté
+        user_profile = get_object_or_404(UserProfile, user=request.user)
+    else:
+        # Profil d'un autre utilisateur
+        user_profile = get_object_or_404(UserProfile, user__username=username)
     
-    # Obtenir les statistiques du forum pour l'utilisateur
+    # Utilisateur dont on affiche le profil
+    profile_user = user_profile.user
+    
+    # Pagination pour les messages et sujets récents
+    topics_page = request.GET.get('topics_page', 1)
+    posts_page = request.GET.get('posts_page', 1)
+    
+    # Récupérer tous les sujets et messages pour la pagination
+    all_topics = (ForumTopic.objects
+        .filter(author=profile_user)
+        .select_related('category')
+        .order_by('-created_at'))
+    
+    all_posts = (ForumPost.objects
+        .filter(author=profile_user)
+        .select_related('topic', 'topic__category')
+        .order_by('-created_at'))
+    
+    # Pagination
+    topics_paginator = Paginator(all_topics, 5)  # 5 sujets par page
+    posts_paginator = Paginator(all_posts, 5)  # 5 messages par page
+    
+    try:
+        paginated_topics = topics_paginator.page(topics_page)
+    except (PageNotAnInteger, EmptyPage):
+        paginated_topics = topics_paginator.page(1)
+        
+    try:
+        paginated_posts = posts_paginator.page(posts_page)
+    except (PageNotAnInteger, EmptyPage):
+        paginated_posts = posts_paginator.page(1)
+    
+    # Statistiques plus détaillées
+    
+    # Activité récente (30 derniers jours)
+    thirty_days_ago = timezone.now() - timedelta(days=30)
+    
+    recent_activity = {
+        'topics_count': ForumTopic.objects.filter(author=profile_user, created_at__gte=thirty_days_ago).count(),
+        'posts_count': ForumPost.objects.filter(author=profile_user, created_at__gte=thirty_days_ago).count(),
+    }
+    
+    # Catégories les plus actives
+    active_categories = (ForumPost.objects
+        .filter(author=profile_user)
+        .values('topic__category__name', 'topic__category__slug')
+        .annotate(count=Count('id'))
+        .order_by('-count')[:3])
+    
+    # Informations sur les réactions reçues
+    reactions_received = (PostReaction.objects
+        .filter(post__author=profile_user)
+        .values('reaction_type')
+        .annotate(count=Count('id'))
+        .order_by('-count'))
+    
     forum_stats = {
-        'topics_count': ForumTopic.objects.filter(author=user_profile.user).count(),
-        'posts_count': ForumPost.objects.filter(author=user_profile.user).count(),
-        'recent_topics': ForumTopic.objects.filter(author=user_profile.user).order_by('-created_at')[:5],
-        'recent_posts': ForumPost.objects.filter(author=user_profile.user).select_related('topic').order_by('-created_at')[:5]
+        'topics_count': all_topics.count(),
+        'posts_count': all_posts.count(),
+        'recent_topics': paginated_topics,
+        'recent_posts': paginated_posts,
+        'recent_activity': recent_activity,
+        'active_categories': active_categories,
+        'reactions_received': reactions_received,
     }
     
     context = {
         'profile': user_profile,
         'forum_stats': forum_stats,
-    }
-    
-    return render(request, 'rastaaslan_app/auth/profile.html', context)
-
-@login_required
-def profile_view(request, username):
-    """Vue pour afficher un profil utilisateur"""
-    # Profil d'un autre utilisateur
-    user_profile = get_object_or_404(UserProfile, user__username=username)
-    
-    # Obtenir les statistiques du forum pour l'utilisateur
-    forum_stats = {
-        'topics_count': ForumTopic.objects.filter(author=user_profile.user).count(),
-        'posts_count': ForumPost.objects.filter(author=user_profile.user).count(),
-        'recent_topics': ForumTopic.objects.filter(author=user_profile.user).order_by('-created_at')[:5],
-        'recent_posts': ForumPost.objects.filter(author=user_profile.user).select_related('topic').order_by('-created_at')[:5]
-    }
-    
-    context = {
-        'profile': user_profile,
-        'forum_stats': forum_stats,
+        'is_own_profile': request.user == profile_user,
     }
     
     return render(request, 'rastaaslan_app/auth/profile.html', context)
@@ -104,7 +156,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Votre profil a été mis à jour avec succès !")
-            return redirect('rastaaslan_app:my_profile')
+            return redirect('rastaaslan_app:profile')  # Corrigé
     else:
         form = UserProfileForm(instance=profile)
     
@@ -120,7 +172,7 @@ def change_password(request):
             # Maintenir la session active après le changement de mot de passe
             update_session_auth_hash(request, user)
             messages.success(request, "Votre mot de passe a été changé avec succès !")
-            return redirect('rastaaslan_app:my_profile')
+            return redirect('rastaaslan_app:profile')  # Corrigé
     else:
         form = CustomPasswordChangeForm(request.user)
     

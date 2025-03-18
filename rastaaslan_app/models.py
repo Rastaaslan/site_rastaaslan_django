@@ -109,7 +109,35 @@ class UserProfile(models.Model):
         return f"Profil de {self.user.username}"
     
     def get_absolute_url(self):
+        """Retourne l'URL pour accéder à ce profil spécifique."""
         return reverse('rastaaslan_app:profile_user', args=[self.user.username])
+
+    def get_avatar_url(self):
+        """Retourne l'URL de l'avatar de l'utilisateur ou une URL par défaut."""
+        if self.avatar:
+            return self.avatar
+        return None  # Le template gère déjà le cas où l'avatar est None
+
+    @property
+    def display_name(self):
+        """Retourne le nom à afficher pour l'utilisateur."""
+        if self.user.first_name and self.user.last_name:
+            return f"{self.user.first_name} {self.user.last_name}"
+        return self.user.username
+
+    @property
+    def activity_score(self):
+        """Calcule un score d'activité basé sur les posts et topics."""
+        from django.utils import timezone
+        from datetime import timedelta
+        
+        # Posts et topics des 30 derniers jours
+        thirty_days_ago = timezone.now() - timedelta(days=30)
+        recent_posts = self.user.forum_posts.filter(created_at__gte=thirty_days_ago).count()
+        recent_topics = self.user.forum_topics.filter(created_at__gte=thirty_days_ago).count()
+        
+        # Un score simple : 1 point par message, 3 points par sujet
+        return recent_posts + (recent_topics * 3)
 
     @property
     def forum_activity(self):
@@ -118,14 +146,6 @@ class UserProfile(models.Model):
             'topics_count': self.user.forum_topics.count(),
             'posts_count': self.user.forum_posts.count()
         }
-
-
-# Signal pour créer automatiquement un profil lorsqu'un utilisateur est créé
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-
 
 class ForumCategory(models.Model):
     """
