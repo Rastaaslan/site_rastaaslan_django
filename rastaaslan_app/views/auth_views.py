@@ -67,7 +67,11 @@ def profile_view(request, username=None):
     """
     if username is None:
         # Profil de l'utilisateur connecté
-        user_profile = get_object_or_404(UserProfile, user=request.user)
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            # Créer un profil si aucun n'existe
+            user_profile = UserProfile.objects.create(user=request.user)
     else:
         # Profil d'un autre utilisateur
         user_profile = get_object_or_404(UserProfile, user__username=username)
