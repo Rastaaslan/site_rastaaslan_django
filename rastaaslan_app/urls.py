@@ -28,7 +28,10 @@ urlpatterns = [
     # Authentification utilisateur
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='rastaaslan_app:home'), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(
+        next_page='rastaaslan_app:home', 
+        http_method_names=['get', 'post']
+    ), name='logout'),
     
     # Gestion du profil
     path('profile/edit/', edit_profile, name='edit_profile'),
