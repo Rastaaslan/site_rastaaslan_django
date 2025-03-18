@@ -2,43 +2,139 @@
 
 {% block title %}Profil de {{ profile.user.username }}{% endblock %}
 
+{% block extra_css %}
+<style>
+    .profile-header {
+        background-color: var(--bg-secondary);
+        border-radius: 8px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px var(--shadow-color);
+    }
+    .avatar-container {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin: 0 auto 1rem;
+        border: 4px solid var(--accent-color);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    .user-stats {
+        display: flex;
+        justify-content: space-around;
+        margin: 1rem 0;
+    }
+    .stat-item {
+        text-align: center;
+    }
+    .stat-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--accent-color);
+    }
+    .activity-indicator {
+        height: 10px;
+        border-radius: 5px;
+        background: linear-gradient(to right, #e0e0e0 0%, var(--accent-color) 100%);
+        margin-top: 0.5rem;
+    }
+    .nav-pills .nav-link.active {
+        background-color: var(--accent-color);
+    }
+    .badge-category {
+        background-color: var(--accent-color);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 12px;
+        margin-right: 0.5rem;
+    }
+    .post-mention {
+        color: var(--accent-color);
+        font-weight: 500;
+    }
+    .reaction-summary {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    .reaction-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.5rem;
+        border-radius: 1rem;
+        background: var(--bg-secondary);
+        border: 1px solid var(--card-border);
+        font-size: 0.875rem;
+    }
+    .reaction-badge .emoji {
+        margin-right: 0.25rem;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
+<div class="profile-header text-center">
+    {% if profile.avatar %}
+        <div class="avatar-container">
+            <img src="{{ profile.avatar }}" class="img-fluid" alt="Avatar de {{ profile.user.username }}">
+        </div>
+    {% else %}
+        <div class="avatar-container bg-secondary d-flex align-items-center justify-content-center">
+            <span class="text-white" style="font-size: 48px;">{{ profile.user.username|first|upper }}</span>
+        </div>
+    {% endif %}
+    
+    <h1 class="display-4">{{ profile.user.username }}</h1>
+    
+    {% if profile.user.first_name or profile.user.last_name %}
+        <p class="lead">{{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+    {% endif %}
+    
+    <p class="text-muted">
+        <i class="fas fa-calendar-alt"></i> Membre depuis {{ profile.date_joined|date:"F Y" }}
+    </p>
+    
+    <div class="profile-badges">
+        {% if profile.is_streamer %}
+            <span class="badge badge-primary">Streamer</span>
+        {% endif %}
+        
+        {% if profile.user.is_staff %}
+            <span class="badge badge-danger">Administrateur</span>
+        {% endif %}
+    </div>
+    
+    {% if profile.twitch_username %}
+        <p class="mt-2">
+            <a href="https://twitch.tv/{{ profile.twitch_username }}" target="_blank" class="btn btn-sm btn-primary">
+                <i class="fab fa-twitch"></i> {{ profile.twitch_username }}
+            </a>
+        </p>
+    {% endif %}
+</div>
+
 <div class="row">
-    <!-- Informations du profil -->
+    <!-- Colonne de gauche -->
     <div class="col-md-4">
+        <!-- Biographie -->
         <div class="card mb-4">
-            <div class="card-body text-center">
-                {% if profile.avatar %}
-                    <img src="{{ profile.avatar }}" class="rounded-circle img-thumbnail mb-3" alt="Avatar de {{ profile.user.username }}" style="width: 150px; height: 150px; object-fit: cover;">
+            <div class="card-header">
+                <h5 class="mb-0">À propos</h5>
+            </div>
+            <div class="card-body">
+                {% if profile.bio %}
+                    <p>{{ profile.bio|linebreaks }}</p>
                 {% else %}
-                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 150px; height: 150px;">
-                        <span class="text-white" style="font-size: 48px;">{{ profile.user.username|first|upper }}</span>
-                    </div>
-                {% endif %}
-                
-                <h3 class="card-title">{{ profile.user.username }}</h3>
-                
-                {% if profile.user.first_name or profile.user.last_name %}
-                    <p class="text-muted">{{ profile.user.first_name }} {{ profile.user.last_name }}</p>
-                {% endif %}
-                
-                <p class="text-muted">
-                    <i class="fas fa-calendar-alt"></i> Membre depuis {{ profile.date_joined|date:"F Y" }}
-                </p>
-                
-                {% if profile.is_streamer %}
-                    <div class="badge badge-primary mb-2">Streamer</div>
-                {% endif %}
-                
-                {% if profile.twitch_username %}
-                    <p><a href="https://twitch.tv/{{ profile.twitch_username }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                        <i class="fab fa-twitch"></i> {{ profile.twitch_username }}
-                    </a></p>
+                    <p class="text-muted">Cet utilisateur n'a pas encore ajouté de biographie.</p>
                 {% endif %}
             </div>
         </div>
         
-        {% if user.is_authenticated and user.id == profile.user.id %}
+        <!-- Actions (si c'est le profil de l'utilisateur connecté) -->
+        {% if is_own_profile %}
             <div class="card mb-4">
                 <div class="card-header">
                     <h5 class="mb-0">Actions</h5>
@@ -55,78 +151,251 @@
                 </div>
             </div>
         {% endif %}
-    </div>
-    
-    <!-- Bio et statistiques -->
-    <div class="col-md-8">
-        <!-- Biographie -->
+        
+        <!-- Statistiques générales -->
         <div class="card mb-4">
             <div class="card-header">
-                <h5 class="mb-0">À propos</h5>
+                <h5 class="mb-0">Statistiques</h5>
             </div>
             <div class="card-body">
-                {% if profile.bio %}
-                    <p>{{ profile.bio|linebreaks }}</p>
-                {% else %}
-                    <p class="text-muted">Cet utilisateur n'a pas encore ajouté de biographie.</p>
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">{{ forum_stats.topics_count }}</div>
+                        <div class="stat-label">Sujets</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">{{ forum_stats.posts_count }}</div>
+                        <div class="stat-label">Messages</div>
+                    </div>
+                </div>
+                
+                <!-- Activité récente (30 derniers jours) -->
+                {% if forum_stats.recent_activity %}
+                <div class="mt-4">
+                    <h6>Activité récente (30 derniers jours)</h6>
+                    <div class="user-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">{{ forum_stats.recent_activity.topics_count }}</div>
+                            <div class="stat-label">Sujets</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">{{ forum_stats.recent_activity.posts_count }}</div>
+                            <div class="stat-label">Messages</div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Catégories les plus actives -->
+                {% if forum_stats.active_categories %}
+                <div class="mt-4">
+                    <h6>Catégories préférées</h6>
+                    <div class="mt-2">
+                        {% for category in forum_stats.active_categories %}
+                            <span class="badge-category">
+                                {{ category.topic__category__name }} ({{ category.count }})
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Réactions reçues -->
+                {% if forum_stats.reactions_received %}
+                <div class="mt-4">
+                    <h6>Réactions reçues</h6>
+                    <div class="reaction-summary">
+                        {% for reaction in forum_stats.reactions_received %}
+                            <div class="reaction-badge">
+                                <span class="emoji">
+                                    {% if reaction.reaction_type == 'like' %}👍{% endif %}
+                                    {% if reaction.reaction_type == 'thanks' %}🙏{% endif %}
+                                    {% if reaction.reaction_type == 'funny' %}😂{% endif %}
+                                    {% if reaction.reaction_type == 'insightful' %}💡{% endif %}
+                                </span>
+                                <span class="count">{{ reaction.count }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
                 {% endif %}
             </div>
         </div>
-        
-        <!-- Statistiques du forum -->
+    </div>
+    
+    <!-- Colonne de droite : Activité sur le forum -->
+    <div class="col-md-8">
         <div class="card mb-4">
             <div class="card-header">
                 <h5 class="mb-0">Activité sur le forum</h5>
             </div>
             <div class="card-body">
-                <div class="row text-center mb-4">
-                    <div class="col-6">
-                        <h4>{{ forum_stats.topics_count }}</h4>
-                        <p class="text-muted">Sujets créés</p>
+                <!-- Onglets pour séparer les sujets et les messages -->
+                <ul class="nav nav-pills mb-3" id="profile-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="topics-tab" data-toggle="pill" href="#topics" role="tab">
+                            Sujets créés
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="posts-tab" data-toggle="pill" href="#posts" role="tab">
+                            Messages publiés
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="profile-tab-content">
+                    <!-- Onglet des sujets créés -->
+                    <div class="tab-pane fade show active" id="topics" role="tabpanel">
+                        {% if forum_stats.recent_topics %}
+                            <div class="list-group mb-3">
+                                {% for topic in forum_stats.recent_topics %}
+                                    <a href="{% url 'rastaaslan_app:forum_topic' topic.category.slug topic.slug %}" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">{{ topic.title }}</h6>
+                                            <small>{{ topic.created_at|date:"d/m/Y" }}</small>
+                                        </div>
+                                        <small class="text-muted">
+                                            Dans <span class="badge badge-info">{{ topic.category.name }}</span>
+                                        </small>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Pagination des sujets -->
+                            {% if forum_stats.recent_topics.has_other_pages %}
+                                <nav aria-label="Pagination des sujets">
+                                    <ul class="pagination justify-content-center">
+                                        {% if forum_stats.recent_topics.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?topics_page={{ forum_stats.recent_topics.previous_page_number }}">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <span class="page-link">&laquo;</span>
+                                            </li>
+                                        {% endif %}
+                                        
+                                        <li class="page-item">
+                                            <span class="page-link">
+                                                {{ forum_stats.recent_topics.number }} / {{ forum_stats.recent_topics.paginator.num_pages }}
+                                            </span>
+                                        </li>
+                                        
+                                        {% if forum_stats.recent_topics.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?topics_page={{ forum_stats.recent_topics.next_page_number }}">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <span class="page-link">&raquo;</span>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            {% endif %}
+                        {% else %}
+                            <p class="text-center text-muted">Aucun sujet créé pour le moment.</p>
+                        {% endif %}
                     </div>
-                    <div class="col-6">
-                        <h4>{{ forum_stats.posts_count }}</h4>
-                        <p class="text-muted">Messages publiés</p>
+                    
+                    <!-- Onglet des messages publiés -->
+                    <div class="tab-pane fade" id="posts" role="tabpanel">
+                        {% if forum_stats.recent_posts %}
+                            <div class="list-group mb-3">
+                                {% for post in forum_stats.recent_posts %}
+                                    <a href="{{ post.get_absolute_url }}" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Dans "{{ post.topic.title }}"</h6>
+                                            <small>{{ post.created_at|date:"d/m/Y" }}</small>
+                                        </div>
+                                        <p class="mb-1 text-muted small">{{ post.content|truncatechars:100 }}</p>
+                                        <small class="text-muted">
+                                            Catégorie <span class="badge badge-info">{{ post.topic.category.name }}</span>
+                                        </small>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Pagination des messages -->
+                            {% if forum_stats.recent_posts.has_other_pages %}
+                                <nav aria-label="Pagination des messages">
+                                    <ul class="pagination justify-content-center">
+                                        {% if forum_stats.recent_posts.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?posts_page={{ forum_stats.recent_posts.previous_page_number }}">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <span class="page-link">&laquo;</span>
+                                            </li>
+                                        {% endif %}
+                                        
+                                        <li class="page-item">
+                                            <span class="page-link">
+                                                {{ forum_stats.recent_posts.number }} / {{ forum_stats.recent_posts.paginator.num_pages }}
+                                            </span>
+                                        </li>
+                                        
+                                        {% if forum_stats.recent_posts.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?posts_page={{ forum_stats.recent_posts.next_page_number }}">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <span class="page-link">&raquo;</span>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            {% endif %}
+                        {% else %}
+                            <p class="text-center text-muted">Aucun message publié pour le moment.</p>
+                        {% endif %}
                     </div>
                 </div>
-                
-                <!-- Derniers sujets -->
-                {% if forum_stats.recent_topics %}
-                    <h6>Derniers sujets créés</h6>
-                    <div class="list-group mb-4">
-                        {% for topic in forum_stats.recent_topics %}
-                            <a href="{% url 'rastaaslan_app:forum_topic' topic.category.slug topic.slug %}" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">{{ topic.title }}</h6>
-                                    <small>{{ topic.created_at|date:"d/m/Y" }}</small>
-                                </div>
-                                <small class="text-muted">
-                                    Dans <span class="badge badge-info">{{ topic.category.name }}</span>
-                                </small>
-                            </a>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-                
-                <!-- Derniers messages -->
-                {% if forum_stats.recent_posts %}
-                    <h6>Derniers messages publiés</h6>
-                    <div class="list-group">
-                        {% for post in forum_stats.recent_posts %}
-                            <a href="{{ post.get_absolute_url }}" class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h6 class="mb-1">{{ post.topic.title }}</h6>
-                                    <small>{{ post.created_at|date:"d/m/Y" }}</small>
-                                </div>
-                                <small class="text-muted">
-                                    Dans <span class="badge badge-info">{{ post.topic.category.name }}</span>
-                                </small>
-                            </a>
-                        {% endfor %}
-                    </div>
-                {% endif %}
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion de la persistance des onglets via l'URL
+    // Récupérer le hash de l'URL
+    const hash = window.location.hash;
+    if (hash) {
+        // Activer l'onglet correspondant
+        $('.nav-pills a[href="' + hash + '"]').tab('show');
+    }
+    
+    // Changer le hash quand un onglet est cliqué
+    $('.nav-pills a').on('click', function(e) {
+        const tabId = $(this).attr('href');
+        window.location.hash = tabId;
+    });
+    
+    // Retenir l'onglet actif quand la page est rechargée (pour pagination)
+    const pageReloadTab = sessionStorage.getItem('activeProfileTab');
+    if (pageReloadTab && !hash) {
+        $('.nav-pills a[href="' + pageReloadTab + '"]').tab('show');
+    }
+    
+    // Stocker l'onglet actif dans sessionStorage
+    $('.nav-pills a').on('shown.bs.tab', function(e) {
+        const tabId = $(e.target).attr('href');
+        sessionStorage.setItem('activeProfileTab', tabId);
+    });
+});
+</script>
 {% endblock %}

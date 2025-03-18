@@ -34,7 +34,7 @@ urlpatterns = [
     path('profile/edit/', edit_profile, name='edit_profile'),
     path('profile/change-password/', change_password, name='change_password'),
     path('profile/<str:username>/', profile_view, name='profile_user'),
-    path('profile/', my_profile_view, name='profile'),  # Utiliser directement my_profile_view ici
+    path('profile/', profile_view, name='profile'),
     
     # Forum
     path('forum/', forum_home, name='forum_home'),
