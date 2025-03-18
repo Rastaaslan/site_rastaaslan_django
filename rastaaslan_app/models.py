@@ -241,7 +241,7 @@ class ForumTopic(models.Model):
         self.views_count += 1
         self.save(update_fields=['views_count'])
         
-    @property
+   
     def reply_count(self):
         """Nombre de réponses (excluant le post initial)"""
         count = self.posts.count() - 1
