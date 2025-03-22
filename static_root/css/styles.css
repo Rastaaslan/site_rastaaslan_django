@@ -1,0 +1,1002 @@
+/* Variables de couleur */
+:root {
+    --terracotta: #E07A5F;
+    --vert-sauge: #81B29A;
+    --bleu-indigo: #3D405B;
+    --creme-vintage: #F2CC8F;
+    --peche-pastel: #F4A261;
+    --gris-bleute: #B8C1EC;
+    --beige-papier: #F8F3E6;
+    --blanc-casse: #EDEAE1;
+    --gris-fonce: #4F4F4F;
+    --vert-pastel: #c6d8bb;
+    
+    /* Variables de transition */
+    --transition-speed: 0.4s;
+    --transition-timing: ease;
+    
+    /* Thème clair (par défaut) */
+    --bg-primary: var(--beige-papier);
+    --bg-secondary: var(--blanc-casse);
+    --text-primary: var(--gris-fonce);
+    --text-secondary: var(--bleu-indigo);
+    --accent-color: var(--terracotta);
+    --accent-hover: var(--vert-sauge);
+    --nav-bg: var(--bleu-indigo);
+    --nav-text: var(--blanc-casse);
+    --card-bg: var(--blanc-casse);
+    --card-border: rgba(0, 0, 0, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Thème sombre */
+[data-theme="dark"] {
+    /* Versions sombres des couleurs */
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --text-primary: #e6e6e6;
+    --text-secondary: #b8c1ec;
+    --accent-color: var(--vert-sauge);
+    --accent-hover: #81b29a;
+    --nav-bg: #0f3460;
+    --nav-text: #edeae1;
+    --card-bg: #16213e;
+    --card-border: rgba(255, 255, 255, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Rendre tous les conteneurs potentiels transparents */
+html, 
+body, 
+.container,
+.container-fluid,
+main,
+.wrapper,
+.content,
+.content-wrapper,
+.page-wrapper,
+.main-content {
+    background-color: transparent !important;
+}
+
+/* Assurer que html a la couleur de fond correcte */
+html {
+    background-color: var(--bg-primary) !important;
+    transition: background-color var(--transition-speed) var(--transition-timing);
+}
+
+/* Base */
+body {
+    font-family: 'IBM Plex Sans', 'Work Sans', sans-serif;
+    font-size: 16px;
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    transition: color var(--transition-speed) var(--transition-timing);
+}
+
+/* Élément d'arrière-plan pour garantir la transition */
+.theme-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -999;
+    background-color: var(--bg-primary);
+    transition: background-color var(--transition-speed) var(--transition-timing);
+}
+
+/* Typographie */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Futura Rounded', 'Quicksand', sans-serif;
+    font-weight: 600;
+    color: var(--accent-color);
+    transition: color var(--transition-speed) var(--transition-timing);
+}
+
+p, span, div {
+    font-family: 'IBM Plex Sans', 'Work Sans', sans-serif;
+    color: var(--text-primary);
+    transition: color var(--transition-speed) var(--transition-timing);
+}
+
+blockquote, .highlight {
+    font-family: 'Reenie Beanie', 'Caveat', cursive;
+    color: var(--vert-sauge);
+    font-style: normal;
+    letter-spacing: 0.5px;
+}
+
+/* Éléments interactifs */
+button {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--accent-hover);
+}
+
+a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-speed) var(--transition-timing);
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--accent-color);
+}
+
+/* Images et médias */
+img {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: filter var(--transition-speed) var(--transition-timing);
+}
+
+[data-theme="dark"] img {
+    filter: brightness(0.9);
+}
+
+/* Layout */
+.container {
+    padding: 20px;
+    margin: 10px auto;
+    max-width: 1200px;
+    transition: color var(--transition-speed) var(--transition-timing);
+}
+
+/* Navigation */
+.navbar-custom {
+    background-color: var(--bg-primary) !important;
+    border-bottom: none; /* Supprimer la bordure existante */
+    transition: background-color var(--transition-speed) var(--transition-timing);
+    padding: 0.75rem 1rem;
+    position: relative; /* Nécessaire pour le positionnement du pseudo-élément */
+}
+
+/* Ajouter un séparateur stylisé avec un pseudo-élément */
+.navbar-custom::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%); /* Centrer horizontalement */
+    width: 30%; /* Largeur de 30% */
+    height: 2px; /* Épaisseur de base */
+    background: linear-gradient(
+        to right,
+        transparent,
+        var(--accent-color) 20%,
+        var(--accent-color) 80%,
+        transparent
+    );
+    /* Créer un effet de dégradé pour que ce soit plus épais au centre */
+    box-shadow: 0 0 4px var(--accent-color); /* Ajouter une ombre douce pour l'effet d'épaisseur */
+}
+
+/* Version pour le thème sombre */
+[data-theme="dark"] .navbar-custom::after {
+    box-shadow: 0 0 5px var(--accent-color); /* Ombre légèrement plus prononcée pour le thème sombre */
+}
+
+/* Logo (Rastaaslan) */
+.navbar-brand {
+    color: var(--accent-color) !important; /* Couleur du titre */
+    font-weight: 600;
+    font-size: 1.5rem;
+    transition: color var(--transition-speed) var(--transition-timing);
+}
+
+/* Conteneur pour centrer les liens */
+.navbar .navbar-collapse {
+    justify-content: center;
+}
+
+/* Items du menu */
+.navbar-nav {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Liens de navigation */
+.nav-link {
+    color: var(--text-primary) !important;
+    font-weight: 500;
+    padding: 0.5rem 1.2rem !important;
+    transition: color var(--transition-speed) var(--transition-timing);
+    position: relative;
+}
+
+.nav-link:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--accent-color);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    opacity: 0;
+}
+
+.nav-link:hover {
+    color: var(--accent-color) !important;
+}
+
+.nav-link:hover:after,
+.nav-link.active:after {
+    width: 70%;
+    opacity: 1;
+}
+
+/* Icône de thème */
+.theme-toggle {
+    margin-left: 15px;
+}
+
+/* Bouton hamburger */
+.navbar-toggler {
+    border: 1px solid var(--text-primary);
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+/* Correction pour le burger menu */
+.burger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 18px;
+    width: 22px;
+}
+
+.burger-icon span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: var(--text-primary) !important;
+    transition: background-color var(--transition-speed) var(--transition-timing);
+    border-radius: 2px;
+}
+
+/* Responsive - ajustements pour petit écran */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        text-align: center;
+        padding: 1rem 0;
+    }
+    
+    .nav-link {
+        padding: 0.7rem 0 !important;
+    }
+    
+    .theme-toggle {
+        margin: 0.5rem auto;
+    }
+}
+
+/* Carousel styles standards */
+.carousel {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px var(--shadow-color);
+    margin-bottom: 30px;
+    transition: box-shadow var(--transition-speed) var(--transition-timing);
+}
+
+.carousel-item {
+    transition: transform 0.6s ease-in-out !important;
+}
+
+.carousel-inner {
+    border-radius: 8px;
+}
+
+.carousel-caption {
+    background-color: rgba(61, 64, 91, 0.7); /* --bleu-indigo with opacity */
+    border-radius: 4px;
+    padding: 10px;
+    bottom: 20px;
+    transition: background-color var(--transition-speed) var(--transition-timing);
+}
+
+[data-theme="dark"] .carousel-caption {
+    background-color: rgba(16, 21, 38, 0.8);
+}
+
+.carousel-caption h5 {
+    color: var(--nav-text);
+    margin-bottom: 0;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 10%;
+    opacity: 0.7;
+    z-index: 10;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+}
+
+.carousel-indicators {
+    bottom: 0;
+    z-index: 10;
+}
+
+.carousel-indicators li {
+    background-color: var(--creme-vintage);
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin: 0 4px;
+}
+
+.carousel-indicators .active {
+    background-color: var(--accent-color);
+}
+
+/* Animations et effets */
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+}
+
+.texture {
+    background: var(--bg-primary);
+    position: relative;
+}
+
+.texture::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('path/to/vintage-noise.png');
+    opacity: 0.08;
+    pointer-events: none;
+}
+
+/* Autres éléments */
+.header, .footer {
+    background-color: var(--bg-secondary);
+    padding: 15px;
+    text-align: center;
+    transition: background-color var(--transition-speed) var(--transition-timing);
+}
+
+.card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--card-bg) !important;
+    border-color: var(--card-border);
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: transform 0.3s ease, 
+                box-shadow 0.3s ease, 
+                background-color var(--transition-speed) var(--transition-timing),
+                border-color var(--transition-speed) var(--transition-timing);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px var(--shadow-color);
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto;
+}
+
+/* Correction des boutons de contrôle pour tous les carrousels */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+/* Adaptations additionnelles pour le thème sombre */
+[data-theme="dark"] .alert-info {
+    background-color: #193652;
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .alert-success {
+    background-color: #1e4d40;
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .alert-warning {
+    background-color: #4d3a1e;
+    color: var(--text-primary);
+}
+
+/* Effet visuel lors du changement de thème */
+.theme-transition-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    z-index: 9999;
+    animation: flash 0.5s ease-out;
+    opacity: 0;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Section Live Stream */
+#chat-container {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                box-shadow var(--transition-speed) var(--transition-timing);
+}
+
+#chat-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+#chat-container iframe {
+    border-radius: 4px;
+    width: 100%;
+}
+
+/* Style pour les statuts de stream */
+.stream-status {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.stream-status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.stream-status-dot.online {
+    background-color: #2ecc71;
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+    animation: pulse 2s infinite;
+}
+
+.stream-status-dot.offline {
+    background-color: #e74c3c;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+    }
+}
+
+/* Amélioration des alertes */
+.alert {
+    border-left: 4px solid;
+    border-radius: 4px;
+    transition: background-color var(--transition-speed) var(--transition-timing), 
+                color var(--transition-speed) var(--transition-timing);
+    background-color: var(--bg-secondary) !important;
+}
+
+.alert-success {
+    border-left-color: var(--vert-sauge);
+}
+
+.alert-info {
+    border-left-color: var(--bleu-indigo);
+}
+
+.alert-warning {
+    border-left-color: var(--peche-pastel);
+}
+
+/* Améliorations des cartes VOD */
+.card-link {
+    text-decoration: none;
+}
+
+.card-link .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, 
+                background-color var(--transition-speed) var(--transition-timing);
+}
+
+.card-link .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px var(--shadow-color);
+}
+
+.card-link .card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Adaptations pour le thème */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: color var(--transition-speed) var(--transition-timing);
+}
+
+.theme-toggle i {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover i {
+    transform: rotate(15deg);
+}
+
+/* Conteneur principal pour le défilement horizontal */
+.horizontal-scroll-container {
+    position: relative;
+    width: 100%;
+    margin: 30px 0;
+}
+
+/* Wrapper avec défilement horizontal */
+.thumbnails-scroll-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch; /* Pour une meilleure expérience sur iOS */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE et Edge */
+    padding: 20px 0;
+}
+
+/* Cacher la scrollbar pour Chrome, Safari et Opera */
+.thumbnails-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* Rangée de miniatures */
+.thumbnails-row {
+    display: inline-flex;
+    padding: 0 10px;
+}
+
+/* Élément de miniature individuel */
+.thumbnail-item {
+    flex: 0 0 auto;
+    width: 280px;
+    margin-right: 20px;
+    transition: transform 0.3s ease;
+}
+
+.thumbnail-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Lien de miniature */
+.thumbnail-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Carte de miniature */
+.thumbnail-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px var(--shadow-color);
+    background-color: var(--card-bg);
+    transition: box-shadow var(--transition-speed) var(--transition-timing),
+                background-color var(--transition-speed) var(--transition-timing);
+    height: 100%;
+    position: relative;
+}
+
+/* Image de miniature */
+.thumbnail-card img {
+    width: 100%;
+    height: 158px; /* Ratio 16:9 pour une largeur de 280px */
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+    display: block;
+}
+
+/* Légende de miniature */
+.thumbnail-caption {
+    padding: 10px;
+    background-color: var(--card-bg);
+    transition: background-color var(--transition-speed) var(--transition-timing);
+}
+
+.thumbnail-caption h5 {
+    margin: 0;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-primary);
+}
+
+/* Flèches de défilement */
+.scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: var(--nav-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: opacity 0.3s ease, background-color var(--transition-speed) var(--transition-timing);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-arrow i {
+    color: var(--nav-text);
+    font-size: 1rem;
+}
+
+.scroll-left {
+    left: 10px;
+}
+
+.scroll-right {
+    right: 10px;
+}
+
+.scroll-arrow:hover {
+    background-color: var(--accent-color);
+}
+
+/* Styles pour l'état actif lors du défilement avec la souris */
+.thumbnails-scroll-wrapper.active {
+    cursor: grabbing;
+}
+
+/* Navigation par onglets */
+.nav-tabs {
+    border-bottom: 1px solid var(--card-border);
+    margin-bottom: 25px;
+    transition: border-color var(--transition-speed) var(--transition-timing);
+}
+
+.nav-tabs .nav-item {
+    margin-bottom: -1px;
+}
+
+.nav-tabs .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    color: var(--text-secondary);
+    transition: color var(--transition-speed) var(--transition-timing),
+                background-color var(--transition-speed) var(--transition-timing),
+                border-color var(--transition-speed) var(--transition-timing);
+    padding: 0.75rem 1.25rem;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: transparent;
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--accent-color);
+    background-color: var(--bg-primary);
+    border-color: var(--card-border) var(--card-border) var(--bg-primary);
+}
+
+/* Contenu des onglets */
+.tab-content {
+    padding-top: 1rem;
+}
+
+.tab-pane {
+    transition: opacity 0.3s ease;
+}
+
+.tab-pane.fade {
+    opacity: 0;
+}
+
+.tab-pane.fade.show {
+    opacity: 1;
+}
+
+/* Animation au changement d'onglet */
+.tab-pane.active.show {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .center-card-carousel .carousel-item.active {
+        transform: translateX(25%) scale(1);
+    }
+    
+    .center-card-carousel .carousel-item.right {
+        transform: translateX(50%) scale(0.85);
+    }
+}
+
+@media (max-width: 768px) {
+    .thumbnail-item {
+        width: 220px;
+    }
+    
+    .thumbnail-card img {
+        height: 124px; /* Maintenir le ratio 16:9 */
+    }
+    
+    .scroll-arrow {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .center-card-carousel .carousel-item.active {
+        transform: translateX(15%) scale(1);
+    }
+    
+    .center-card-carousel .carousel-item.right {
+        transform: translateX(30%) scale(0.85);
+    }
+    
+    #chat-container {
+        margin-top: 30px;
+        padding: 10px;
+    }
+    
+    #chat-container h2 {
+        font-size: 1.2rem;
+    }
+    
+    #chat-container iframe {
+        height: 400px;
+    }
+}
+
+@media (max-width: 576px) {
+    .thumbnail-item {
+        width: 180px;
+    }
+    
+    .thumbnail-card img {
+        height: 101px; /* Maintenir le ratio 16:9 */
+    }
+    
+    .thumbnail-caption h5 {
+        font-size: 0.8rem;
+    }
+    
+    .scroll-arrow {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .center-card-carousel .carousel-item.active {
+        transform: translateX(5%) scale(1);
+    }
+    
+    .center-card-carousel .carousel-item.right {
+        transform: translateX(10%) scale(0.85);
+    }
+    
+    .nav-tabs .nav-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Ajout des styles pour le jumbotron */
+.jumbotron {
+    background-color: var(--vert-pastel) !important;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                color var(--transition-speed) var(--transition-timing);
+}
+
+.jumbotron .lead {
+    color: var(--text-primary);
+}
+
+.jumbotron h1 {
+    color: var(--gris-fonce);
+}
+
+.jumbotron p {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+}
+
+/* Thème sombre pour le jumbotron */
+[data-theme="dark"] .jumbotron {
+    background-color: var(--vert-sauge);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .jumbotron .lead {
+    color: var(--gris-fonce) !important;
+}
+
+/* Correction pour la navbar en mode mobile */
+@media (max-width: 991.98px) {
+    .navbar-toggler {
+        border-color: var(--text-primary);
+        padding: 0.5rem;
+        outline: none !important;
+    }
+    
+    .navbar-toggler:focus {
+        outline: none;
+    }
+    
+    .burger-icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 18px;
+        width: 22px;
+    }
+    
+    .burger-icon span {
+        display: block;
+        height: 2px;
+        width: 100%;
+        background-color: var(--text-primary);
+        transition: background-color var(--transition-speed) var(--transition-timing);
+        border-radius: 2px;
+    }
+    
+    /* Centrer la navbar en mode mobile */
+    .navbar-nav {
+        text-align: center;
+        padding-top: 1rem;
+    }
+    
+    .navbar-nav .nav-item {
+        margin: 0.25rem 0;
+    }
+    
+    /* Améliorer l'apparence des dropdowns en mode mobile */
+    .navbar-nav .dropdown-menu {
+        background-color: var(--bg-secondary);
+        border-color: var(--card-border);
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+    
+    .navbar-nav .dropdown-item {
+        color: var(--text-primary);
+    }
+    
+    .navbar-nav .dropdown-item:hover {
+        background-color: var(--accent-color);
+        color: white;
+    }
+    
+    /* Ajuster le toggle de thème en mode mobile */
+    .theme-toggle {
+        margin: 1rem auto;
+    }
+}
+
+/* Améliorer l'apparence des liens actifs */
+.nav-link.active {
+    color: var(--accent-color) !important;
+    font-weight: 600;
+}
+
+/* Style pour le dropdown utilisateur */
+.dropdown-menu {
+    background-color: var(--bg-secondary);
+    border-color: var(--card-border);
+    box-shadow: 0 4px 10px var(--shadow-color);
+    transition: background-color var(--transition-speed) var(--transition-timing),
+                border-color var(--transition-speed) var(--transition-timing);
+}
+
+.dropdown-item {
+    color: var(--text-primary);
+    transition: color var(--transition-speed) var(--transition-timing),
+                background-color var(--transition-speed) var(--transition-timing);
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.dropdown-divider {
+    border-top-color: var(--card-border);
+    transition: border-color var(--transition-speed) var(--transition-timing);
+}
+
+/* Réduction de la hauteur de la navbar en format portrait */
+@media (max-width: 991.98px) {
+    .navbar-custom {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    
+    /* Ajuster la taille du logo/titre pour contribuer à la réduction de hauteur */
+    .navbar-brand {
+        font-size: 1.25rem;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    
+    /* Réduire la taille du bouton hamburger */
+    .navbar-toggler {
+        padding: 0.25rem 0.5rem;
+    }
+    
+    /* Réduire légèrement la taille de l'icône hamburger */
+    .burger-icon {
+        height: 16px;
+        width: 20px;
+    }
+}
+
+/* Assurer que le menu déplié a suffisamment d'espace */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        margin-top: 0.5rem;
+    }
+}
