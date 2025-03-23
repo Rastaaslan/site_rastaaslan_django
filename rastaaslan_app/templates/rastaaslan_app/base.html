@@ -51,7 +51,7 @@
                         <a class="nav-link" href="{% url 'rastaaslan_app:clips' %}">Clips</a>
                     </li>
                     <li class="nav-item {% if 'boutique' in request.path %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'oscar:index' %}">Boutique</a>
+                        <a class="nav-link" href="{% url 'oscar:oscar' %}">Boutique</a>
                     </li>
                     <li class="nav-item {% if 'forum' in request.resolver_match.url_name %}active{% endif %}">
                         <a class="nav-link" href="{% url 'rastaaslan_app:forum_home' %}">Forum</a>
