@@ -1,0 +1,65 @@
+{% extends 'rastaaslan_app/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% block oscar_title %}{% endblock %} | Boutique Rastaaslan
+{% endblock %}
+
+{% block content %}
+    <div class="oscar-container">
+        {% block oscar_content %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <style>
+        /* Styles pour la boutique Oscar */
+        .oscar-container {
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        
+        /* Harmonisation des couleurs avec le site principal */
+        .btn-primary {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+        }
+        
+        /* Style pour les produits */
+        .product_pod {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .product_pod:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--shadow);
+        }
+        
+        /* Style pour les prix */
+        .price_color {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        /* Navigation */
+        .side_categories ul li a {
+            color: var(--text-primary);
+        }
+        .side_categories ul li a:hover {
+            color: var(--accent-color);
+        }
+    </style>
+    {% block oscar_css %}{% endblock %}
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    {% block oscar_js %}{% endblock %}
+{% endblock %}
