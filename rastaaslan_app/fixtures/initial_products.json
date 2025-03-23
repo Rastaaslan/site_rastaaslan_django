@@ -1,0 +1,53 @@
+[
+    {
+      "model": "catalogue.product",
+      "pk": 1,
+      "fields": {
+        "structure": "standalone",
+        "upc": "RAS-TSHIRT-01",
+        "title": "T-shirt RastaAslan",
+        "slug": "t-shirt-rastaaslan",
+        "description": "<p>T-shirt officiel de la chaîne RastaAslan.</p>",
+        "product_class": 1,
+        "is_discountable": true,
+        "date_created": "2025-03-23T12:00:00Z",
+        "date_updated": "2025-03-23T12:00:00Z",
+        "is_public": true,
+        "is_streamer_exclusive": false
+      }
+    },
+    {
+      "model": "catalogue.product",
+      "pk": 2,
+      "fields": {
+        "structure": "standalone",
+        "upc": "RAS-MUG-01",
+        "title": "Mug RastaAslan",
+        "slug": "mug-rastaaslan",
+        "description": "<p>Buvez votre café en regardant les streams de RastaAslan.</p>",
+        "product_class": 1,
+        "is_discountable": true,
+        "date_created": "2025-03-23T12:00:00Z",
+        "date_updated": "2025-03-23T12:00:00Z",
+        "is_public": true,
+        "is_streamer_exclusive": false
+      }
+    },
+    {
+      "model": "catalogue.product",
+      "pk": 3,
+      "fields": {
+        "structure": "standalone",
+        "upc": "RAS-HOODIE-01",
+        "title": "Hoodie RastaAslan Premium",
+        "slug": "hoodie-rastaaslan-premium",
+        "description": "<p>Hoodie premium de haute qualité avec le logo RastaAslan.</p>",
+        "product_class": 1,
+        "is_discountable": true,
+        "date_created": "2025-03-23T12:00:00Z",
+        "date_updated": "2025-03-23T12:00:00Z",
+        "is_public": true,
+        "is_streamer_exclusive": true
+      }
+    }
+  ]
