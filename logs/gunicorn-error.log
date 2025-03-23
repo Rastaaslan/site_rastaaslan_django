@@ -1,0 +1,20 @@
+[2025-03-22 22:15:29 +0100] [14864] [INFO] Starting gunicorn 20.1.0
+[2025-03-22 22:15:29 +0100] [14864] [INFO] Listening at: unix:/var/www/html/site_rastaaslan_django/run/gunicorn.sock (14864)
+[2025-03-22 22:15:29 +0100] [14864] [INFO] Using worker: sync
+[2025-03-22 22:15:29 +0100] [14869] [INFO] Booting worker with pid: 14869
+[2025-03-22 22:15:29 +0100] [14870] [INFO] Booting worker with pid: 14870
+[2025-03-22 22:15:29 +0100] [14871] [INFO] Booting worker with pid: 14871
+[2025-03-22 21:19:12 +0000] [14871] [INFO] Worker exiting (pid: 14871)
+[2025-03-22 21:19:12 +0000] [14870] [INFO] Worker exiting (pid: 14870)
+[2025-03-22 21:19:12 +0000] [14869] [INFO] Worker exiting (pid: 14869)
+[2025-03-22 22:19:12 +0100] [14864] [INFO] Handling signal: term
+[2025-03-22 22:19:12 +0100] [14864] [WARNING] Worker with pid 14869 was terminated due to signal 15
+[2025-03-22 22:19:12 +0100] [14864] [WARNING] Worker with pid 14870 was terminated due to signal 15
+[2025-03-22 22:19:12 +0100] [14864] [WARNING] Worker with pid 14871 was terminated due to signal 15
+[2025-03-22 22:19:13 +0100] [14864] [INFO] Shutting down: Master
+[2025-03-22 22:19:13 +0100] [14963] [INFO] Starting gunicorn 20.1.0
+[2025-03-22 22:19:13 +0100] [14963] [INFO] Listening at: unix:/var/www/html/site_rastaaslan_django/run/gunicorn.sock (14963)
+[2025-03-22 22:19:13 +0100] [14963] [INFO] Using worker: sync
+[2025-03-22 22:19:13 +0100] [14968] [INFO] Booting worker with pid: 14968
+[2025-03-22 22:19:13 +0100] [14969] [INFO] Booting worker with pid: 14969
+[2025-03-22 22:19:13 +0100] [14970] [INFO] Booting worker with pid: 14970
